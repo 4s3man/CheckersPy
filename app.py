@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, session
 import json
+import itertools
 app = Flask(__name__)
 
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
+class InvalidOperationError(Exception):
+    pass
 
 class Coin:
     def __init__(self, color, id, type='coin'):
@@ -11,28 +14,16 @@ class Coin:
         self.id = str(id)
         self.type = type
 
+    def set_foreward_vector(self, vector):
+        self.foreward = vector
+
     def html(self):
         return '<span id="%s" class="%s coin--%s"></span>' % (
             self.color + self.id, self.type, self.color)
 
-    def moves(self):
-        moves = []
-        if self.type == 'coin':
-            if self.color == 'white':
-                if self.x - 1 >= 0:
-                    moves.append((self.y + 1, self.x - 1))
-                if self.x + 1 <= 7:
-                    moves.append((self.y + 1, self.x + 1))
-            else:
-                if self.x - 1 >= 0:
-                    moves.append((self.y - 1, self.x - 1))
-                if self.x + 1 <= 7:
-                    moves.append((self.y - 1, self.x + 1))
-        return moves
-
 
 class BoardField:
-    coin = 0
+    coin = None
 
     def set_coin(self, coin, y, x):
         self.coin = coin
@@ -40,14 +31,12 @@ class BoardField:
         self.coin.x = x
 
     def unset_coin(self):
-        self.coin = 0
+        self.coin = None
 
     def get_html(self):
         return '' if not self.coin else\
             self.coin.html()
 # todo jak to wrzucic do obiektu board najlepiej
-
-
 def obj_dict(obj):
     return obj.__dict__
 
@@ -58,20 +47,32 @@ class Board:
         self.white_coins = []
         self.black_coins = []
 
+    def set_coin_y_x(self, coin, y, x):
+        if y in range(8) and x in range(8):
+            self.fields[y][x].set_coin(coin, y, x)
+        else:
+            raise InvalidOperationError("Invalid operation")
+
+    def unset_coin(self, coin):
+        self.fields[coin.y][coin.x].unset_coin()
+
     def set_initial_state(self):
         self.white_coins = [Coin('white', id) for id in range(8)]
         self.black_coins = [Coin('black', id) for id in range(8)]
         for i, coin in enumerate(self.white_coins):
             if not i % 2:
-                self.fields[0][i].set_coin(coin, 0, i)
+                self.set_coin_y_x(coin, 6, i)
             else:
-                self.fields[1][i].set_coin(coin, 1, i)
+                self.set_coin_y_x(coin, 7, i)
+                self.set_coin_y_x(coin, 5, i)
+            coin.set_foreward_vector(-1)
         for i, coin in enumerate(self.black_coins):
             if not i % 2:
-                self.fields[6][i].set_coin(coin, 6, i)
+                self.set_coin_y_x(coin, 0, i)
+                self.set_coin_y_x(coin, 2, i)
             else:
-                self.fields[7][i].set_coin(coin, 7, i)
-
+                self.set_coin_y_x(coin, 1, i)
+            coin.set_foreward_vector(1)
     def json_encode_coins(self):
         coins = {
             'white_coins': self.white_coins,
@@ -87,7 +88,26 @@ class Board:
                 self.fields[j_coin['y']][j_coin['x']].set_coin(
                     coin, j_coin['y'], j_coin['x'])
                 collection.append(coin)
-
+    #todo
+    def get_available_moves(self, color):
+        print(color)
+    #todo
+    def get_moves_for_coin(self, coin):
+        destinaiton_positions = []
+        if "coin" == coin.type:
+            fields_around = self.get_fields_around(coin)
+            print(coin.foreward)
+    #todo
+    def get_fields_around(self, coin):
+        vectors = itertools.product((1,-1),repeat = 2)
+        fields_around = []
+        for yx in vectors:
+            field_y = coin.y + yx[0]
+            field_x = coin.x + yx[1]
+            if field_y in range(8) and field_x in range(8):
+                fields_around.append(self.fields[field_y][field_x])
+        return fields_around
+        # return [ self.fields[coin.y + yx[0]][coin.x + yx[1]] for yx in vectors if coin.x and coin.y in range(1, 6)]
     # def move_coin(self, coin, pos):
     #     #check if there would be no other coins if coin can move there
     #     if pos in coin.moves():
@@ -105,10 +125,11 @@ class Board:
 def checkers():
     board = Board()
     board.set_initial_state()
-    if 'coins' not in session:
-        session['coins'] = board.json_encode_coins()
-    else:
-        board.set_coins_from_json(session['coins'])
+    board.get_moves_for_coin(board.fields[0][0].coin)
+    # if 'coins' not in session:
+    #     session['coins'] = board.json_encode_coins()
+    # else:
+    #     board.set_coins_from_json(session['coins'])
     return render_template('checkers.html', board=board.fields)
 
 # @app.route('/ajax/move', methods=['POST'])
