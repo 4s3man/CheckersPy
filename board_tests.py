@@ -9,13 +9,15 @@ class BoardTestCase(unittest.TestCase):
     #todo
     def test_set_coins_from_json(self):
         board = Board()
-        coin = Coin('white', 1)
-        board.set_coin_y_x(coin, 1, 1)
+        coin = Coin('white', 0)
+        board.set_coin_y_x(coin, 2, 4)
         coin.set_foreward_vector(-1)
+        board.white_coins.append(coin)
         json = board.json_encode_coins()
 
-        board.set_coins_from_json(json)
-        print(json)
+        board1 = Board()
+        board1.set_coins_from_json(json)
+        print(board1.white_coins)
 
 
     def test_set_coin_y_x(self):
