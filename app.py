@@ -36,10 +36,6 @@ class BoardField:
     def get_html(self):
         return '' if not self.coin else\
             self.coin.html()
-# todo jak to wrzucic do obiektu board najlepiej
-def obj_dict(obj):
-    return obj.__dict__
-
 
 class Board:
     def __init__(self):
@@ -78,7 +74,7 @@ class Board:
         coins = {
             'white_coins': self.white_coins,
             'black_coins': self.black_coins}
-        return json.dumps(coins, default=obj_dict)
+        return json.dumps(coins, default=(lambda x: x.__dict__))
 
         #przetestować bo po dodaniu coin.foreward powinno być zepsute
     def set_coins_from_json(self, json_coins):
@@ -137,7 +133,9 @@ class Board:
 @app.route('/', methods=['POST', 'GET'])
 def checkers():
     board = Board()
-    # board.set_initial_state()
+    board.set_initial_state()
+    coin = Coin('white', 1)
+    print(board.json_encode_coins())
     # board.get_moves_for_coin(board.fields[0][0].coin)
     # if 'coins' not in session:
     #     session['coins'] = board.json_encode_coins()

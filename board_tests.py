@@ -1,9 +1,22 @@
 import os
 import unittest
 import tempfile
+import json
 from app import Board, BoardField, Coin,InvalidOperationError
 
 class BoardTestCase(unittest.TestCase):
+
+    #todo
+    def test_set_coins_from_json(self):
+        board = Board()
+        coin = Coin('white', 1)
+        board.set_coin_y_x(coin, 1, 1)
+        coin.set_foreward_vector(-1)
+        json = board.json_encode_coins()
+
+        board.set_coins_from_json(json)
+        print(json)
+
 
     def test_set_coin_y_x(self):
         board = Board()
