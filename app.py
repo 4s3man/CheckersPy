@@ -73,12 +73,14 @@ class Board:
             else:
                 self.set_coin_y_x(coin, 1, i)
             coin.set_foreward_vector(1)
+
     def json_encode_coins(self):
         coins = {
             'white_coins': self.white_coins,
             'black_coins': self.black_coins}
         return json.dumps(coins, default=obj_dict)
 
+        #przetestować bo po dodaniu coin.foreward powinno być zepsute
     def set_coins_from_json(self, json_coins):
         coins = json.loads(json_coins)
         for name, arr in coins.items():
@@ -92,21 +94,32 @@ class Board:
     def get_available_moves(self, color):
         print(color)
     #todo
-    def get_moves_for_coin(self, coin):
-        destinaiton_positions = []
+    def get_moves_for_coin(self, coin, moves = [], recurence_counter = 0):
         if "coin" == coin.type:
-            fields_around = self.get_fields_around(coin)
-            print(coin.foreward)
-    #todo
-    def get_fields_around(self, coin):
-        vectors = itertools.product((1,-1),repeat = 2)
-        fields_around = []
-        for yx in vectors:
-            field_y = coin.y + yx[0]
-            field_x = coin.x + yx[1]
-            if field_y in range(8) and field_x in range(8):
-                fields_around.append(self.fields[field_y][field_x])
-        return fields_around
+            vectors = itertools.product((1,-1),repeat = 2)
+            for yx in vectors:
+                if self.enemy_in_this_direction(coin, yx):
+                    print(coin.foreward)
+
+    def enemy_in_this_direction(self, coin, vector):
+        y, x = vector
+        if coin.y + y not in range(8) or coin.x + x not in range(8): return False
+        destination_field = self.fields[coin.y + vector[0]][coin.x + vector[1]]
+        return destination_field.coin is not None and destination_field.coin.color != coin.color
+
+    def can_jump_in_direction(self, coin, vector):
+        y, x = (v*2 for v in vector)
+        if coin.y + y not in range(8) or coin.x + x not in range(8): return False
+        return self.fields[coin.y + y][coin.x + x].coin is None
+    # def get_fields_around(self, coin):
+    #     vectors = itertools.product((1,-1),repeat = 2)
+    #     fields_around = []
+    #     for yx in vectors:
+    #         field_y = coin.y + yx[0]
+    #         field_x = coin.x + yx[1]
+    #         if field_y in range(8) and field_x in range(8):
+    #             fields_around.append(self.fields[field_y][field_x])
+    #     return fields_around
         # return [ self.fields[coin.y + yx[0]][coin.x + yx[1]] for yx in vectors if coin.x and coin.y in range(1, 6)]
     # def move_coin(self, coin, pos):
     #     #check if there would be no other coins if coin can move there
@@ -124,8 +137,8 @@ class Board:
 @app.route('/', methods=['POST', 'GET'])
 def checkers():
     board = Board()
-    board.set_initial_state()
-    board.get_moves_for_coin(board.fields[0][0].coin)
+    # board.set_initial_state()
+    # board.get_moves_for_coin(board.fields[0][0].coin)
     # if 'coins' not in session:
     #     session['coins'] = board.json_encode_coins()
     # else:
