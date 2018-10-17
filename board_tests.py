@@ -12,17 +12,16 @@ class BoardTestCase(unittest.TestCase):
         coin = Coin('white', 0)
         board.set_coin_y_x(coin, 2, 4)
         coin.set_foreward_vector(-1)
-        board.white_coins.append(coin)
+        board.white_coins[coin.id] = coin
         json = board.json_encode_coins()
 
         # print(json)
         board1 = Board()
         board1.set_coins_from_json(json)
-        print(board.white_coins)
-        print(board1.white_coins)
-
-        # self.assertEqual(board.white_coins, board1.white_coins)
-
+        self.assertEqual(board.white_coins[coin.id].__dict__, board1.white_coins[coin.id].__dict__)
+        
+        board1.white_coins[coin.id].set_foreward_vector(1)
+        self.assertNotEqual(board.white_coins[coin.id].__dict__, board1.white_coins[coin.id].__dict__)
 
     def test_set_coin_y_x(self):
         board = Board()

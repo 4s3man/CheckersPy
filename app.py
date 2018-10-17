@@ -5,12 +5,12 @@ app = Flask(__name__)
 
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
-class InvalidOperationError(Exception):
+class BoardError(Exception):
     pass
 
 class Move:
     """Colection of fields in visiting order field = (position_y, position_x)"""
-    fields_yx = []
+    visited_fields_yx = []
     """Colection of beated coins coin = <Object Coin>"""
     beated_coins = []
 
@@ -59,13 +59,14 @@ class Board:
         self.black_coins = [None] * self.coins_for_site
 
     def set_coin_y_x(self, coin, y, x):
-        if y in range(self.board_size) and x in range(self.board_size):
+        if self.field_in_board(y, x):
             self.fields[y][x].set_coin(coin, y, x)
         else:
-            raise InvalidOperationError("Wanted to set coin out of the board")
+            raise BoardError("Wanted to set coin out of the board")
 
     def unset_coin(self, coin):
         self.fields[coin.y][coin.x].unset_coin()
+
 
     def set_initial_state(self):
         self.white_coins = [Coin('white', id) for id in range(self.coins_for_site)]
@@ -110,23 +111,53 @@ class Board:
     def get_available_moves(self, color):
         print(color)
     #todo
-    def get_moves_for_coin(self, coin, moves = [], recurence_counter = 0):
+    def get_moves_for_coin(self, coin, move = None, recurence_counter = 0):
         if "coin" == coin.type:
-            vectors = itertools.product((1,-1),repeat = 2)
-            for yx in vectors:
-                if self.enemy_in_this_direction(coin, yx):
-                    print(coin.foreward)
+            for direction_yx in itertools.product((1,-1),repeat = 2):
+                try:
+                    coin_in_direction = self.get_coin_in_direction(coin, direction_yx)
+                    if coin_in_direction is not None:
+                        if self.can_jump_in_direction(coin, coin_in_direction, direction_yx, move):
+                            print('ok')
+                            # move = Move() if move is None
+                            # move.beated_coins.append(coin_in_direction)
+                            # move.visited_fields_yx.append(coin_in_direction.y + direction_yx[0], coin_in_direction.x + direction_yx[1])
+                except BoardError:
+                    pass
 
-    def enemy_in_this_direction(self, coin, vector):
-        y, x = vector
-        if coin.y + y not in range(self.board_size) or coin.x + x not in range(self.board_size): return False
-        destination_field = self.fields[coin.y + vector[0]][coin.x + vector[1]]
-        return destination_field.coin is not None and destination_field.coin.color != coin.color
+    def get_coin_in_direction(self, coin, vector):
+        y, x = (coin.y + vector[0], coin.x + vector[1])
+        if self.field_in_board(y, x):
+            if self.fields[y][x].coin is not coin:
+                return self.fields[y][x].coin
+        else:
+            raise BoardError('Field in direction out of the board')
 
-    def can_jump_in_direction(self, coin, vector):
+    # def enemy_in_this_direction(self, coin, vector):
+    #     y, x = vector
+    #     if coin.y + y not in range(self.board_size) or coin.x + x not in range(self.board_size): return False
+    #     destination_field = self.fields[coin.y + vector[0]][coin.x + vector[1]]
+    #     return destination_field.coin is not None and destination_field.coin.color != coin.color
+
+    def can_jump_in_direction(self, coin, coin_in_direction, vector, move):
+
+        #coins have different colors
+        if coin_in_direction.color == coin.color: return False
+
+        #field after is in board
         y, x = (v*2 for v in vector)
-        if coin.y + y not in range(self.board_size) or coin.x + x not in range(self.board_size): return False
-        return self.fields[coin.y + y][coin.x + x].coin is None
+        if not self.field_in_board(y, x): return False
+
+        #field after jump is free
+        if self.fields[coin.y + y][coin.x + x].coin is not None: return False
+
+        #if move is calculating and coin_in_direction wasn't beated yet
+        if move is not None and coin_in_direction in move.beated_coins: return False
+
+        return True
+
+    def field_in_board(self, y, x):
+        return y in range(self.board_size) and x in range(self.board_size)
     # def get_fields_around(self, coin):
     #     vectors = itertools.product((1,-1),repeat = 2)
     #     fields_around = []
@@ -156,11 +187,13 @@ def checkers():
     board.set_initial_state()
     json = board.json_encode_coins()
 
-    board1 = Board()
-    board1.set_coins_from_json(json)
-    # print(json)
+    # board.set_coin_y_x(Coin('white', 12), 3, 1)
+    # board.get_moves_for_coin(board.fields[2][0].coin)
+    a = [Coin('white', 1)]
+    b = a
+    print(a[0] is b[0])
 
-    # board.get_moves_for_coin(board.fields[0][0].coin)
+
     # if 'coins' not in session:
     #     session['coins'] = board.json_encode_coins()
     # else:
