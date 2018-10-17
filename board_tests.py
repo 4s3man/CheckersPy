@@ -15,9 +15,13 @@ class BoardTestCase(unittest.TestCase):
         board.white_coins.append(coin)
         json = board.json_encode_coins()
 
+        # print(json)
         board1 = Board()
         board1.set_coins_from_json(json)
+        print(board.white_coins)
         print(board1.white_coins)
+
+        # self.assertEqual(board.white_coins, board1.white_coins)
 
 
     def test_set_coin_y_x(self):

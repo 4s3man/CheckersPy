@@ -74,35 +74,19 @@ class Board:
         black_fields = ((self.board_size**2)//2)
         down_coins, up_coins = iter(self.white_coins), iter(self.black_coins)
         for i in range(black_fields):
-            # x = (i%4)*2
             y = i//(self.board_size//2)
+            x = (i%4)*2 + y%2
             try:
-                if y in range(0,3) and 0 == i%2:
+                if y in range(0,3):
                     coin = next(up_coins)
-                    self.set_coin_y_x(coin, y, )
+                    self.set_coin_y_x(coin, y, x)
+                    coin.set_foreward_vector(1)
+                if y in range(5,8):
+                    coin = next(down_coins)
+                    self.set_coin_y_x(coin, y, x)
+                    coin.set_foreward_vector(-1)
             except StopIteration:
-                print('ok')
-            # if coin is not None:
-            #     print(coin)
-
-
-
-        # for i in range(self.board_size):
-        #     white_coin = next(w)
-        #     black_coin = next(w)
-        #     if not i % 2:
-        #         self.set_coin_y_x(white_coin, 6, i)
-        #     else:
-        #         self.set_coin_y_x(coin, 7, i)
-        #         self.set_coin_y_x(coin, 5, i)
-        #     coin.set_foreward_vector(-1)
-        # for i, coin in zip(range(self.board_size), self.black_coins):
-        #     if not i % 2:
-        #         self.set_coin_y_x(coin, 0, i)
-        #         self.set_coin_y_x(coin, 2, i)
-        #     else:
-        #         self.set_coin_y_x(coin, 1, i)
-        #     coin.set_foreward_vector(1)
+                pass
 
     def json_encode_coins(self):
         coins = {
@@ -116,12 +100,12 @@ class Board:
         for name, arr in coins.items():
             collection = self.white_coins if name == 'white_coins' else self.black_coins
             for j_coin in arr:
-                coin = Coin(j_coin['color'], j_coin['id'], j_coin['type'])
-                coin.set_foreward_vector(j_coin['foreward'])
-                print(j_coin['foreward'])
-                return
-                self.set_coin_y_x(coin, j_coin['y'], j_coin['x'])
-                collection[j_coin['id']] = coin
+                if j_coin is not None:
+                    coin = Coin(j_coin['color'], j_coin['id'], j_coin['type'])
+                    coin.set_foreward_vector(j_coin['foreward'])
+                    self.set_coin_y_x(coin, j_coin['y'], j_coin['x'])
+                    collection[j_coin['id']] = coin
+
     #todo
     def get_available_moves(self, color):
         print(color)
@@ -170,12 +154,12 @@ class Board:
 def checkers():
     board = Board()
     board.set_initial_state()
+    json = board.json_encode_coins()
 
-    # json = board.json_encode_coins()
-    #
-    # board1 = Board()
-    # board1.set_coins_from_json(json)
-    # print(board1.white_coins[0].__dict__)
+    board1 = Board()
+    board1.set_coins_from_json(json)
+    # print(json)
+
     # board.get_moves_for_coin(board.fields[0][0].coin)
     # if 'coins' not in session:
     #     session['coins'] = board.json_encode_coins()
