@@ -2,7 +2,7 @@ import os
 import unittest
 import tempfile
 import json
-from app import Board, BoardField, Coin,InvalidOperationError
+from app import Board, BoardField, Coin, Move, BoardError, NoCoinError
 
 class BoardTestCase(unittest.TestCase):
 
@@ -19,7 +19,7 @@ class BoardTestCase(unittest.TestCase):
         board1 = Board()
         board1.set_coins_from_json(json)
         self.assertEqual(board.white_coins[coin.id].__dict__, board1.white_coins[coin.id].__dict__)
-        
+
         board1.white_coins[coin.id].set_foreward_vector(1)
         self.assertNotEqual(board.white_coins[coin.id].__dict__, board1.white_coins[coin.id].__dict__)
 
@@ -31,47 +31,78 @@ class BoardTestCase(unittest.TestCase):
         self.assertEqual(coin.y, 2)
         self.assertEqual(coin.x, 5)
 
-        with self.assertRaises(InvalidOperationError):
+        self.assertEqual(board.white_coins[coin.id], coin)
+
+        with self.assertRaises(BoardError):
             board.set_coin_y_x(Coin('white', 9) , 0, 12)
 
-    def test_enemy_coin_in_this_direction(self):
+    def test_unset_coin(self):
+        board = Board()
+        coin = Coin('white', 1)
+        y,x = 3,3
+
+        board.set_coin_y_x(coin, y, x)
+        board.unset_coin(coin)
+
+        self.assertFalse(board.white_coins[1])
+        self.assertEqual(None, board.fields[y][x].coin)
+
+
+    #todo
+    def test_get_coin_in_direction(self):
         board = Board()
         coin = Coin('white', 1)
         coin1 = Coin('black', 1)
         board.set_coin_y_x(coin, 3, 1)
         board.set_coin_y_x(coin1, 4, 0)
-        board.set_coin_y_x(Coin('black', 1), 2, 2)
-        board.set_coin_y_x(Coin('white', 1), 4, 2)
-        board.set_coin_y_x(Coin('white', 1), 2, 0)
+        board.set_coin_y_x(Coin('black', 2), 2, 2)
+        board.set_coin_y_x(Coin('white', 2), 4, 2)
 
-        #assert white recognizes enemies
-        self.assertTrue(board.enemy_in_this_direction(coin, (-1, 1)))
-        self.assertTrue(board.enemy_in_this_direction(coin, (1, -1)))
-        self.assertFalse(board.enemy_in_this_direction(coin, (-1, -1)))
-        self.assertFalse(board.enemy_in_this_direction(coin, (1, 1)))
-        #assert black recognizes enemies
-        self.assertTrue(board.enemy_in_this_direction(coin1, (-1, 1)))
-        #assert no enemy if out of the board
-        self.assertFalse(board.enemy_in_this_direction(coin1, (-1, -1)))
 
-    def test_can_jump_in_direction(self):
+        #returns coin
+        self.assertTrue(isinstance(board.get_coin_in_direction(coin, (1,1)), Coin))
+        self.assertTrue(isinstance(board.get_coin_in_direction(coin1, (-1,1)), Coin))
+
+        #raise NoCoinError if no coin in direciton
+        with self.assertRaises(NoCoinError):
+            board.get_coin_in_direction(coin, (-1,-1))
+
+        #raises BoardError in case of direction is out of the board
+        with self.assertRaises(BoardError):
+            board.get_coin_in_direction(coin1, (1, -1))
+
+        with self.assertRaises(NoCoinError):
+            board.set_coin_y_x(coin1, 5, 1)
+            board.get_coin_in_direction(coin1, (1,1))
+
+
+    def test_have_obligatory_move(self):
         board = Board()
         coin = Coin('white', 1)
         coin1 = Coin('black', 1)
-        board.set_coin_y_x(coin, 3, 1)
-        board.set_coin_y_x(coin1, 4, 0)
-        board.set_coin_y_x(Coin('black', 1), 2, 2)
+        board.set_coin_y_x(coin, 3, 3)
+
+        """When coin was already beated"""
+        board.set_coin_y_x(coin1, 2, 2)
+        move = Move()
+        move.beated_coins.append(coin1)
+        self.assertFalse(board.have_obligatory_move(coin, move))
+
+        """Check move in any direction"""
+        move = None
+        board.unset_coin(coin1)
+        board.set_coin_y_x(coin1, 2, 2)
+        self.assertTrue(board.have_obligatory_move(coin, move))
+
+        board.set_coin_y_x(Coin('black', 1), 2, 3)
+        self.assertTrue(board.have_obligatory_move(coin, move))
+
         board.set_coin_y_x(Coin('black', 1), 4, 2)
-        board.set_coin_y_x(Coin('black', 1), 5, 3)
+        self.assertTrue(board.have_obligatory_move(coin, move))
 
-        #can jump
-        self.assertTrue(board.can_jump_in_direction(coin, (-1,1)))
+        board.set_coin_y_x(Coin('black', 1), 4, 4)
+        self.assertTrue(board.have_obligatory_move(coin, move))
 
-        #cant jump becouse next field is not free
-        self.assertFalse(board.can_jump_in_direction(coin, (1,1)))
-
-        #cant jump becouse next field is out of range
-        self.assertFalse(board.can_jump_in_direction(coin, (1, -1)))
 
 if __name__ == '__main__':
     unittest.main()
