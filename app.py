@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session
 import json
 import itertools
+import copy
 app = Flask(__name__)
 
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
@@ -19,6 +20,8 @@ class Move:
     visited_fields_yx = []
     """Colection of beated coins coin = <Object Coin>"""
     beated_coins = []
+    def __init__(self):
+        self.ended = False
 
 
 class Coin:
@@ -117,9 +120,6 @@ class Board:
                     collection[j_coin['id']] = coin
 
     #todo
-    def get_available_moves(self, color):
-        print(color)
-    #todo
     def get_moves_for_coin(self, coin, move = None, recurence_counter = 0):
         if "coin" == coin.type:
             moves = self.get_obligatory_moves(coin, [])
@@ -130,9 +130,34 @@ class Board:
 
     #obligatory means if player can beat coin he must do it
     def get_obligatory_moves(self, coin, move_list, move=None, debug=0):
-        if self.have_obligatory_move(coin, move):
-            print('ok')
+        for y, x in itertools.product((1,-1),repeat = 2):
+            try:
+                coin_in_direction = self.get_coin_in_direction(coin, (y, x))
+                if self.can_jump_in_direction(coin, coin_in_direction, (y, x), move):
+                    next_y, next_x = coin_in_direction.y + y, coin_in_direction.x + x
+                    print('first move :',next_y, next_x)
 
+                    move = Move() if move is None else copy.deepcopy(move)
+                    move.beated_coins.append(coin_in_direction)
+                    move.visited_fields_yx.append((next_y, next_x))
+                    print('move: ', move)
+                    print('move ended: ',move.ended)
+                    print(move.beated_coins)
+                    print(move.visited_fields_yx)
+
+                    coin_after_jump = copy.deepcopy(coin)
+                    coin_after_jump.y = next_y
+                    coin_after_jump.x = next_x
+
+                    print('obligatory: ',self.have_obligatory_move(coin_after_jump, move))
+                    if self.have_obligatory_move(coin_after_jump, move):
+                        self.get_obligatory_moves(coin_after_jump, move_list, move, debug+1)
+                    else:
+                        move.ended=True
+                        print('move end')
+                        print('vectors: ', y, x)
+            except BoardError:
+                pass
 
         #     print('ok')
         #     if move not in move_list:
@@ -141,26 +166,26 @@ class Board:
         # if self.have_obligatory_move(coin, move):
         # for direction_yx in itertools.product((1,-1),repeat = 2):
         #     try:
-        #         coin_in_direction = self.get_coin_in_direction(coin, direction_yx)
-        #         if self.can_jump_in_direction(coin, coin_in_direction, direction_yx, move):
-        #             after_jump_y, after_jump_x = coin_in_direction.y + direction_yx[0], coin_in_direction.x + direction_yx[1]
-        #
-        #             if move is None: move = Move()
-        #             move.beated_coins.append(coin_in_direction)
-        #             move.visited_fields_yx.append((after_jump_y, after_jump_x))
-        #
-        #             coin_after_jump = coin
-        #             coin_after_jump.y = after_jump_y
-        #             coin_after_jump.x = after_jump_x
-        #
-        #             if self.have_obligatory_move(coin_after_jump, move):
-        #                 self.get_obligatory_moves(coin_after_jump, move_list, move, debug+1)
-        #             else:
-        #                 move_list.append(move)
-        #                 move = None
-        #                 return
-        #     except BoardError:
-        #         pass
+            #     coin_in_direction = self.get_coin_in_direction(coin, direction_yx)
+            #     if self.can_jump_in_direction(coin, coin_in_direction, direction_yx, move):
+            #         after_jump_y, after_jump_x = coin_in_direction.y + direction_yx[0], coin_in_direction.x + direction_yx[1]
+            #
+            #         if move is None: move = Move()
+            #         move.beated_coins.append(coin_in_direction)
+            #         move.visited_fields_yx.append((after_jump_y, after_jump_x))
+            #
+            #         coin_after_jump = coin
+            #         coin_after_jump.y = after_jump_y
+            #         coin_after_jump.x = after_jump_x
+            #
+            #         if self.have_obligatory_move(coin_after_jump, move):
+            #             self.get_obligatory_moves(coin_after_jump, move_list, move, debug+1)
+            #         else:
+            #             move_list.append(move)
+            #             move = None
+            #             return
+            # except BoardError:
+            #     pass
         # return move_list
 
     def have_obligatory_move(self, coin, move):
@@ -178,7 +203,8 @@ class Board:
         if not self.field_in_board(y, x): raise BoardError('Field in direction out of the board')
         if coin_in_direction is None: raise NoCoinError('No coin in this direction')
         #if encounters itself
-        if coin.color == coin_in_direction.color and coin.id == coin_in_direction.id: raise NoCoinError('Same coin in direction')
+        if coin.color == coin_in_direction.color and\
+           coin.id == coin_in_direction.id: raise NoCoinError('Same coin in direction')
         return coin_in_direction
 
     def can_jump_in_direction(self, coin, coin_in_direction, vector, move):
@@ -212,14 +238,13 @@ def checkers():
     # board.set_initial_state()
     json = board.json_encode_coins()
 
+    coin = Coin('white', 2)
+    board.set_coin_y_x(coin, 1, 1)
+    board.set_coin_y_x(Coin('black', 1), 2, 2)
+    board.set_coin_y_x(Coin('black', 3), 4, 4)
+    board.set_coin_y_x(Coin('black', 3), 2, 4)
 
-    # board.set_coin_y_x(Coin('black', 1), 2, 2)
-    # board.set_coin_y_x(Coin('white', 2), 1, 1)
-    # board.set_coin_y_x(Coin('white', 2), 3, 1)
-    # board.set_coin_y_x(Coin('white', 3), 3, 3)
-    # board.set_coin_y_x(Coin('white', 4), 5, 3)
-    # board.set_coin_y_x(Coin('white', 1), 3, 1)
-    # board.get_moves_for_coin(board.fields[2][0].coin)
+    board.get_moves_for_coin(coin)
 
     # if 'coins' not in session:
     #     session['coins'] = board.json_encode_coins()
