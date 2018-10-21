@@ -124,7 +124,7 @@ class Board:
     #todo
     def get_moves_for_coin(self, coin, move = None, recurence_counter = 0):
         if "coin" == coin.type:
-            moves = self.get_obligatory_moves(coin)
+            moves = self.get_obligatory_moves(coin) or self.get_no_jump_moves(coin)
             # if moves is not None:
             print(moves)
             # print('moves amount: ', len(moves))
@@ -156,6 +156,16 @@ class Board:
                     return
                 except BoardError:
                     pass
+        return move_list
+
+    def get_no_jump_moves(self, coin):
+        move_list = []
+        for y,x in [(coin.foreward, 1), (coin.foreward, -1)]:
+            try:
+                self.get_coin_in_direction(coin, (y, x))
+            except NoCoinError:
+                move = {"pos":(coin.y + y, coin.x + x)}
+                move_list.append(move)
         return move_list
 
     def have_obligatory_move(self, coin, move):
@@ -215,10 +225,10 @@ def checkers():
 
     coin = Coin('white', 2)
     board.set_coin_y_x(coin, 3, 3)
-    board.set_coin_y_x(Coin('black', 1), 2, 2)
-    board.set_coin_y_x(Coin('black', 3), 4, 4)
-    board.set_coin_y_x(Coin('black', 4), 2, 4)
-    board.set_coin_y_x(Coin('black', 5), 6, 6)
+    # board.set_coin_y_x(Coin('black', 1), 2, 2)
+    # board.set_coin_y_x(Coin('black', 3), 4, 4)
+    # board.set_coin_y_x(Coin('black', 4), 2, 4)
+    # board.set_coin_y_x(Coin('black', 5), 6, 6)
 
     board.get_moves_for_coin(coin)
 
