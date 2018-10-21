@@ -58,7 +58,6 @@ class BoardTestCase(unittest.TestCase):
         board.set_coin_y_x(Coin('black', 2), 2, 2)
         board.set_coin_y_x(Coin('white', 2), 4, 2)
 
-
         #returns coin
         self.assertTrue(isinstance(board.get_coin_in_direction(coin, (1,1)), Coin))
         self.assertTrue(isinstance(board.get_coin_in_direction(coin1, (-1,1)), Coin))

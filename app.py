@@ -11,6 +11,8 @@ class BoardError(Exception):
 
 class NoCoinError(BoardError):
     pass
+class OutOfBoardError(BoardError):
+    pass
 
 # class SameCoinIdErrror(Exception):
 #     pass
@@ -122,43 +124,38 @@ class Board:
     #todo
     def get_moves_for_coin(self, coin, move = None, recurence_counter = 0):
         if "coin" == coin.type:
-            moves = self.get_obligatory_moves(coin, [])
+            moves = self.get_obligatory_moves(coin)
             # print('moves amount: ', len(moves))
             # for move in moves:
-            #     print('fields: ', move.visited_fields_yx)
-            #     print('beated_coins_id: ', [coin.id for coin in move.beated_coins])
+            #     print(move)
 
     #obligatory means if player can beat coin he must do it
-    def get_obligatory_moves(self, coin, move_list, move=None, debug=0):
-        for y, x in itertools.product((1,-1),repeat = 2):
-            try:
-                coin_in_direction = self.get_coin_in_direction(coin, (y, x))
-                if self.can_jump_in_direction(coin, coin_in_direction, (y, x), move):
-                    next_y, next_x = coin_in_direction.y + y, coin_in_direction.x + x
-                    print('first move :',next_y, next_x)
+    def get_obligatory_moves(self, coin, move_list=[], move=None, debug=0):
+        if self.have_obligatory_move(coin, move):
+            for y, x in itertools.product((1,-1),repeat = 2):
+                try:
+                    coin_in_direction = self.get_coin_in_direction(coin, (y, x))
+                    if self.can_jump_in_direction(coin, coin_in_direction, (y, x), move):
+                        next_y, next_x = coin_in_direction.y + y, coin_in_direction.x + x
 
-                    move = Move() if move is None else copy.deepcopy(move)
-                    move.beated_coins.append(coin_in_direction)
-                    move.visited_fields_yx.append((next_y, next_x))
-                    print('move: ', move)
-                    print('move ended: ',move.ended)
-                    print(move.beated_coins)
-                    print(move.visited_fields_yx)
+                        move_inst = {'pos':[], 'beated_coins':[]} if move is None else move
+                        move_inst['pos'].append((next_y, next_x))
+                        move_inst['beated_coins'].append(coin_in_direction)
 
-                    coin_after_jump = copy.deepcopy(coin)
-                    coin_after_jump.y = next_y
-                    coin_after_jump.x = next_x
+                        # move_list.append(move_inst)
+                        print(move_inst)
 
-                    print('obligatory: ',self.have_obligatory_move(coin_after_jump, move))
-                    if self.have_obligatory_move(coin_after_jump, move):
-                        self.get_obligatory_moves(coin_after_jump, move_list, move, debug+1)
-                    else:
-                        move.ended=True
-                        print('move end')
-                        print('vectors: ', y, x)
-            except BoardError:
-                pass
+                        coin1 = copy.deepcopy(coin)
+                        coin1.y = next_y
+                        coin1.x = next_x
 
+                        self.get_moves_for_coin(coin1, move_list, move_inst)
+                except OutOfBoardError:
+                    return
+                except BoardError:
+                    pass
+        else:
+            return move_list
         #     print('ok')
         #     if move not in move_list:
         #         move_list.append(move)
@@ -199,12 +196,17 @@ class Board:
 
     def get_coin_in_direction(self, coin, vector):
         y, x = (coin.y + vector[0], coin.x + vector[1])
+
+        if not self.field_in_board(y, x): raise OutOfBoardError('Field in direction out of the board')
+
         coin_in_direction = self.fields[y][x].coin
-        if not self.field_in_board(y, x): raise BoardError('Field in direction out of the board')
+
         if coin_in_direction is None: raise NoCoinError('No coin in this direction')
+
         #if encounters itself
         if coin.color == coin_in_direction.color and\
            coin.id == coin_in_direction.id: raise NoCoinError('Same coin in direction')
+
         return coin_in_direction
 
     def can_jump_in_direction(self, coin, coin_in_direction, vector, move):
@@ -220,7 +222,7 @@ class Board:
         if self.fields[coin.y + y][coin.x + x].coin is not None: return False
 
         #if move is calculating and coin_in_direction wasn't beated yet
-        if move is not None and coin_in_direction in move.beated_coins: return False
+        if move is not None and coin_in_direction in move['beated_coins']: return False
 
         return True
 
@@ -239,12 +241,17 @@ def checkers():
     json = board.json_encode_coins()
 
     coin = Coin('white', 2)
-    board.set_coin_y_x(coin, 1, 1)
+    board.set_coin_y_x(coin, 3, 3)
     board.set_coin_y_x(Coin('black', 1), 2, 2)
     board.set_coin_y_x(Coin('black', 3), 4, 4)
-    board.set_coin_y_x(Coin('black', 3), 2, 4)
+    board.set_coin_y_x(Coin('black', 4), 2, 4)
+    board.set_coin_y_x(Coin('black', 5), 6, 6)
 
     board.get_moves_for_coin(coin)
+
+    # board.set_coin_y_x(coin, 5, 5)
+    # print(board.have_obligatory_move(coin, None))
+
 
     # if 'coins' not in session:
     #     session['coins'] = board.json_encode_coins()
