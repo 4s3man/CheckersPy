@@ -125,6 +125,8 @@ class Board:
     def get_moves_for_coin(self, coin, move = None, recurence_counter = 0):
         if "coin" == coin.type:
             moves = self.get_obligatory_moves(coin)
+            # if moves is not None:
+            print(moves)
             # print('moves amount: ', len(moves))
             # for move in moves:
             #     print(move)
@@ -142,48 +144,19 @@ class Board:
                         move_inst['pos'].append((next_y, next_x))
                         move_inst['beated_coins'].append(coin_in_direction)
 
-                        # move_list.append(move_inst)
-                        print(move_inst)
+                        if move_inst not in move_list:
+                            move_list.append(move_inst)
 
                         coin1 = copy.deepcopy(coin)
                         coin1.y = next_y
                         coin1.x = next_x
 
-                        self.get_moves_for_coin(coin1, move_list, move_inst)
+                        self.get_obligatory_moves(coin1, move_list, move_inst)
                 except OutOfBoardError:
                     return
                 except BoardError:
                     pass
-        else:
-            return move_list
-        #     print('ok')
-        #     if move not in move_list:
-        #         move_list.append(move)
-        #         move = None
-        # if self.have_obligatory_move(coin, move):
-        # for direction_yx in itertools.product((1,-1),repeat = 2):
-        #     try:
-            #     coin_in_direction = self.get_coin_in_direction(coin, direction_yx)
-            #     if self.can_jump_in_direction(coin, coin_in_direction, direction_yx, move):
-            #         after_jump_y, after_jump_x = coin_in_direction.y + direction_yx[0], coin_in_direction.x + direction_yx[1]
-            #
-            #         if move is None: move = Move()
-            #         move.beated_coins.append(coin_in_direction)
-            #         move.visited_fields_yx.append((after_jump_y, after_jump_x))
-            #
-            #         coin_after_jump = coin
-            #         coin_after_jump.y = after_jump_y
-            #         coin_after_jump.x = after_jump_x
-            #
-            #         if self.have_obligatory_move(coin_after_jump, move):
-            #             self.get_obligatory_moves(coin_after_jump, move_list, move, debug+1)
-            #         else:
-            #             move_list.append(move)
-            #             move = None
-            #             return
-            # except BoardError:
-            #     pass
-        # return move_list
+        return move_list
 
     def have_obligatory_move(self, coin, move):
         for y, x in [(1,1), (1,-1), (-1, 1), (-1,-1)]:
