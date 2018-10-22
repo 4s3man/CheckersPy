@@ -1,3 +1,7 @@
+body{
+  background-color: black;
+  color:white;
+}
 .board{
   position: relative;
   width: 400px;
@@ -16,7 +20,7 @@
 }
 
 .board__field--black{
-  background-color: black;
+  background-color: #666666;
 }
 
 .coin{

@@ -11,11 +11,9 @@ class BoardError(Exception):
 
 class NoCoinError(BoardError):
     pass
+
 class OutOfBoardError(BoardError):
     pass
-
-# class SameCoinIdErrror(Exception):
-#     pass
 
 class Move:
     """Colection of fields in visiting order field = (position_y, position_x)"""
@@ -31,7 +29,7 @@ class Coin:
     color = ''
     foreward = 0
     type = ''
-    moves = []
+    moves = {'obligatory':[], 'normal':[]}
     y = 0
     x = 0
     def __init__(self, color, id, type='coin'):
@@ -122,10 +120,10 @@ class Board:
                     collection[j_coin['id']] = coin
 
     #todo
-    def get_moves_for_coin(self, coin, move = None, recurence_counter = 0):
+    def get_moves_for_coin(self, coin):
         if "coin" == coin.type:
-            moves = self.get_obligatory_moves(coin) or self.get_no_jump_moves(coin)
-            print(moves)
+            moves = {"obligatory": self.get_obligatory_moves(coin, [])} or {"normal": self.get_no_jump_moves(coin)}
+            coin.moves = moves
             # if moves is not None:
                 # print(moves)
             # print('moves amount: ', len(moves))
@@ -133,7 +131,7 @@ class Board:
             #     print(move)
 
     #obligatory means if player can beat coin he must do it
-    def get_obligatory_moves(self, coin, move_list=[], move=None, debug=0):
+    def get_obligatory_moves(self, coin, move_list, move=None, debug=0):
         if self.have_obligatory_move(coin, move):
             for y, x in itertools.product((1,-1),repeat = 2):
                 try:
@@ -214,11 +212,6 @@ class Board:
     def field_in_board(self, y, x):
         return y in range(self.board_size) and x in range(self.board_size)
 
-"""Remove"""
-def recTest():
-    print('ok')
-"""Remove"""
-
 @app.route('/', methods=['POST', 'GET'])
 def checkers():
     board = Board()
@@ -236,7 +229,10 @@ def checkers():
     # move = {'beated_coins':[black_coins[1]]}
     # print(board.have_obligatory_move(coin, move))
     board.get_moves_for_coin(coin)
-
+    print(coin.moves)
+    # for move in moves:
+    #     dono = 'pos: ' + str(move['pos']) + ' coins: ' + str([(coin.x, coin.y) for coin in move['beated_coins']])
+    #     print(dono)
     # board.set_coin_y_x(coin, 5, 5)
     # print(board.have_obligatory_move(coin, None))
 
