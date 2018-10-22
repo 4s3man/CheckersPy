@@ -83,8 +83,8 @@ class BoardTestCase(unittest.TestCase):
 
         """When coin was already beated"""
         board.set_coin_y_x(coin1, 2, 2)
-        move = Move()
-        move.beated_coins.append(coin1)
+        move = {'beated_coins':[]}
+        move['beated_coins'].append(coin1)
         self.assertFalse(board.have_obligatory_move(coin, move))
 
         """Check move in any direction"""
@@ -102,6 +102,37 @@ class BoardTestCase(unittest.TestCase):
         board.set_coin_y_x(Coin('black', 1), 4, 4)
         self.assertTrue(board.have_obligatory_move(coin, move))
 
+    def test_have_obligatory_move__after_move(self):
+            board = Board()
+            black_coins = [Coin('black', i) for i in range(4)]
+            coin = Coin('white', 2)
+            board.set_coin_y_x(coin, 3, 3)
+            board.set_coin_y_x(black_coins[0], 2, 2)
+            board.set_coin_y_x(black_coins[1], 4, 4)
+            board.set_coin_y_x(black_coins[2], 2, 4)
+
+            move = {'beated_coins':[black_coins[1]]}
+            self.assertTrue(board.have_obligatory_move(coin, move))
+
+    def test_get_obligatory_moves(self):
+        board = Board()
+        black_coins = [Coin('black', i) for i in range(4)]
+        coin = Coin('white', 2)
+        board.set_coin_y_x(coin, 3, 3)
+        board.set_coin_y_x(black_coins[0], 2, 2)
+        board.set_coin_y_x(black_coins[1], 4, 4)
+        board.set_coin_y_x(black_coins[2], 2, 4)
+        board.set_coin_y_x(black_coins[3], 6, 6)
+
+        moves = board.get_obligatory_moves(coin)
+        should_return1 = [
+        {'pos': [(5, 5), (7, 7)], 'beated_coins': [black_coins[1], black_coins[3]]},
+        {'pos': [(1, 5)], 'beated_coins': [black_coins[2]]},
+        {'pos': [(1, 1)], 'beated_coins': [black_coins[0]]}
+        ]
+
+        for x, y in zip(should_return1, moves):
+            self.assertEqual(x, y)
 
 if __name__ == '__main__':
     unittest.main()

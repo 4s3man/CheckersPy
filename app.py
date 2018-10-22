@@ -125,8 +125,9 @@ class Board:
     def get_moves_for_coin(self, coin, move = None, recurence_counter = 0):
         if "coin" == coin.type:
             moves = self.get_obligatory_moves(coin) or self.get_no_jump_moves(coin)
-            # if moves is not None:
             print(moves)
+            # if moves is not None:
+            # print(moves)
             # print('moves amount: ', len(moves))
             # for move in moves:
             #     print(move)
@@ -172,7 +173,7 @@ class Board:
         for y, x in [(1,1), (1,-1), (-1, 1), (-1,-1)]:
             try:
                 coin_in_direction = self.get_coin_in_direction(coin, (y,x))
-                return self.can_jump_in_direction(coin, coin_in_direction, (y,x), move)
+                if self.can_jump_in_direction(coin, coin_in_direction, (y,x), move): return True
             except BoardError:
                 pass
         return False
@@ -223,13 +224,16 @@ def checkers():
     # board.set_initial_state()
     json = board.json_encode_coins()
 
+    black_coins = [Coin('black', i) for i in range(4)]
     coin = Coin('white', 2)
-    board.set_coin_y_x(coin, 3, 3)
-    # board.set_coin_y_x(Coin('black', 1), 2, 2)
-    # board.set_coin_y_x(Coin('black', 3), 4, 4)
-    # board.set_coin_y_x(Coin('black', 4), 2, 4)
-    # board.set_coin_y_x(Coin('black', 5), 6, 6)
+    board.set_coin_y_x(coin, 5, 5)
+    board.set_coin_y_x(black_coins[0], 2, 2)
+    board.set_coin_y_x(black_coins[1], 4, 4)
+    board.set_coin_y_x(black_coins[2], 2, 4)
+    # board.set_coin_y_x(black_coins[3], 6, 6)
 
+    # move = {'beated_coins':[black_coins[1]]}
+    # print(board.have_obligatory_move(coin, move))
     board.get_moves_for_coin(coin)
 
     # board.set_coin_y_x(coin, 5, 5)
