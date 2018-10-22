@@ -127,7 +127,7 @@ class Board:
             moves = self.get_obligatory_moves(coin) or self.get_no_jump_moves(coin)
             print(moves)
             # if moves is not None:
-            # print(moves)
+                # print(moves)
             # print('moves amount: ', len(moves))
             # for move in moves:
             #     print(move)
@@ -141,16 +141,17 @@ class Board:
                     if self.can_jump_in_direction(coin, coin_in_direction, (y, x), move):
                         next_y, next_x = coin_in_direction.y + y, coin_in_direction.x + x
 
-                        move_inst = {'pos':[], 'beated_coins':[]} if move is None else move
+                        move_inst = {'pos':[], 'beated_coins':[]} if move is None else copy.deepcopy(move)
                         move_inst['pos'].append((next_y, next_x))
                         move_inst['beated_coins'].append(coin_in_direction)
-
-                        if move_inst not in move_list:
-                            move_list.append(move_inst)
 
                         coin1 = copy.deepcopy(coin)
                         coin1.y = next_y
                         coin1.x = next_x
+
+                        if move_inst not in move_list and\
+                        not self.have_obligatory_move(coin1, {'beated_coins':[coin_in_direction]}):
+                            move_list.append(move_inst)
 
                         self.get_obligatory_moves(coin1, move_list, move_inst)
                 except OutOfBoardError:
