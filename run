@@ -1,0 +1,3 @@
+# to use in checkersPy as "sh run"
+setsid firefox-developer --new-window localhost:5000 &
+setsid atom . && export FLASK_ENV=app.py && export FLASK_DEBUG=1 && . venv/bin/activate && flask run

@@ -29,7 +29,7 @@ class Coin:
     color = ''
     foreward = 0
     type = ''
-    moves = {'obligatory':[], 'normal':[]}
+    moves = {}
     y = 0
     x = 0
     def __init__(self, color, id, type='coin'):
@@ -122,8 +122,11 @@ class Board:
     #todo
     def get_moves_for_coin(self, coin):
         if "coin" == coin.type:
-            moves = {"obligatory": self.get_obligatory_moves(coin, [])} or {"normal": self.get_no_jump_moves(coin)}
-            coin.moves = moves
+            moves = self.get_obligatory_moves(coin, [])
+            if moves:
+                coin.moves["obligatory"] = moves
+            else:
+                coin.moves["normal"] = self.get_no_jump_moves(coin)
             # if moves is not None:
                 # print(moves)
             # print('moves amount: ', len(moves))
@@ -220,7 +223,8 @@ def checkers():
 
     black_coins = [Coin('black', i) for i in range(4)]
     coin = Coin('white', 2)
-    board.set_coin_y_x(coin, 5, 5)
+    coin.set_foreward_vector(1)
+    board.set_coin_y_x(coin, 4, 6)
     board.set_coin_y_x(black_coins[0], 2, 2)
     board.set_coin_y_x(black_coins[1], 4, 4)
     board.set_coin_y_x(black_coins[2], 2, 4)
