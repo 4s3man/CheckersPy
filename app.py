@@ -14,7 +14,6 @@ class NoCoinError(BoardError):
 
 class OutOfBoardError(BoardError):
     pass
-
 class Move:
     """Colection of fields in visiting order field = (position_y, position_x)"""
     visited_fields_yx = []
@@ -127,11 +126,6 @@ class Board:
                 coin.moves["obligatory"] = moves
             else:
                 coin.moves["normal"] = self.get_no_jump_moves(coin)
-            # if moves is not None:
-                # print(moves)
-            # print('moves amount: ', len(moves))
-            # for move in moves:
-            #     print(move)
 
     #obligatory means if player can beat coin he must do it
     def get_obligatory_moves(self, coin, move_list, move=None, debug=0):
@@ -203,15 +197,23 @@ class Board:
         #field after jump is either free or coin on that field is not coin who jumps
         next_field = self.fields[coin.y + y][coin.x + x]
         if next_field.coin is not None\
-        and (next_field.coin.id != coin.id and next_field.coin.color != coin.color): return False
+        and not self.same_coin(coin, next_field.coin): return False
 
         #if move is calculating and coin_in_direction wasn't beated yet
-        if move is not None and coin_in_direction in move['beated_coins']: return False
+        if move is not None and self.same_coin_in(coin_in_direction, move['beated_coins']): return False
 
         return True
 
     def field_in_board(self, y, x):
         return y in range(self.board_size) and x in range(self.board_size)
+
+    def same_coin_in(self, coin, array):
+        for coin1 in array:
+            if self.same_coin(coin, coin1): return True
+        return False
+
+    def same_coin(self, coin1, coin2):
+        return coin1.id == coin2.id and coin1.color == coin2.color
 
 @app.route('/', methods=['POST', 'GET'])
 def checkers():
@@ -219,7 +221,7 @@ def checkers():
     # board.set_initial_state()
     json = board.json_encode_coins()
 
-    black_coins = [Coin('black', i) for i in range(4)]
+    black_coins = [Coin('black', i) for i in range(5)]
     coin = Coin('white', 2)
     coin.set_foreward_vector(1)
     board.set_coin_y_x(coin, 5, 3)
@@ -227,11 +229,14 @@ def checkers():
     board.set_coin_y_x(black_coins[1], 4, 4)
     board.set_coin_y_x(black_coins[2], 2, 4)
     board.set_coin_y_x(black_coins[3], 4, 2)
+    board.set_coin_y_x(black_coins[4], 6, 4)
 
     # move = {'beated_coins':[black_coins[1]]}
+
     # print(board.have_obligatory_move(coin, move))
     board.get_moves_for_coin(coin)
     print(coin.moves)
+
     # for move in moves:
     #     dono = 'pos: ' + str(move['pos']) + ' coins: ' + str([(coin.x, coin.y) for coin in move['beated_coins']])
     #     print(dono)
