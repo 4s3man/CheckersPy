@@ -189,10 +189,6 @@ class Board:
 
         if coin_in_direction is None: raise NoCoinError('No coin in this direction')
 
-        #if encounters itself
-        if coin.color == coin_in_direction.color and\
-           coin.id == coin_in_direction.id: raise NoCoinError('Same coin in direction')
-
         return coin_in_direction
 
     def can_jump_in_direction(self, coin, coin_in_direction, vector, move):
@@ -204,8 +200,10 @@ class Board:
         y, x = (v*2 for v in vector)
         if not self.field_in_board(coin.y + y, coin.x + x): return False
 
-        #field after jump is free
-        if self.fields[coin.y + y][coin.x + x].coin is not None: return False
+        #field after jump is either free or coin on that field is not coin who jumps
+        next_field = self.fields[coin.y + y][coin.x + x]
+        if next_field.coin is not None\
+        and (next_field.coin.id != coin.id and next_field.coin.color != coin.color): return False
 
         #if move is calculating and coin_in_direction wasn't beated yet
         if move is not None and coin_in_direction in move['beated_coins']: return False
@@ -224,11 +222,11 @@ def checkers():
     black_coins = [Coin('black', i) for i in range(4)]
     coin = Coin('white', 2)
     coin.set_foreward_vector(1)
-    board.set_coin_y_x(coin, 4, 6)
+    board.set_coin_y_x(coin, 5, 3)
     board.set_coin_y_x(black_coins[0], 2, 2)
     board.set_coin_y_x(black_coins[1], 4, 4)
     board.set_coin_y_x(black_coins[2], 2, 4)
-    # board.set_coin_y_x(black_coins[3], 6, 6)
+    board.set_coin_y_x(black_coins[3], 4, 2)
 
     # move = {'beated_coins':[black_coins[1]]}
     # print(board.have_obligatory_move(coin, move))
