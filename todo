@@ -1,2 +1,6 @@
+0. trzeba zmienić testy ruchów tak żeby było wiadomo o co chodzi
+1. skakanie w kółko znowu nie działa
+
+
 #1 long term todo
   cloning coins kills performance quite a bit, implement pointers instead of cloning

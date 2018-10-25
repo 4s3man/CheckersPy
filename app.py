@@ -144,9 +144,9 @@ class Board:
                         coin1.y = next_y
                         coin1.x = next_x
 
-                        if move_inst not in move_list and\
-                        not self.have_obligatory_move(coin1, {'beated_coins':[coin_in_direction]}) and\
-                        not self.same_pos_in_movelist(move_inst, move_list):
+                        if move_inst not in move_list\
+                        and not self.have_obligatory_move(coin1, {'beated_coins':[coin_in_direction]})\
+                        and not self.same_pos_in_movelist(move_inst, move_list):
                             move_list.append(move_inst)
 
                         self.get_obligatory_moves(coin1, move_list, move_inst)
@@ -164,6 +164,8 @@ class Board:
             except NoCoinError:
                 move = {"pos":(coin.y + y, coin.x + x)}
                 move_list.append(move)
+            except OutOfBoardError:
+                pass
         return move_list
 
     def have_obligatory_move(self, coin, move):
@@ -225,15 +227,16 @@ def checkers():
 
     black_coins = [Coin('black', i) for i in range(5)]
     coin = Coin('white', 2)
-    coin.set_foreward_vector(1)
-    board.set_coin_y_x(coin, 5, 3)
-    board.set_coin_y_x(black_coins[0], 2, 2)
-    board.set_coin_y_x(black_coins[1], 4, 4)
+    coin.set_foreward_vector(-1)
+    board.set_coin_y_x(coin, 1, 7)
+    board.set_coin_y_x(black_coins[0], 2, 6)
+    board.set_coin_y_x(black_coins[1], 2, 2)
     board.set_coin_y_x(black_coins[2], 2, 4)
     board.set_coin_y_x(black_coins[3], 4, 2)
-    board.set_coin_y_x(black_coins[4], 6, 4)
+    # board.set_coin_y_x(black_coins[4], 6, 4)
 
     # move = {'beated_coins':[black_coins[1]]}
+
 
     board.get_moves_for_coin(coin)
     print(coin.moves)

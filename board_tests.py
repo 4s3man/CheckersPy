@@ -177,7 +177,6 @@ class BoardTestCase(unittest.TestCase):
         move['pos'].pop()
         self.assertFalse(board.same_pos_in_movelist(move, poses))
 
-
     def readable_moves(self, moves):
         return ['pos_yx: ' + str(move['pos']) + 'beated_coins_yx: ' + str([(coin.x, coin.y) for coin in move['beated_coins']]) for move in moves]
 
