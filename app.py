@@ -226,9 +226,9 @@ def checkers():
     black_coins = [Coin('black', i) for i in range(5)]
     coin = Coin('white', 2)
     coin.set_foreward_vector(-1)
-    board.set_coin_y_x(coin, 3, 5)
+    board.set_coin_y_x(coin, 1, 5)
     board.set_coin_y_x(black_coins[0], 4, 4)
-    board.set_coin_y_x(black_coins[1], 2, 2)
+    board.set_coin_y_x(black_coins[1], 6, 6)
     board.set_coin_y_x(black_coins[2], 2, 4)
     board.set_coin_y_x(black_coins[3], 4, 2)
     # board.set_coin_y_x(black_coins[4], 6, 4)
