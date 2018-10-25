@@ -177,6 +177,17 @@ class BoardTestCase(unittest.TestCase):
         move['pos'].pop()
         self.assertFalse(board.same_pos_in_movelist(move, poses))
 
+    def test_moves_for_coin_jumping_down(self):
+        board = Board()
+        # black_coins = [Coin('black', i) for i in range(5)]
+        # coin = Coin('white', 2)
+        # coin.set_foreward_vector(-1)
+        # board.set_coin_y_x(coin, 1, 7)
+        # board.set_coin_y_x(black_coins[0], 2, 6)
+        # board.set_coin_y_x(black_coins[1], 2, 2)
+        # board.set_coin_y_x(black_coins[2], 2, 4)
+        # board.set_coin_y_x(black_coins[3], 4, 2)
+
     def readable_moves(self, moves):
         return ['pos_yx: ' + str(move['pos']) + 'beated_coins_yx: ' + str([(coin.x, coin.y) for coin in move['beated_coins']]) for move in moves]
 

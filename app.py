@@ -145,7 +145,7 @@ class Board:
                         coin1.x = next_x
 
                         if move_inst not in move_list\
-                        and not self.have_obligatory_move(coin1, {'beated_coins':[coin_in_direction]})\
+                        and not self.have_obligatory_move(coin1, move_inst)\
                         and not self.same_pos_in_movelist(move_inst, move_list):
                             move_list.append(move_inst)
 
@@ -226,8 +226,8 @@ def checkers():
     black_coins = [Coin('black', i) for i in range(5)]
     coin = Coin('white', 2)
     coin.set_foreward_vector(-1)
-    board.set_coin_y_x(coin, 1, 7)
-    board.set_coin_y_x(black_coins[0], 2, 6)
+    board.set_coin_y_x(coin, 3, 5)
+    board.set_coin_y_x(black_coins[0], 4, 4)
     board.set_coin_y_x(black_coins[1], 2, 2)
     board.set_coin_y_x(black_coins[2], 2, 4)
     board.set_coin_y_x(black_coins[3], 4, 2)
