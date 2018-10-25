@@ -148,8 +148,35 @@ class BoardTestCase(unittest.TestCase):
         {'beated_coins': [black_coins[1], black_coins[2] ], 'pos': [(3, 3), (1, 5)]},
         {'beated_coins': [black_coins[1], black_coins[0]], 'pos': [(3, 3), (1, 1)]}
         ]
-
         self.assertEqual(self.readable_moves(moves), self.readable_moves(should_return))
+
+    def test_get_obligatory_moves_extended_circle_example(self):
+        board = Board()
+        black_coins = [Coin('black', i) for i in range(5)]
+        coin = Coin('white', 2)
+        coin.set_foreward_vector(1)
+        board.set_coin_y_x(coin, 5, 3)
+        board.set_coin_y_x(black_coins[0], 4, 4)
+        board.set_coin_y_x(black_coins[1], 2, 4)
+        board.set_coin_y_x(black_coins[2], 2, 2)
+        board.set_coin_y_x(black_coins[3], 4, 2)
+        board.set_coin_y_x(black_coins[4], 6, 4)
+
+        should_return = [
+        {'beated_coins': [black_coins[4]], 'pos': [(7, 5)]},
+        {'beated_coins': black_coins, 'pos': [(3, 5), (1, 3), (3, 1), (5, 3), (7, 5)]}]
+
+        moves = board.get_obligatory_moves(coin, [])
+        self.assertEqual(self.readable_moves(moves), self.readable_moves(should_return))
+
+    def test_same_pos_in_movelist(self):
+        board = Board()
+        poses = [{'pos': [(7, 5)]}, {'pos': [(3, 5), (1, 3), (3, 1), (5, 3), (7, 5)]}]
+        move = {'pos': [(3, 1), (1, 3), (3, 5), (5, 3), (7, 5)]}
+        self.assertTrue(board.same_pos_in_movelist(move, poses))
+        move['pos'].pop()
+        self.assertFalse(board.same_pos_in_movelist(move, poses))
+
 
     def readable_moves(self, moves):
         return ['pos_yx: ' + str(move['pos']) + 'beated_coins_yx: ' + str([(coin.x, coin.y) for coin in move['beated_coins']]) for move in moves]

@@ -1,3 +1,2 @@
-sprawdzic get coin in direction dla 5,5
-zdebugować dlaczego zawsze wywala a może uda się do środy zrobić ruchy i zacząć reacta
-ewentualnie maxmin-a
+#1 long term todo
+  cloning coins kills performance quite a bit, implement pointers instead of cloning

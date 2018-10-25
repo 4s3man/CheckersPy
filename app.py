@@ -145,7 +145,8 @@ class Board:
                         coin1.x = next_x
 
                         if move_inst not in move_list and\
-                        not self.have_obligatory_move(coin1, {'beated_coins':[coin_in_direction]}):
+                        not self.have_obligatory_move(coin1, {'beated_coins':[coin_in_direction]}) and\
+                        not self.same_pos_in_movelist(move_inst, move_list):
                             move_list.append(move_inst)
 
                         self.get_obligatory_moves(coin1, move_list, move_inst)
@@ -186,20 +187,16 @@ class Board:
         return coin_in_direction
 
     def can_jump_in_direction(self, coin, coin_in_direction, vector, move):
-
-        #coins have different colors
+        """coins have different colors"""
         if coin_in_direction.color == coin.color: return False
-
-        #field after is in board
+        """field after is in board"""
         y, x = (v*2 for v in vector)
         if not self.field_in_board(coin.y + y, coin.x + x): return False
-
-        #field after jump is either free or coin on that field is not coin who jumps
+        """field after jump is either free or coin on that field is not coin who jumps"""
         next_field = self.fields[coin.y + y][coin.x + x]
         if next_field.coin is not None\
         and not self.same_coin(coin, next_field.coin): return False
-
-        #if move is calculating and coin_in_direction wasn't beated yet
+        """if move is calculating and coin_in_direction wasn't beated yet"""
         if move is not None and self.same_coin_in(coin_in_direction, move['beated_coins']): return False
 
         return True
@@ -214,6 +211,11 @@ class Board:
 
     def same_coin(self, coin1, coin2):
         return coin1.id == coin2.id and coin1.color == coin2.color
+
+    def same_pos_in_movelist(self, move, move_list):
+        for move_l in move_list:
+            if set(move_l['pos']) == set(move['pos']): return True
+        return False
 
 @app.route('/', methods=['POST', 'GET'])
 def checkers():
@@ -233,9 +235,9 @@ def checkers():
 
     # move = {'beated_coins':[black_coins[1]]}
 
-    # print(board.have_obligatory_move(coin, move))
     board.get_moves_for_coin(coin)
     print(coin.moves)
+
 
     # for move in moves:
     #     dono = 'pos: ' + str(move['pos']) + ' coins: ' + str([(coin.x, coin.y) for coin in move['beated_coins']])
