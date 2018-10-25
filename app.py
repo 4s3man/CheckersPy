@@ -150,8 +150,6 @@ class Board:
                             move_list.append(move_inst)
 
                         self.get_obligatory_moves(coin1, move_list, move_inst)
-                except OutOfBoardError:
-                    return
                 except BoardError:
                     pass
         return move_list
@@ -237,7 +235,7 @@ def checkers():
 
     # move = {'beated_coins':[black_coins[1]]}
 
-
+    print('hoave bligaory: ',board.have_obligatory_move(coin, None))
     board.get_moves_for_coin(coin)
     print(coin.moves)
 
