@@ -14,7 +14,7 @@ def checkers():
     black_coins = [b.Coin('white', i) for i in range(5)]
     coin = b.Coin('black', 2)
     coin.set_foreward_vector(-1)
-    board.set_coin_y_x(coin, 5, 1)
+    board.set_coin_y_x(coin, 3, 1)
     board.set_coin_y_x(black_coins[0], 4, 2)
     board.set_coin_y_x(black_coins[1], 2, 4)
     board.set_coin_y_x(black_coins[2], 4, 0)

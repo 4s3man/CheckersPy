@@ -132,13 +132,9 @@ class Board:
 
     def get_coin_in_direction(self, coin, vector):
         y, x = (coin.y + vector[0], coin.x + vector[1])
-
         if not self.field_in_board(y, x): raise OutOfBoardError('Field in direction out of the board')
-
         coin_in_direction = self.fields[y][x].coin
-
         if coin_in_direction is None: raise NoCoinError('No coin in this direction')
-
         return coin_in_direction
 
     def can_jump_in_direction(self, coin, coin_in_direction, vector, move):
