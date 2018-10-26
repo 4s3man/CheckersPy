@@ -1,8 +1,0 @@
-uruchamianie serwera
-	. /venv/bin/activate
-	export FLASK_ENV=<main file>
-	
-w trybie debugowania
-	export FLASK_DEBUG=1
-
-	flask run
