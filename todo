@@ -1,8 +1,5 @@
-1. zrobić ruchy dla:
-kółka
-skakania do środka i na boki
-skakania w dół i w górę
-czy jeśli jest obligatory to jest obligatory i czy jeśli nie jest to nie
+napisać test do board.fileds[y][x] is board.state.white_pawns[0]
 
-#1 long term todo
-  cloning coins kills performance quite a bit, implement pointers instead of cloning
+w react wyrenderować nam elegancko stronę
+
+wysłać w reakcie zapytanie o state
