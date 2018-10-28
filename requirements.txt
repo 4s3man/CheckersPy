@@ -6,6 +6,3 @@ Flask==1.0.2
 
 # Automated tests
 pytest==3.9.3
-
-#Assets management
-Flask-Webpack==0.1.0
