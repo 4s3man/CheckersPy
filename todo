@@ -1,5 +1,9 @@
-napisać test do board.fileds[y][x] is board.state.white_pawns[0]
+wysłać w reakcie ajaxowe zapytanie o state
 
-w react wyrenderować nam elegancko stronę
+zdecydować się albo na jsx albo na const jeśli chodzi o pawn
 
-wysłać w reakcie zapytanie o state
+znleźć framework do testowania js
+
+przetestować funkcje renderującą
+
+dalsza refraktoryzacja na backendzie

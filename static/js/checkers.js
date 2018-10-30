@@ -4,65 +4,81 @@ import classnames from 'classnames'
 export default class Checkers extends Component{
   constructor(props, context){
     super(props);
+    this.s = {"white_pawns": [{"foreward": -1, "y": 5, "id": 0, "x": 1, "type": "normal", "color": "white"}, {"foreward": -1, "y": 5, "id": 1, "x": 3, "type": "normal", "color": "white"}, {"foreward": -1, "y": 5, "id": 2, "x": 5, "type": "normal", "color": "white"}, {"foreward": -1, "y": 5, "id": 3, "x": 7, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 4, "x": 0, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 5, "x": 2, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 6, "x": 4, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 7, "x": 6, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 8, "x": 1, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 9, "x": 3, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 10, "x": 5, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 11, "x": 7, "type": "normal", "color": "white"}], "black_pawns": [{"foreward": 1, "y": 0, "id": 0, "x": 0, "type": "normal", "color": "black"}, {"foreward": 1, "y": 0, "id": 1, "x": 2, "type": "normal", "color": "black"}, {"foreward": 1, "y": 0, "id": 2, "x": 4, "type": "normal", "color": "black"}, {"foreward": 1, "y": 0, "id": 3, "x": 6, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 4, "x": 1, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 5, "x": 3, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 6, "x": 5, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 7, "x": 7, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 8, "x": 0, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 9, "x": 2, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 10, "x": 4, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 11, "x": 6, "type": "normal", "color": "black"}]}
     this.state = {
-      fields: this.createFields(),
-      boardState: {"white_pawns": [{"foreward": -1, "y": 5, "id": 0, "x": 1, "type": "normal", "color": "white"}, {"foreward": -1, "y": 5, "id": 1, "x": 3, "type": "normal", "color": "white"}, {"foreward": -1, "y": 5, "id": 2, "x": 5, "type": "normal", "color": "white"}, {"foreward": -1, "y": 5, "id": 3, "x": 7, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 4, "x": 0, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 5, "x": 2, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 6, "x": 4, "type": "normal", "color": "white"}, {"foreward": -1, "y": 6, "id": 7, "x": 6, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 8, "x": 1, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 9, "x": 3, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 10, "x": 5, "type": "normal", "color": "white"}, {"foreward": -1, "y": 7, "id": 11, "x": 7, "type": "normal", "color": "white"}], "black_pawns": [{"foreward": 1, "y": 0, "id": 0, "x": 0, "type": "normal", "color": "black"}, {"foreward": 1, "y": 0, "id": 1, "x": 2, "type": "normal", "color": "black"}, {"foreward": 1, "y": 0, "id": 2, "x": 4, "type": "normal", "color": "black"}, {"foreward": 1, "y": 0, "id": 3, "x": 6, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 4, "x": 1, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 5, "x": 3, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 6, "x": 5, "type": "normal", "color": "black"}, {"foreward": 1, "y": 1, "id": 7, "x": 7, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 8, "x": 0, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 9, "x": 2, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 10, "x": 4, "type": "normal", "color": "black"}, {"foreward": 1, "y": 2, "id": 11, "x": 6, "type": "normal", "color": "black"}]}
+      fields: this.createFields(this.createFieldsPawnObj()),
+      playerTurn: true,
     }
-    console.log(this.state.fields[0][0]);
   }
 
-  createFields(boardState = null){
+  createFieldsPawnObj(){
+    let boardState = this.s['white_pawns'].concat(this.s['black_pawns']);
+    let pawnFields = {}
+    for (let i=0; i<boardState.length; i++){
+      let key = boardState[i].x + ' ' + boardState[i].y;
+      pawnFields[key] = Pawn(boardState[i]);
+    }
+    return pawnFields;
+  }
+
+  createFields(fieldPawn = null){
     let fields = [],
-        id = 0,
-        color = null;
+        id = 0;
     for (let y=0;y<8;y++){
       let row = [];
       for (let x=0;x<8;x++){
         id++;
-        color = (x+y)%2 == 0? 'white' : 'black';
-        row = [...row, BoardField(color, id)];
+        let color = (x+y)%2 == 0? 'white' : 'black';
+        let pawn = fieldPawn[x + ' ' + y]? fieldPawn[x + ' ' + y] : null;
+        row = [...row, <BoardField color={color} key={id} pawn={pawn}/>];
       }
       fields = [...fields, row];
     }
     return fields;
   }
 
-  getCoin(){
-    return (
-      <Coin props={{"foreward": 1, "y": 0, "id": 0, "x": 0, "type": "normal", "color": "black"}} handler={this.coinHandler} />
-    )
-  }
-
-  coinHandler(){
-    alert('ok');
-  }
-
   render(){
     return (
       <div className='board'>
         {this.state.fields}
-        {this.getCoin()}
       </div>
     );
   }
 }
-const BoardField = (color, key, coin=null) => {
+
+class BoardField extends Component{
+  constructor(props, context){
+    super(props, context);
+  }
+  render(){
     let blockClass = 'board__field';
     return (
       <div
-       className={classnames(blockClass, blockClass+'--'+color)}
-       key={key}
+       className={classnames(blockClass, blockClass+'--'+this.props.color)}
+       key={this.props.id}
        >
-       {coin}
+       {this.props.pawn}
       </div>
     );
   }
-const Coin = (props, handler) => {
-  let blockClass = 'coin';
-  console.log(props);
+}
+
+// const BoardField = (color, key, pawn=null) => {
+//     let blockClass = 'board__field';
+//     return (
+//       <div
+//        className={classnames(blockClass, blockClass+'--'+color)}
+//        key={key}
+//        >
+//        {pawn}
+//       </div>
+//     );
+//   }
+const Pawn = (props, handler) => {
+  let blockClass = 'pawn';
   return (
     <span
-    className={classnames(blockClass, blockClass+'--'+props.props.color)}
+    className={classnames(blockClass, blockClass+'--'+props.color)}
     onClick = {(e) => {props.handler()}}
     />
   )

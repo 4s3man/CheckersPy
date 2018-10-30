@@ -23,18 +23,18 @@ body{
   background-color: #666666;
 }
 
-.coin{
+.pawn{
   display: block;
   width: 30px;
   height: 30px;
   border-radius: 80px;
 }
 
-.coin--white{
+.pawn--white{
   background-color: white;
 }
 
-.coin--black{
+.pawn--black{
   background-color: brown;
 }
 
