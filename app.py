@@ -38,10 +38,7 @@ def checkers():
     # print(board.have_obligatory_move(coin, None))
 
 
-    # if 'coins' not in session:
-    #     session['coins'] = board.json_encode_coins()
-    # else:
-    #     board.set_coins_from_json(session['coins'])
+    session['board_state'] = board.state.json_encode()
     return render_template('empty.html')
 
 # @app.route('/ajax/move', methods=['POST'])

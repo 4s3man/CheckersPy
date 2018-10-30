@@ -5,8 +5,7 @@ export default class Checkers extends Component{
   constructor(props, context){
     super(props);
     this.state = {
-      fields: this.createFields(),
-      coin: this.getCoin()
+      fields: this.createFields()
     }
   }
 
@@ -28,7 +27,7 @@ export default class Checkers extends Component{
 
   getCoin(){
     return (
-      <Coin id='1' color='white' moves={[]} handler={this.coinHandler} />
+      <Coin id='1' position color='white' moves={[]} handler={this.coinHandler} />
     )
   }
 
@@ -55,7 +54,7 @@ const BoardField = (color, key, coin=null) => {
       </div>
     );
   }
-const Coin = (id, color, moves, handler) => {
+const Coin = (id, color, position, moves, handler) => {
   let blockClass = 'coin';
   return (
     <span className={classnames(blockClass, blockClass+'--'+color)} />
