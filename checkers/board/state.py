@@ -4,13 +4,29 @@ import json
 class State():
     board_size = 8
     pawns_for_site = 12
-    def __init__(self):
+    def __init__(self, jsonState: str = ''):
         self.white_pawns = [None] * self.pawns_for_site
         self.black_pawns = [None] * self.pawns_for_site
+        if jsonState:
+            self.json_decode(jsonState)
+
     def json_encode(self):
         return json.dumps(self, default=(lambda x: x.__dict__))
-    # def json_decode(self, stateJson: string):
-    #     return null
+
+    def json_decode(self, stateJson: str):
+        stateDict = json.loads(stateJson)
+        pawns = stateDict['white_pawns'] + stateDict['black_pawns']
+        for pawn in pawns:
+            self.makePawn(pawn)
+
+    def makePawn(self, pawn: dict):
+        if pawn is None: return
+        i = pawn['id']
+        collection = self.white_pawns if pawn['color'] == 'white' else self.black_pawns
+        collection[i] = Pawn(pawn['color'], i, pawn['type'])
+        collection[i].set_foreward_vector(pawn['foreward'])
+        collection[i].set_positon((pawn['x'], pawn['y']))
+        collection[i].set_moves(pawn['moves'])
 
 class InitialState(State):
     def __init__(self):

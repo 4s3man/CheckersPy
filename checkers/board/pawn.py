@@ -19,7 +19,6 @@ class Pawn:
     def set_positon(self, position:tuple):
         self.x, self.y = position
 
-    """coin html"""
-    def html(self)->str:
-        return '<span id="%s" class="%s pawn--%s"></span>' % (
-            self.color + str(self.id), self.type, self.color)
+    """sets coin moves"""
+    def set_moves(self, moves:dict):
+        self.moves = moves
