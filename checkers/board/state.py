@@ -4,10 +4,13 @@ import json
 class State():
     board_size = 8
     pawns_for_site = 12
-    white_pawns = [None] * pawns_for_site
-    black_pawns = [None] * pawns_for_site
+    def __init__(self):
+        self.white_pawns = [None] * self.pawns_for_site
+        self.black_pawns = [None] * self.pawns_for_site
     def json_encode(self):
         return json.dumps(self, default=(lambda x: x.__dict__))
+    # def json_decode(self, stateJson: string):
+    #     return null
 
 class InitialState(State):
     def __init__(self):

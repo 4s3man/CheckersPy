@@ -16,8 +16,10 @@ class Checkers extends Component{
     let pawns = this.props.boardState['white_pawns'].concat(this.props.boardState['black_pawns']);
     let pawnFields = {}
     for (let i=0; i<pawns.length; i++){
-      let key = pawns[i].x + ' ' + pawns[i].y;
-      pawnFields[key] = Pawn(pawns[i]);
+      if (pawns[i]){
+        let key = pawns[i].x + ' ' + pawns[i].y;
+        pawnFields[key] = Pawn(pawns[i]);
+      }
     }
     return pawnFields;
   }
@@ -95,6 +97,5 @@ const mapDispatchToProps = (dispatch) => {
     fetchBoardState: (url) => dispatch(fetchBoardState(url))
   };
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkers);
