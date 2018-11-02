@@ -1,8 +1,16 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import {render} from 'react-dom'
+import {Provider} from 'react-redux'
 
+import configureStore from './store/configureStore'
 import Checkers from './checkers'
 
+const store = configureStore();
 console.log('dono');
 
-ReactDOM.render(<Checkers/>, document.getElementById('JScheckers'));
+render(
+  <Provider store={store}>
+    <Checkers/>
+  </Provider>,
+  document.getElementById('JScheckers')
+);

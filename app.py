@@ -15,6 +15,6 @@ def checkers():
     session['board_state'] = board.state.json_encode()
     return render_template('empty.html')
 
-# @app.route('/ajax/move', methods=['POST'])
-# def move():
-#     return 'ok'
+@app.route('/move', methods=['POST'])
+def move():
+    return session['board_state']
