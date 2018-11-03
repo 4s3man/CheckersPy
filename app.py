@@ -10,7 +10,6 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
 @app.route('/', methods=['POST', 'GET'])
 def checkers():
-
     state = cb.State()
     state.white_pawns[1] = cb.Pawn('white', 2)
     state.white_pawns[1].set_positon((1,1))

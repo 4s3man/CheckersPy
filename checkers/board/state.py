@@ -10,6 +10,11 @@ class State():
         if jsonState:
             self.json_decode(jsonState)
 
+    def __eq__(self, other: object):
+        this_obj = json.loads(json.dumps(self, default=(lambda x: x.__dict__)))
+        other_obj = json.loads(json.dumps(other, default=(lambda x: x.__dict__)))
+        return this_obj == other_obj
+
     def json_encode(self):
         return json.dumps(self, default=(lambda x: x.__dict__))
 
