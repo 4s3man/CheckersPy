@@ -15,9 +15,10 @@ class Pawn:
     def set_foreward_vector(self, vector:int):
         self.foreward = vector
 
-    """position: (x,y)"""
-    def set_positon(self, position:tuple):
-        self.x, self.y = position
+    """sets coin position: y, x"""
+    def set_positon(self, y:int, x:int):
+        self.x = x
+        self.y = y
 
     """sets coin moves"""
     def set_moves(self, moves:dict):

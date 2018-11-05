@@ -1,4 +1,4 @@
-from checkers.board.pawn import *
+from checkers.board.pawn import Pawn
 import json
 
 class State():
@@ -30,7 +30,7 @@ class State():
         collection = self.white_pawns if pawn['color'] == 'white' else self.black_pawns
         collection[i] = Pawn(pawn['color'], i, pawn['type'])
         collection[i].set_foreward_vector(pawn['foreward'])
-        collection[i].set_positon((pawn['x'], pawn['y']))
+        collection[i].set_positon(pawn['y'], pawn['x'])
         collection[i].set_moves(pawn['moves'])
 
 class InitialState(State):
@@ -46,11 +46,11 @@ class InitialState(State):
             try:
                 if y in range(0,3):
                     pawn = next(up_pawns)
-                    pawn.set_positon((x, y))
+                    pawn.set_positon(y, x)
                     pawn.set_foreward_vector(1)
                 if y in range(5,8):
                     pawn = next(down_pawns)
-                    pawn.set_positon((x, y))
+                    pawn.set_positon(y, x)
                     pawn.set_foreward_vector(-1)
             except StopIteration:
                 pass
