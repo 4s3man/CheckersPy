@@ -1,6 +1,5 @@
 from checkers.board.state import *
 from checkers.board.errors import *
-from checkers.board.move_resolver import *
 
 class Board():
     board_size = 8

@@ -17,10 +17,13 @@ def checkers():
     state.white_pawns[1].set_foreward_vector(1)
     state.white_pawns[1].moves = {'beated_coin_ids':[1,2,3,4], "fields": [(1,2), (3,4)]}
 
+    checkers = Checkers(state)
+    print(checkers.state.white_pawns[1].moves)
+    session['board_state'] = checkers.state.json_encode()
 
-    if not 'board_state' in session.keys():
-        checkers = Checkers(InitialState())
-        session['board_state'] = checkers.state.json_encode()
+    # if not 'board_state' in session.keys():
+    #     checkers = Checkers(InitialState())
+    #     session['board_state'] = checkers.state.json_encode()
 
     return render_template('empty.html')
 

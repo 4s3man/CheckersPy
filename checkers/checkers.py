@@ -1,4 +1,5 @@
 from checkers.board.board import *
+from checkers.board.move_resolver import *
 
 class Checkers():
     state = None
