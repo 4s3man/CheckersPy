@@ -6,9 +6,6 @@ class Board():
     pawns_for_site = 12
     fields = [[]]
 
-    def __init__(self, state: State = InitialState()):
-        self.place_pawns(state)
-
     def place_pawns(self, state: State):
         self.fields = [[None for x in range(self.board_size)] for y in range(self.board_size)]
 

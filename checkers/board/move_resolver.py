@@ -5,7 +5,6 @@ class MoveResolver():
 
     def __init__(self):
         self.board = Board()
-        pass
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
