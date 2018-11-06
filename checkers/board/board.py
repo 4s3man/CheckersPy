@@ -17,12 +17,9 @@ class Board():
         self.place_pawns_from_collection(state.black_pawns)
 
     def place_pawns_from_collection(self, collection: list):
-        try:
             for pawn in collection:
-                if self.has_position(pawn.y, pawn.x):
+                if isinstance(pawn, Pawn) and self.has_position(pawn.y, pawn.x):
                     self.fields[pawn.y][pawn.x] = collection[pawn.id]
-        except AttributeError:
-            pass
 
     def has_position(self, y:int, x:int):
         return y in range(self.board_size) and x in range(self.board_size)

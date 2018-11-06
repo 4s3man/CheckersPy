@@ -3,14 +3,16 @@ from checkers.board.board import *
 class MoveResolver():
     board = None
 
-    def __init__(self):
+    def __init__(self, state: State = None):
         self.board = Board()
+        if state:
+            self.board.place_pawns(state)
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
 
-        for pawn in state.white_pawns + state.black_pawns:
-            if pawn: self.resolve_pawn_moves(pawn)
+        # for pawn in state.white_pawns + state.black_pawns:
+        #     if pawn: self.resolve_pawn_moves(pawn)
         # """debug to remove"""
         # self.get_jump_moves(state.white_pawns[1])
         #

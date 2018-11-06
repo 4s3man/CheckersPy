@@ -29,12 +29,28 @@ def different_coins_around_white():
             None,
             {"y": 3, "x": 3,"color": "white", "type": "normal", "foreward": -1, "id": 1, "moves": []},
             {"y": 2, "x": 4,"color": "white", "type": "normal", "foreward": -1, "id": 2, "moves": []},
-            None, None, None, None, None, None, None, None, None
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
             ],
         "black_pawns":
             [
             {"y": 2, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 0, "moves": []},
             {"y": 4, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 1, "moves": []},
             {"y": 5, "x": 1,"color": "black", "type": "normal", "foreward": 1, "id": 2, "moves": []},
-            None, None, None, None, None, None, None, None, None]
+            {"y": 5, "x": 7,"color": "black", "type": "normal", "foreward": 1, "id": 3, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
     })
