@@ -56,7 +56,7 @@ def different_pawns_around_white_state():
     })
 
 @pytest.fixture
-def circle_state():
+def extended_circle_state():
     return makeState({
         "white_pawns":
             [
@@ -79,8 +79,8 @@ def circle_state():
             {"y": 4, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 1, "moves": []},
             {"y": 4, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 2, "moves": []},
             {"y": 2, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 3, "moves": []},
-            None,
-            None,
+            {"y": 6, "x": 6,"color": "black", "type": "normal", "foreward": 1, "id": 4, "moves": []},
+            {"y": 1, "x": 1,"color": "black", "type": "normal", "foreward": 1, "id": 5, "moves": []},
             None,
             None,
             None,

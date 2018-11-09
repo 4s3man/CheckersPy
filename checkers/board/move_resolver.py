@@ -12,7 +12,7 @@ class MoveResolver():
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
-        moves = self.get_jump_moves_for_pawn(state.white_pawns[1], [])
+        moves = self.get_jump_moves_for_pawn(state.white_pawns[2], [])
         print(moves)
         # for pawn in state.white_pawns + state.black_pawns:
         #     if pawn: self.resolve_pawn_moves(pawn)
