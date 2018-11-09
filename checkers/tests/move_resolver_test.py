@@ -42,4 +42,5 @@ def test_pawn_has_obligtory_move_after_move(circle_state):
     assert True == move_res.pawn_has_obligatory_move(state.white_pawns[1], move)
 
 def test_get_obligatory_moves_circle_state(circle_state):
-    pass
+    state = circle_state
+    move_res = MoveResolver(state)

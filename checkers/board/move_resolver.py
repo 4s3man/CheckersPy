@@ -47,8 +47,7 @@ class MoveResolver():
                     if self.pawn_can_jump_in_direction(pawn, pawn_in_direction, (y, x), move):
                         next_y, next_x = pawn_in_direction.y + y, pawn_in_direction.x + x
 
-                        move_inst = {'pos':[], 'beated_pawn_ids':[]} if not len(move) else copy.deepcopy(move)
-                        move_inst['pos'].append((next_y, next_x))
+                        move_inst = {'positon_after_move':None, 'beated_pawn_ids':[]} if not len(move) else copy.deepcopy(move)
                         move_inst['beated_pawn_ids'].append(pawn_in_direction.id)
 
                         pawn1 = copy.deepcopy(pawn)
@@ -57,7 +56,8 @@ class MoveResolver():
 
                         if move_inst not in move_list\
                         and not self.pawn_has_obligatory_move(pawn1, move_inst)\
-                        and not self.same_pos_in_movelist(move_inst, move_list):
+                        and not self.same_pawns_beated(move_inst, move_list):
+                            move_inst['positon_after_move'] = (next_y, next_x)
                             move_list.append(move_inst)
 
                         self.get_jump_moves_for_pawn(pawn1, move_list, move_inst)
@@ -102,7 +102,7 @@ class MoveResolver():
 
         return True
 
-    def same_pos_in_movelist(self, move: dict, move_list: list)-> bool:
+    def same_pawns_beated(self, move: dict, move_list: list)-> bool:
         for move_l in move_list:
-            if set(move_l['pos']) == set(move['pos']): return True
+            if set(move_l['beated_pawn_ids']) == set(move['beated_pawn_ids']): return True
         return False
