@@ -12,7 +12,7 @@ class MoveResolver():
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
-        moves = self.get_jump_moves_for_pawn(state.black_pawns[0], [])
+        moves = self.get_jump_moves_for_pawn(state.white_pawns[1], [])
         print(moves)
         # for pawn in state.white_pawns + state.black_pawns:
         #     if pawn: self.resolve_pawn_moves(pawn)
@@ -39,7 +39,7 @@ class MoveResolver():
     #     pass
 
     def get_jump_moves_for_pawn(self, pawn: Pawn, move_list: list, move: dict={}, debug=0)-> list:
-        """TODO zmienić tak żeby łapało tylko pawn.id do move a nie całe obiekty pawn"""
+        """debug on circle"""
         if self.pawn_has_obligatory_move(pawn, move):
             for y, x in self.directions:
                 try:
