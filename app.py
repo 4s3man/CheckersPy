@@ -13,8 +13,8 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 @app.route('/', methods=['POST', 'GET'])
 def checkers():
 
-    # state = one_coin_at_1_1()
-    state = extended_circle_state()
+    # state = one_pawn_at_1_1_state()
+    state = circle_state()
 
     checkers = Checkers(state)
     session['board_state'] = checkers.state.json_encode()

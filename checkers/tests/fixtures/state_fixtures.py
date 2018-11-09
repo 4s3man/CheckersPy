@@ -9,7 +9,7 @@ def initial_state():
     return InitialState()
 
 @pytest.fixture
-def one_coin_at_1_1():
+def one_pawn_at_1_1_state():
     return makeState({
     "white_pawns":
         [
@@ -22,7 +22,7 @@ def one_coin_at_1_1():
     })
 
 @pytest.fixture
-def different_coins_around_white():
+def different_pawns_around_white_state():
     return makeState({
         "white_pawns":
             [
@@ -56,7 +56,7 @@ def different_coins_around_white():
     })
 
 @pytest.fixture
-def extended_circle_state():
+def circle_state():
     return makeState({
         "white_pawns":
             [

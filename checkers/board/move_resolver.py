@@ -88,17 +88,17 @@ class MoveResolver():
         """false if position after jump is out of board"""
         y, x = (v*2 for v in vector)
         if not self.board.has_position(this_pawn.y + y, this_pawn.x + x): return False
-
         """false if pawns have same colors"""
         if pawn_to_check.color == this_pawn.color: return False
 
         """false if on field after jump is pawn and it's not the pawn who jumps"""
         field_after_jump = self.board.fields[this_pawn.y + y][this_pawn.x + x]
         if isinstance(field_after_jump, Pawn)\
-        and field_after_jump is not this_pawn: return False
+        and (field_after_jump.id != this_pawn.id)\
+        and (field_after_jump.color != this_pawn.color): return False
 
-        """if move is calculating and coin_in_direction wasn't beated yet"""
-        if len(move) and (pawn_to_check.id not in move['beated_pawn_ids']): return False
+        """false if move is calculating and coin_in_direction was already beated"""
+        if len(move) and (pawn_to_check.id in move['beated_pawn_ids']): return False
 
         return True
 
