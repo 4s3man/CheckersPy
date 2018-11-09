@@ -13,7 +13,7 @@ def one_pawn_at_1_1_state():
     return makeState({
     "white_pawns":
         [
-        {"y": 1, "x": 1,"color": "white", "type": "normal", "foreward": 1, "id": 0, "moves": []},
+        {"y": 1, "x": 1,"color": "white", "type": "normal", "foreward": -1, "id": 0, "moves": []},
         None,
         None, None, None, None, None, None, None, None, None, None
         ],
@@ -63,7 +63,7 @@ def extended_circle_state():
             None,
             {"y": 5, "x": 3,"color": "white", "type": "normal", "foreward": -1, "id": 1, "moves": []},
             {"y": 1, "x": 5,"color": "white", "type": "normal", "foreward": -1, "id": 2, "moves": []},
-            None,
+            {"y": 6, "x": 0,"color": "white", "type": "normal", "foreward": -1, "id": 3, "moves": []},
             None,
             None,
             None,
@@ -88,3 +88,37 @@ def extended_circle_state():
             None,
             None]
     })
+
+# @pytest.fixture
+# def no_moves_variations_state():
+#     return makeState({
+#         "white_pawns":
+#             [
+#             None,
+#             {"y": 5, "x": 3,"color": "white", "type": "normal", "foreward": -1, "id": 1, "moves": []},
+#             {"y": 1, "x": 5,"color": "white", "type": "normal", "foreward": -1, "id": 2, "moves": []},
+#             None,
+#             None,
+#             None,
+#             None,
+#             None,
+#             None,
+#             None,
+#             None,
+#             None
+#             ],
+#         "black_pawns":
+#             [
+#             {"y": 2, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 0, "moves": []},
+#             {"y": 4, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 1, "moves": []},
+#             {"y": 4, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 2, "moves": []},
+#             {"y": 2, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 3, "moves": []},
+#             {"y": 6, "x": 6,"color": "black", "type": "normal", "foreward": 1, "id": 4, "moves": []},
+#             {"y": 1, "x": 1,"color": "black", "type": "normal", "foreward": 1, "id": 5, "moves": []},
+#             None,
+#             None,
+#             None,
+#             None,
+#             None,
+#             None]
+#     })

@@ -12,8 +12,9 @@ class MoveResolver():
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
-        moves = self.get_jump_moves_for_pawn(state.white_pawns[2], [])
-        print(moves)
+        pawn = state.white_pawns[3]
+        pawn.moves = self.get_moves_for_pawn(pawn)
+        print(pawn.moves)
         # for pawn in state.white_pawns + state.black_pawns:
         #     if pawn: self.resolve_pawn_moves(pawn)
         # """debug to remove"""
@@ -28,17 +29,10 @@ class MoveResolver():
     #     # elif pawn.type == 'queen':
     #     #     self.get_moves_for_queen(pawn)
     #
-    # def get_moves_for_pawn(self, pawn: Pawn):
-    #     pawn.moves = self.get_jump_moves(pawn) or self.get_pawn_normal_moves(pawn)
-    #     pass
-    #
-    # def get_jump_moves(self, pawn: Pawn):
-    #     pass
-    #
-    # def get_pawn_normal_moves(self, pawn: Pawn):
-    #     pass
+    def get_moves_for_pawn(self, pawn: Pawn)-> list:
+        return self.get_jump_moves(pawn, []) or self.get_normal_pawn_moves(pawn)
 
-    def get_jump_moves_for_pawn(self, pawn: Pawn, move_list: list, move: dict={}, debug=0)-> list:
+    def get_jump_moves(self, pawn: Pawn, move_list: list, move: dict={})-> list:
         """debug on circle"""
         if self.pawn_has_obligatory_move(pawn, move):
             for y, x in self.directions:
@@ -60,9 +54,21 @@ class MoveResolver():
                             move_inst['positon_after_move'] = (next_y, next_x)
                             move_list.append(move_inst)
 
-                        self.get_jump_moves_for_pawn(pawn1, move_list, move_inst)
+                        self.get_jump_moves(pawn1, move_list, move_inst)
                 except BoardError:
                     pass
+        return move_list
+
+    def get_normal_pawn_moves(self, pawn: Pawn)-> list:
+        move_list = []
+        for y,x in [(pawn.foreward, 1), (pawn.foreward, -1)]:
+            try:
+                self.get_pawn_in_direction(pawn, (y, x))
+            except NoCoinError:
+                move = {"positon_after_move":(pawn.y + y, pawn.x + x)}
+                move_list.append(move)
+            except OutOfBoardError:
+                pass
         return move_list
 
     def pawn_has_obligatory_move(self, pawn: Pawn, move: dict = {})->bool:
