@@ -71,7 +71,7 @@ const Pawn = (props, handler) => {
   let blockClass = 'pawn';
   return (
     <span
-    className={classnames(blockClass, blockClass+'--'+props.color)}
+    className={classnames(blockClass, blockClass+'--'+props.color, blockClass+'--'+props.type)}
     onClick = {(e) => {props.handler()}}
     >
     {props.id}

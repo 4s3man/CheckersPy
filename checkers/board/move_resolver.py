@@ -28,7 +28,10 @@ class MoveResolver():
     #         self.get_moves_for_pawn(pawn)
     #     # elif pawn.type == 'queen':
     #     #     self.get_moves_for_queen(pawn)
-    #
+
+    def get_moves_for_queen(self, pawn:Pawn)->list:
+        pass
+
     def get_moves_for_pawn(self, pawn: Pawn)-> list:
         return self.get_most_beating_moves(self.get_jump_moves(pawn, [])) or self.get_normal_pawn_moves(pawn)
 

@@ -35,6 +35,10 @@ body{
   text-align: center;
 }
 
+.pawn--queen{
+  border: 2px solid red;
+}
+
 .pawn--white{
   background-color: white;
 }

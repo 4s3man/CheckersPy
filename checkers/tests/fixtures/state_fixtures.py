@@ -95,7 +95,7 @@ def for_queen_state():
         "white_pawns":
             [
             None,
-            {"y": 3, "x": 3,"color": "white", "type": "normal", "foreward": -1, "id": 1, "moves": []},
+            {"y": 3, "x": 3,"color": "white", "type": "queen", "foreward": -1, "id": 1, "moves": []},
             None,
             None,
             None,
