@@ -1,7 +1,3 @@
-przetestować:
- get_normal_pawn_moves
- get_moves_for_pawn
-
 zrobić:
   get_moves_for_queen
   make_move?

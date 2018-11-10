@@ -12,9 +12,9 @@ class MoveResolver():
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
-        pawn = state.white_pawns[2]
-        pawn.moves = self.get_moves_for_pawn(pawn)
-        print(pawn.moves)
+        # pawn = state.white_pawns[2]
+        # pawn.moves = self.get_moves_for_pawn(pawn)
+
         # for pawn in state.white_pawns + state.black_pawns:
         #     if pawn: self.resolve_pawn_moves(pawn)
         # """debug to remove"""
@@ -114,5 +114,8 @@ class MoveResolver():
 
     def get_most_beating_moves(self, move_list: list)->list:
         """Returns list of moves which has longest beated_pawn_ids"""
-        max_beated_pawns = len(max(move_list, key=lambda x: len(x['beated_pawn_ids']))['beated_pawn_ids'])
-        return [move for move in move_list if len(move['beated_pawn_ids']) == max_beated_pawns]
+        if len(move_list):
+            max_beated_pawns = len(max(move_list, key=lambda x: len(x['beated_pawn_ids']))['beated_pawn_ids'])
+            return [move for move in move_list if len(move['beated_pawn_ids']) == max_beated_pawns]
+        else:
+            return move_list
