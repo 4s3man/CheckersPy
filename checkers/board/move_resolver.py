@@ -12,22 +12,29 @@ class MoveResolver():
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
-        pawn = state.white_pawns[1]
-        print(self.get_queen_jump_moves(pawn))
 
-        # for pawn in state.white_pawns + state.black_pawns:
-        #     if pawn: self.resolve_pawn_moves(pawn)
-        # """debug to remove"""
-        # self.get_jump_moves(state.white_pawns[1])
-        #
-        # """debug to remove"""
+        for pawn in state.white_pawns + state.black_pawns:
+            if pawn: self.resolve_pawn_moves(pawn)
+        """TODO
+        przetestować resolve_moves
+        przyciąć ruchy tak że jeśli są jakieś bijące to żeby zostały tylko
+        te bijące które zbiją tyle samo pionków"""
+        print(state.black_pawns[5].moves)
         return state
 
-    # def resolve_pawn_moves(self, pawn: Pawn):
-    #     if pawn.type == 'normal':
-    #         self.get_moves_for_pawn(pawn)
-    #     # elif pawn.type == 'queen':
-    #     #     self.get_queen_jump_moves(pawn)
+    def resolve_pawn_moves(self, pawn: Pawn):
+        if pawn.type == 'normal':
+            pawn.moves = self.get_moves_for_pawn(pawn)
+        elif pawn.type == 'queen':
+            pawn.moves = self.get_moves_for_queen(pawn)
+        else:
+            pass
+
+    def get_moves_for_queen(self, queen: Pawn)->list:
+        return self.get_most_beating_moves(self.get_queen_jump_moves(queen)) or self.get_queen_normal_moves(queen)
+
+    def get_moves_for_pawn(self, pawn: Pawn)-> list:
+        return self.get_most_beating_moves(self.get_jump_moves(pawn, [])) or self.get_normal_pawn_moves(pawn)
 
     def get_queen_jump_moves(self, pawn:Pawn)->list:
         move_list = []
@@ -47,6 +54,21 @@ class MoveResolver():
                         move_list.append({'positon_after_move':(pawn_in_line.y+y, pawn_in_line.x+x), 'beated_pawn_ids':[pawn_in_line.id]})
         return move_list
 
+    def get_queen_normal_moves(self, this_pawn: Pawn)->list:
+        move_list = []
+        for direction in self.directions:
+            for i in range(1,self.board.board_size + 1):
+                y,x = (d*i for d in direction)
+                try:
+                    pawn_in_line = self.get_pawn_in_direction(this_pawn, (y,x))
+                    if pawn_in_line:
+                        break
+                except NoCoinError:
+                    move_list.append({'position_after_move':(this_pawn.y + y, this_pawn.x + x)})
+                except OutOfBoardError:
+                    pass
+        return move_list
+
     def get_pawn_in_line(self, this_pawn: Pawn, direction: tuple)->Pawn:
         for i in range(1,self.board.board_size + 1):
             y,x = (d*i for d in direction)
@@ -56,9 +78,6 @@ class MoveResolver():
                 pass
             except OutOfBoardError:
                 return None
-
-    def get_moves_for_pawn(self, pawn: Pawn)-> list:
-        return self.get_most_beating_moves(self.get_jump_moves(pawn, [])) or self.get_normal_pawn_moves(pawn)
 
     def get_jump_moves(self, pawn: Pawn, move_list: list, move: dict={})-> list:
         if self.pawn_has_obligatory_move(pawn, move):
@@ -117,7 +136,7 @@ class MoveResolver():
         if pawn_in_direction is None: raise NoCoinError('No coin in this direction')
         return pawn_in_direction
 
-    def pawn_can_jump_in_direction(self, this_pawn: Pawn, pawn_to_check: Pawn, vector: tuple, move: dict):
+    def pawn_can_jump_in_direction(self, this_pawn: Pawn, pawn_to_check: Pawn, vector: tuple, move: dict)->bool:
         """false if position after jump is out of board"""
         y, x = (v*2 for v in vector)
         if not self.board.has_position(this_pawn.y + y, this_pawn.x + x): return False
