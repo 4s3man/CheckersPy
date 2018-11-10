@@ -123,3 +123,39 @@ def for_queen_state():
             None,
             None]
     })
+
+@pytest.fixture
+def for_queen_blocking_pawns_state():
+    return makeState({
+        "white_pawns":
+            [
+            None,
+            {"y": 4, "x": 2,"color": "white", "type": "queen", "foreward": -1, "id": 1, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+        "black_pawns":
+            [
+            {"y": 3, "x": 1,"color": "black", "type": "normal", "foreward": 1, "id": 0, "moves": []},
+            {"y": 2, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 1, "moves": []},
+            {"y": 6, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 2, "moves": []},
+            {"y": 6, "x": 6,"color": "black", "type": "normal", "foreward": 1, "id": 3, "moves": []},
+            {"y": 1, "x": 1,"color": "black", "type": "normal", "foreward": 1, "id": 4, "moves": []},
+            {"y": 1, "x": 5,"color": "black", "type": "normal", "foreward": 1, "id": 5, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
+    })
