@@ -95,7 +95,7 @@ def for_queen_state():
         "white_pawns":
             [
             None,
-            {"y": 3, "x": 3,"color": "white", "type": "queen", "foreward": -1, "id": 1, "moves": []},
+            {"y": 4, "x": 2,"color": "white", "type": "queen", "foreward": -1, "id": 1, "moves": []},
             None,
             None,
             None,
@@ -109,9 +109,10 @@ def for_queen_state():
             ],
         "black_pawns":
             [
-            {"y": 2, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 0, "moves": []},
-            None,
-            None,
+            {"y": 2, "x": 0,"color": "black", "type": "normal", "foreward": 1, "id": 0, "moves": []},
+            {"y": 2, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 1, "moves": []},
+            {"y": 6, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 2, "moves": []},
+            {"y": 6, "x": 6,"color": "black", "type": "normal", "foreward": 1, "id": 3, "moves": []},
             None,
             None,
             None,

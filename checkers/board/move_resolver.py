@@ -12,8 +12,8 @@ class MoveResolver():
 
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
-        # pawn = state.white_pawns[2]
-        # pawn.moves = self.get_moves_for_pawn(pawn)
+        pawn = state.white_pawns[1]
+        self.get_moves_for_queen(pawn)
 
         # for pawn in state.white_pawns + state.black_pawns:
         #     if pawn: self.resolve_pawn_moves(pawn)
@@ -30,7 +30,32 @@ class MoveResolver():
     #     #     self.get_moves_for_queen(pawn)
 
     def get_moves_for_queen(self, pawn:Pawn)->list:
-        pass
+        move_list = []
+        for y, x in self.directions:
+            virtual_queen = copy.deepcopy(pawn)
+            pawn_in_line = self.get_pawn_in_line(virtual_queen, (y, x))
+            if pawn_in_line:
+                virtual_queen.y = pawn_in_line.y - y
+                virtual_queen.x = pawn_in_line.x - x
+                if self.pawn_can_jump_in_direction(virtual_queen, pawn_in_line, (y,x), {}):
+                    virtual_queen.y = pawn_in_line.y + y
+                    virtual_queen.x = pawn_in_line.x + x
+                    jump_moves = self.get_jump_moves(virtual_queen, [], {'positon_after_move':None, 'beated_pawn_ids':[pawn_in_line.id]})
+                    if jump_moves:
+                        move_list += jump_moves
+                    else:
+                        move_list.append({'positon_after_move':(pawn_in_line.y+y, pawn_in_line.x+x), 'beated_pawn_ids':[pawn_in_line.id]})
+        return move_list
+
+    def get_pawn_in_line(self, this_pawn: Pawn, direction: tuple)->Pawn:
+        for i in range(1,self.board.board_size + 1):
+            y,x = (d*i for d in direction)
+            try:
+                return self.get_pawn_in_direction(this_pawn, (y,x))
+            except NoCoinError:
+                pass
+            except OutOfBoardError:
+                return None
 
     def get_moves_for_pawn(self, pawn: Pawn)-> list:
         return self.get_most_beating_moves(self.get_jump_moves(pawn, [])) or self.get_normal_pawn_moves(pawn)
