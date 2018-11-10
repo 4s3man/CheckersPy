@@ -13,7 +13,7 @@ class MoveResolver():
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
         pawn = state.white_pawns[1]
-        self.get_moves_for_queen(pawn)
+        self.get_queen_jump_moves(pawn)
 
         # for pawn in state.white_pawns + state.black_pawns:
         #     if pawn: self.resolve_pawn_moves(pawn)
@@ -27,9 +27,9 @@ class MoveResolver():
     #     if pawn.type == 'normal':
     #         self.get_moves_for_pawn(pawn)
     #     # elif pawn.type == 'queen':
-    #     #     self.get_moves_for_queen(pawn)
+    #     #     self.get_queen_jump_moves(pawn)
 
-    def get_moves_for_queen(self, pawn:Pawn)->list:
+    def get_queen_jump_moves(self, pawn:Pawn)->list:
         move_list = []
         for y, x in self.directions:
             virtual_queen = copy.deepcopy(pawn)
