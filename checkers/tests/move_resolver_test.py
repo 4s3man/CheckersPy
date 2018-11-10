@@ -75,3 +75,8 @@ def test_get_normal_pawn_moves_extended_circle_state(extended_circle_state):
 
     assert [] == move_res.get_normal_pawn_moves(state.white_pawns[1])
     assert [{'positon_after_move': (0, 6)}] != move_res.get_normal_pawn_moves(state.white_pawns[1])
+
+def test_get_moves_for_pawn(extended_circle_state):
+    state = extended_circle_state
+    move_res = MoveResolver(state)
+    

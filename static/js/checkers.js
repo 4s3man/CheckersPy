@@ -73,7 +73,9 @@ const Pawn = (props, handler) => {
     <span
     className={classnames(blockClass, blockClass+'--'+props.color)}
     onClick = {(e) => {props.handler()}}
-    />
+    >
+    {props.id}
+    </span>
   )
 }
 
