@@ -1,9 +1,17 @@
-wysłać w reakcie ajaxowe zapytanie o state
+przetestować:
+ get_normal_pawn_moves
+ get_moves_for_pawn
 
-zdecydować się albo na jsx albo na const jeśli chodzi o pawn
+zrobić:
+  get_moves_for_queen
+  make_move?
+
+
+
+
+
+
+
+
 
 znleźć framework do testowania js
-
-przetestować funkcje renderującą
-
-dalsza refraktoryzacja na backendzie
