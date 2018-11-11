@@ -1,7 +1,7 @@
 zrobić:
-  get_moves_for_queen
-  make_move?
-
+  przetestować resolve_moves
+  przyciąć ruchy tak że jeśli są jakieś bijące to żeby zostały tylko
+  te bijące które zbiją tyle samo pionków
 
 
 

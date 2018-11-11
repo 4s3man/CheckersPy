@@ -1,4 +1,5 @@
 # to use in checkersPy as "sh run"
+setsid gnome-terminal &
 setsid firefox-developer --new-window localhost:5000 &
 (cd static/ && gnome-terminal -x sh -c "npm run watch; bash") &&
 setsid atom . && export FLASK_ENV=app.py && export FLASK_DEBUG=1 && . venv/bin/activate && flask run

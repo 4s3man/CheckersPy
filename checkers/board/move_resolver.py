@@ -13,22 +13,25 @@ class MoveResolver():
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
 
-        for pawn in state.white_pawns + state.black_pawns:
-            if pawn: self.resolve_pawn_moves(pawn)
+        self.resolve_pawn_moves(state)
+
+        # self.leave_max_beating_moves_only()
         """TODO
         przetestować resolve_moves
         przyciąć ruchy tak że jeśli są jakieś bijące to żeby zostały tylko
         te bijące które zbiją tyle samo pionków"""
-        print(state.black_pawns[5].moves)
+        # print(state.black_pawns[5].moves)
         return state
 
-    def resolve_pawn_moves(self, pawn: Pawn):
-        if pawn.type == 'normal':
-            pawn.moves = self.get_moves_for_pawn(pawn)
-        elif pawn.type == 'queen':
-            pawn.moves = self.get_moves_for_queen(pawn)
-        else:
-            pass
+    def resolve_pawn_moves(self, state: State):
+        for pawn in state.white_pawns + state.black_pawns:
+            if pawn:
+                if pawn.type == 'normal':
+                    pawn.moves = self.get_moves_for_pawn(pawn)
+                elif pawn.type == 'queen':
+                    pawn.moves = self.get_moves_for_queen(pawn)
+                else:
+                    pass
 
     def get_moves_for_queen(self, queen: Pawn)->list:
         return self.get_most_beating_moves(self.get_queen_jump_moves(queen)) or self.get_queen_normal_moves(queen)
