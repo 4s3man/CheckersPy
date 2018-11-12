@@ -17,11 +17,15 @@ def checkers():
     state = queen_extended_circle_state()
 
     checkers = Checkers(state)
-    for pawn in state.black_pawns:
+
+    """For making tests"""
+    for pawn in state.white_pawns:
         if pawn:
-            # print(pawn.id, pawn.moves, '\n')
-            print("assert", pawn.moves, '\\')
-            print("==state.black_pawns[" + str(pawn.id) + "].moves", "\n")
+            print(pawn.id, pawn.moves, '\n')
+    #         # print("assert", pawn.moves, '\\')
+    #         # print("==state.black_pawns[" + str(pawn.id) + "].moves", "\n")
+    """For making tests end"""
+
     session['board_state'] = checkers.state.json_encode()
 
     # if not 'board_state' in session.keys():

@@ -16,13 +16,33 @@ class MoveResolver():
         self.resolve_moves_for_pawn_collection(state.white_pawns)
         self.resolve_moves_for_pawn_collection(state.black_pawns)
 
-        # self.leave_max_beating_moves_only()
+        self.leave_max_beating_moves_only(state.white_pawns)
         """TODO
-        przetestować resolve_moves
-        przyciąć ruchy tak że jeśli są jakieś bijące to żeby zostały tylko
-        te bijące które zbiją tyle samo pionków"""
-        # print(state.black_pawns[5].moves)
+        przetestować reolve_moves
+        zrobić make move w checkers i front end
+        """
         return state
+
+    def leave_max_beating_moves_only(self, pawn_collection: list):
+        """
+        Modifies pawn collection so it has only moves who beat biggest amount of pawns
+        if there are no beating moves it leaves all of them
+        important for performance, and becouse most beating moves are obligatory according to rules
+        """
+        max_beated_pawns = max(
+                map(
+                    lambda pawn: self.get_max_beated_pawns_from_move_list(pawn.moves) if pawn != None else 0,
+                     pawn_collection
+                    )
+             )
+        for pawn in pawn_collection:
+            if pawn:
+                pawn.moves = list(
+                                filter(
+                                    lambda moves:len(moves.get('beated_pawn_ids', [])) == max_beated_pawns,
+                                    pawn.moves
+                                    )
+                                )
 
     def resolve_moves_for_pawn_collection(self, pawn_collection: list):
         for pawn in pawn_collection:
@@ -166,7 +186,13 @@ class MoveResolver():
     def get_most_beating_moves(self, move_list: list)->list:
         """Returns list of moves which has longest beated_pawn_ids"""
         if len(move_list):
-            max_beated_pawns = len(max(move_list, key=lambda x: len(x['beated_pawn_ids']))['beated_pawn_ids'])
+            max_beated_pawns = self.get_max_beated_pawns_from_move_list(move_list)
             return [move for move in move_list if len(move['beated_pawn_ids']) == max_beated_pawns]
         else:
             return move_list
+
+    def get_max_beated_pawns_from_move_list(self, move_list: list)->int:
+        if len(move_list):
+            return len(max(move_list, key=lambda x: len(x.get('beated_pawn_ids', []))).get('beated_pawn_ids', []))
+        else:
+            return 0
