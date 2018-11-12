@@ -13,7 +13,8 @@ class MoveResolver():
     def resolve_moves(self, state: State)->State:
         self.board.place_pawns(state)
 
-        self.resolve_pawn_moves(state)
+        self.resolve_moves_for_pawn_collection(state.white_pawns)
+        self.resolve_moves_for_pawn_collection(state.black_pawns)
 
         # self.leave_max_beating_moves_only()
         """TODO
@@ -23,8 +24,8 @@ class MoveResolver():
         # print(state.black_pawns[5].moves)
         return state
 
-    def resolve_pawn_moves(self, state: State):
-        for pawn in state.white_pawns + state.black_pawns:
+    def resolve_moves_for_pawn_collection(self, pawn_collection: list):
+        for pawn in pawn_collection:
             if pawn:
                 if pawn.type == 'normal':
                     pawn.moves = self.get_moves_for_pawn(pawn)

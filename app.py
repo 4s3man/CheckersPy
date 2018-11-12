@@ -14,9 +14,14 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 def checkers():
 
     # state = one_pawn_at_1_1_state()
-    state = for_queen_blocking_pawns_state()
+    state = queen_extended_circle_state()
 
     checkers = Checkers(state)
+    for pawn in state.black_pawns:
+        if pawn:
+            # print(pawn.id, pawn.moves, '\n')
+            print("assert", pawn.moves, '\\')
+            print("==state.black_pawns[" + str(pawn.id) + "].moves", "\n")
     session['board_state'] = checkers.state.json_encode()
 
     # if not 'board_state' in session.keys():

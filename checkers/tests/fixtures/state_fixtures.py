@@ -195,3 +195,37 @@ def for_queen_normal_moves_state():
             None,
             None]
     })
+
+@pytest.fixture
+def queen_extended_circle_state():
+    return makeState({
+        "white_pawns":
+            [
+            None,
+            {"y": 7, "x": 1,"color": "white", "type": "queen", "foreward": -1, "id": 1, "moves": []},
+            {"y": 0, "x": 2,"color": "white", "type": "queen", "foreward": -1, "id": 2, "moves": []},
+            {"y": 0, "x": 4,"color": "white", "type": "queen", "foreward": -1, "id": 3, "moves": []},
+            {"y": 1, "x": 7,"color": "white", "type": "queen", "foreward": -1, "id": 4, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+        "black_pawns":
+            [
+            {"y": 2, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 0, "moves": []},
+            {"y": 4, "x": 2,"color": "black", "type": "normal", "foreward": 1, "id": 1, "moves": []},
+            {"y": 4, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 2, "moves": []},
+            {"y": 2, "x": 4,"color": "black", "type": "normal", "foreward": 1, "id": 3, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
+    })
