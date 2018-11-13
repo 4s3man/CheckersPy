@@ -1,9 +1,28 @@
 zrobić:
-  przetestować resolve_moves
-  przyciąć ruchy tak że jeśli są jakieś bijące to żeby zostały tylko
-  te bijące które zbiją tyle samo pionków
+  gracz ma wchodzi do gry
+  dostaje pionki jakiegoś koloru? czy białego?
+  wysyła request do serwera a w nim jakimi pionkami gra
+    jeśli nie gra białymi to serwer czeka na ruch od białych ? a białe dadzą ruch od max mina?
+    zapisywać w sesji kto ostatnio miał ruch?
 
+    co się dzieje w przypadku kiedy gracz asynchronicznie wysyła ruch do serwera
+    serwer liczy ruch max-mina i w trakcie liczenia gracz odświeża strone wysyłając kolejne zapytanie?
+    serwer od nowa liczy max mina? więc serwer nie może mieć czasu na ruch, ale gracz musi mieć określony czas na ruch
 
+    jeszcze raz:
+      gracz dostaje białe pionki (dla uproszczenia)
+      wysyła zapytanie mam białe pionki jakie mam ruchy
+      dostaje ruchy
+      wybiera jeden z nich i wysyła zapytanie do serwera mam białe pionki i chce taki ruch
+        serwer wykonuje ruch
+        zapisuje nowy stan w sesji
+        zapisuje w sesji że ostatnio ruch został wykonany przez białe i jeśli zapytanie z "mam białe pionki" zostanie wysłane ponownie
+        to serwer
+          obliczy i wykona ruch dla czarnych pionków
+          zapisze nowy stan w sesji z informacją że ostatni ruch był czarnych
+            jeśli teraz będzie nowe zapytanie o białe pionki to serwer zwróci stan sesji
+        jeśli nowe zapytanie nie zostanie wysłane to serwer:
+          zwróci stan z sesji
 
 
 

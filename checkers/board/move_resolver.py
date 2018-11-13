@@ -19,8 +19,7 @@ class MoveResolver():
         self.leave_max_beating_moves_only(state.white_pawns)
         self.leave_max_beating_moves_only(state.black_pawns)
         """TODO
-        przetestować reolve_moves
-        zrobić make move w checkers i front end
+        które ruchy resolvować dla białych czy czarnych?
         """
         return state
 
