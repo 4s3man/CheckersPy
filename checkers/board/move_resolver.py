@@ -17,6 +17,7 @@ class MoveResolver():
         self.resolve_moves_for_pawn_collection(state.black_pawns)
 
         self.leave_max_beating_moves_only(state.white_pawns)
+        self.leave_max_beating_moves_only(state.black_pawns)
         """TODO
         przetestować reolve_moves
         zrobić make move w checkers i front end
