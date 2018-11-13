@@ -20,6 +20,16 @@ export function stateHasError(state = false, action){
   }
 };
 
+export function pawnClicked(state = false, action){
+  switch (action.type) {
+    case constants.PAWN_CLICKED:
+      return action.clicked;
+
+    default:
+      return state;
+  }
+};
+
 export function stateFetchSuccess(state = {}, action){
   switch (action.type) {
     case constants.STATE_FETCH_SUCCESS:

@@ -15,12 +15,20 @@ export function playerTurn(bool){
   }
 }
 
+export function pawnClicked(bool){
+  return {
+    type:constatns.COIN_CLICKED,
+    clicked:bool
+  }
+}
+
 export function stateFetchSuccess(state){
   return {
     type:constatns.STATE_FETCH_SUCCESS,
     state
   }
 }
+
 
 export function fetchBoardState(url){
   return dispatch => {
