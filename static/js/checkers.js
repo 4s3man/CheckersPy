@@ -11,6 +11,10 @@ class Checkers extends Component{
     this.props.fetchBoardState('/move');
   }
 
+  make_move(moves){
+    console.log(moves);
+  }
+
   createFieldsPawnObj(){
     if (this.props.boardState['white_pawns'] == undefined) return null;
     let pawns = this.props.boardState['white_pawns'].concat(this.props.boardState['black_pawns']);
@@ -18,7 +22,7 @@ class Checkers extends Component{
     for (let i=0; i<pawns.length; i++){
       if (pawns[i]){
         let key = pawns[i].x + ' ' + pawns[i].y;
-        pawnFields[key] = Pawn(pawns[i]);
+        pawnFields[key] = Pawn(pawns[i], this.make_move);
       }
     }
     return pawnFields;
@@ -72,7 +76,7 @@ const Pawn = (props, handler) => {
   return (
     <span
     className={classnames(blockClass, blockClass+'--'+props.color, blockClass+'--'+props.type)}
-    onClick = {(e) => {props.handler()}}
+    onClick = {(e) => {handler(props.moves)}}
     >
     {props.id}
     </span>

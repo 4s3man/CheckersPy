@@ -1,4 +1,10 @@
 zrobić:
+  dodać świecącą klasę do pionków jeśli mają ruchy
+  dodać podświetlenia pól na które pionki mogą się ruszać
+  dodać usuwanie i pionków z planszy i ruch pionka na pole z ruchu
+  dodać wysyłanie wybranego ruchu na serwer
+
+
   gracz ma wchodzi do gry
   dostaje pionki jakiegoś koloru? czy białego?
   wysyła request do serwera a w nim jakimi pionkami gra
