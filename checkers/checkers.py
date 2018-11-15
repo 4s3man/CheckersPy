@@ -9,7 +9,11 @@ class Checkers():
 
     def __init__(self, state: State):
         self.move_resolver = MoveResolver()
-        self.state = self.move_resolver.resolve_moves(state)
+        self.state = state
+        # self.state = self.move_resolver.resolve_moves(state)
+
+    def resolve_moves(self, collection: str):
+        self.state = self.move_resolver.resolve_moves(self.state, collection)
 
     """TODO TEST THIS"""
     # def make_move(self, pawn: Pawn, move_id: int):

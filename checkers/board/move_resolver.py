@@ -10,17 +10,11 @@ class MoveResolver():
         if state:
             self.board.place_pawns(state)
 
-    def resolve_moves(self, state: State)->State:
+    def resolve_moves(self, state: State, collection: str)->State:
         self.board.place_pawns(state)
-
-        self.resolve_moves_for_pawn_collection(state.white_pawns)
-        self.resolve_moves_for_pawn_collection(state.black_pawns)
-
-        self.leave_max_beating_moves_only(state.white_pawns)
-        self.leave_max_beating_moves_only(state.black_pawns)
-        """TODO
-        które ruchy resolvować dla białych czy czarnych?
-        """
+        collection = state.white_pawns if collection == 'white' else state.black_pawns
+        self.resolve_moves_for_pawn_collection(collection)
+        self.leave_max_beating_moves_only(collection)
         return state
 
     def leave_max_beating_moves_only(self, pawn_collection: list):

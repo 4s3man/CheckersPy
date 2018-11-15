@@ -1,4 +1,7 @@
 zrobić:
+  dodać obsługę jeśli w checkers.js this.props.hasError = true
+
+
   dodać świecącą klasę do pionków jeśli mają ruchy
   dodać podświetlenia pól na które pionki mogą się ruszać
   dodać usuwanie i pionków z planszy i ruch pionka na pole z ruchu

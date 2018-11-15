@@ -27,6 +27,7 @@ def checkers():
 
     if not 'board_state' in session.keys():
         checkers = Checkers(InitialState())
+        checkers.resolve_moves('white')
         session['board_state'] = checkers.state.json_encode()
         session['turn'] = 'white'
 

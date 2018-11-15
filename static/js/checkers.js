@@ -20,47 +20,33 @@ class Checkers extends Component{
   }
 
   createFields(){
-    let fieldPawn = this.dataToXYarray();
     let fields = [],
         id = 0;
     for (let y=0;y<8;y++){
       let row = [];
       for (let x=0;x<8;x++){
         id++;
-        row = this.appendBoardField(x, y, id, row, fieldPawn)
+        row = [...row, this.makeBoardField(x, y, id)];
       }
       fields = [...fields, row];
     }
     return fields;
   }
 
-  appendBoardField(x, y, id, row, fieldPawn){
+  makeBoardField(x, y, id){
     let color = (x+y)%2 == 0? 'white' : 'black';
-    let pawnData = fieldPawn && fieldPawn[x + ' ' + y]? fieldPawn[x + ' ' + y] : null;
-    let shouldPulse = pawnData ? pawnData.moves.length != 0 : false;
-    let pawn = pawnData ? Pawn(pawnData) : null;
-    let boardField = <BoardField
-                        pawn={pawn}
-                        shouldPulse={shouldPulse}
+    let fieldsData = this.props.fieldsData;
+    if (isEmpty(fieldsData)) return <BoardField color={color} key={id} /> ;
+
+    let fieldKey = y + ' ' + x;
+    let fieldData = fieldsData[fieldKey] != undefined ? fieldsData[fieldKey] : null;
+    let pawnData = fieldData && fieldData.pawn != undefined ? fieldData.pawn : null;
+
+    return <BoardField
+                        pawnData={pawnData}
                         color={color}
                         key={id}
-                        selectField = {this.selectField}
                         />;
-
-    return [...row, boardField];
-  }
-
-  dataToXYarray(){
-    if (this.props.boardState['white_pawns'] == undefined) return null;
-    let pawns = this.props.boardState['white_pawns'].concat(this.props.boardState['black_pawns']);
-    let pawnFields = {}
-    for (let i=0; i<pawns.length; i++){
-      if (pawns[i]){
-        let key = pawns[i].x + ' ' + pawns[i].y;
-        pawnFields[key] = pawns[i];
-      }
-    }
-    return pawnFields;
   }
 
   render(){
@@ -74,19 +60,17 @@ class Checkers extends Component{
 }
 
 class BoardField extends Component{
-  constructor(props, context){
-    super(props, context);
-  }
   render(){
     let blockClass = 'board__field';
-    let selectField = this.props.shouldPulse ? () => this.props.selectField() : () => {};
+    let pawn = this.props.pawnData ? Pawn(this.props.pawnData) : null;
+    let shouldPulse = pawn && this.props.pawnData.moves != undefined ? this.props.pawnData.moves.length != 0 : null;
+
     return (
       <div
-       className={classnames( {'board__field--pulse': this.props.shouldPulse}, blockClass, blockClass+'--'+this.props.color)}
+       className={classnames( {'board__field--pulse': shouldPulse}, blockClass, blockClass+'--'+this.props.color)}
        key={this.props.id}
-       onClick = {selectField}
        >
-       {this.props.pawn}
+       {pawn}
       </div>
     );
   }
@@ -105,7 +89,7 @@ const Pawn = (props) => {
 
 Checkers.propTypes = {
     fetchBoardState: PropTypes.func.isRequired,
-    boardState: PropTypes.object.isRequired,
+    fieldsData: PropTypes.object.isRequired,
     hasError: PropTypes.bool.isRequired,
     playerTurn: PropTypes.bool.isRequired,
     pawnClicked: PropTypes.bool.isRequired
@@ -113,7 +97,7 @@ Checkers.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    boardState: state.stateFetchSuccess,
+    fieldsData: state.stateFetchSuccess,
     hasError: state.stateHasError,
     playerTurn: state.statePlayerTurn,
     pawnClicked: state.pawnClicked
@@ -127,3 +111,11 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkers);
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}

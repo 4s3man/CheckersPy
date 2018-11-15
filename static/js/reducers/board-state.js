@@ -20,22 +20,25 @@ export function stateHasError(state = false, action){
   }
 };
 
-export function pawnClicked(state = false, action){
-  switch (action.type) {
-    case constants.PAWN_CLICKED:
-      return action.clicked;
-
-    default:
-      return state;
-  }
-};
-
 export function stateFetchSuccess(state = {}, action){
   switch (action.type) {
     case constants.STATE_FETCH_SUCCESS:
-      return action.state;
+      return makeFieldsDataFromState(action, state)
 
     default:
       return state;
   }
 };
+
+function makeFieldsDataFromState(action, stateBefore){
+  if (action.state['white_pawns'] == undefined) return state;
+  let pawns = action.state['white_pawns'].concat(action.state['black_pawns']);
+  let fieldsData = {}
+  for (let i=0; i<pawns.length; i++){
+    if (pawns[i]){
+      let key = pawns[i].y + ' ' + pawns[i].x;
+      fieldsData[key] = {pawn: pawns[i]};
+    }
+  }
+  return fieldsData;
+}
