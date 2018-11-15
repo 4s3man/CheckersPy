@@ -31,6 +31,7 @@ export function stateFetchSuccess(state = {}, action){
   }
 };
 
+//TODO do something with this func added here
 function makeFieldsDataFromState(action, stateBefore){
   if (action.state['white_pawns'] == undefined) return state;
   let pawns = action.state['white_pawns'].concat(action.state['black_pawns']);

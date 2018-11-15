@@ -4,7 +4,7 @@ import { fetch as fetchPolyfill } from 'whatwg-fetch'
 export function fetchBoardState(url){
   return dispatch => {
     dispatch(playerTurn(false));
-
+    
     fetchPolyfill(url, {method:'POST'})
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
