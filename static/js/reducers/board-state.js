@@ -1,4 +1,5 @@
-import * as constants from "../constants/action-types";
+import * as constants from "../constants/action-types"
+import {choosePawn} from "../actions/moves.js"
 
 export function statePlayerTurn(state = false, action){
   switch (action.type) {
@@ -38,6 +39,9 @@ function makeFieldsDataFromState(action, stateBefore){
     if (pawns[i]){
       let key = pawns[i].y + ' ' + pawns[i].x;
       fieldsData[key] = {pawn: pawns[i]};
+
+      if(pawns[i].moves != undefined && pawns[i].moves.length > 0)
+        fieldsData[key]['moveFunc'] = choosePawn;
     }
   }
   return fieldsData;

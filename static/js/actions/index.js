@@ -41,10 +41,3 @@ export function playerTurn(bool){
     playerTurn:bool
   }
 }
-
-export function pawnClicked(bool){
-  return {
-    type:constatns.COIN_CLICKED,
-    clicked:bool
-  }
-}

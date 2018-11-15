@@ -4,7 +4,7 @@ import {fetch as fetchPolyfill} from 'whatwg-fetch';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { stateFetchSuccess, stateHasError, statePlayerTurn, fetchBoardState, pawnClicked } from './actions';
+import { stateFetchSuccess, stateHasError, statePlayerTurn, fetchBoardState, pawnChoosed, chooseMove } from './actions';
 
 class Checkers extends Component{
   componentDidMount(){
@@ -89,10 +89,12 @@ const Pawn = (props) => {
 
 Checkers.propTypes = {
     fetchBoardState: PropTypes.func.isRequired,
+    chooseMove: PropTypes.func.isRequired,
     fieldsData: PropTypes.object.isRequired,
+
     hasError: PropTypes.bool.isRequired,
     playerTurn: PropTypes.bool.isRequired,
-    pawnClicked: PropTypes.bool.isRequired
+    pawnChoosed: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -100,13 +102,14 @@ const mapStateToProps = (state) => {
     fieldsData: state.stateFetchSuccess,
     hasError: state.stateHasError,
     playerTurn: state.statePlayerTurn,
-    pawnClicked: state.pawnClicked
+    pawnChoosed: state.pawnChoosed
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchBoardState: (url) => dispatch(fetchBoardState(url))
+    fetchBoardState: (url) => dispatch(fetchBoardState(url)),
+    chooseMove: (move) => dispatch(chooseMove(move))
   };
 }
 
