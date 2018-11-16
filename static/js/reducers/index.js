@@ -1,9 +1,11 @@
-import {stateHasError, stateFetchSuccess, statePlayerTurn} from './board-state'
+import {stateHasError, statePlayerTurn, fields, pawns, moves} from './board-state'
 import {pawnChoosed} from './moves.js'
 import {combineReducers} from 'redux'
 
 export default combineReducers({
-  stateFetchSuccess,
+  pawns,
+  fields,
+  moves,
   stateHasError,
   statePlayerTurn,
   pawnChoosed

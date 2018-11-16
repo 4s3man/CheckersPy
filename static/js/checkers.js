@@ -12,14 +12,6 @@ class Checkers extends Component{
     this.props.fetchBoardState('/move');
   }
 
-  selectField() {
-    console.log('ok');
-  }
-
-  make_move(moves){
-    console.log(moves);
-  }
-
   createFields(){
     let fields = [],
         id = 0;
@@ -36,19 +28,14 @@ class Checkers extends Component{
 
   makeBoardField(x, y, id){
     let color = (x+y)%2 == 0? 'white' : 'black';
-    let fieldsData = this.props.fieldsData;
-    if (isEmpty(fieldsData)) return <BoardField color={color} key={id} /> ;
-
     let fieldKey = y + ' ' + x;
-    let fieldData = fieldsData[fieldKey] != undefined ? fieldsData[fieldKey] : null;
-    let pawnData = fieldData && fieldData.pawn != undefined ? fieldData.pawn : null;
+    let field = this.props.fields[fieldKey] || null;
 
-    return <BoardField
-                        pawnData={pawnData}
-                        color={color}
-                        key={id}
-                        moveFun = {this.props.choosePawn}
-                        />;
+    if (!field) return FilerField(color, id);
+    
+    if(field.funcs) return ClickableField(color, id, field.funcs, this.props.pawns[field.pawn]);
+    else return FilerField(color, id, this.props.pawns[field.pawn]);
+
   }
 
   render(){
@@ -61,22 +48,29 @@ class Checkers extends Component{
 
 }
 
-class BoardField extends Component{
-  render(){
-    let blockClass = 'board__field';
-    let pawn = this.props.pawnData ? Pawn(this.props.pawnData) : null;
-    let shouldPulse = pawn && this.props.pawnData.moves != undefined ? this.props.pawnData.moves.length != 0 : null;
-
-    return (
+const ClickableField = (color, id, funcs=null, pawn=null) => {
+  let blockClass = 'board__field';
+  return (
       <div
-       className={classnames( {'board__field--pulse': shouldPulse}, blockClass, blockClass+'--'+this.props.color)}
-       key={this.props.id}
-       onClick = {() => this.props.moveFun()}
+       className={classnames(blockClass, blockClass+'--'+color)}
+       key={id}
+       // onClick = {() => moveFun({'fieldKey': this.props.fieldKey, 'moves': this.props.pawnData.moves})}
        >
-       {pawn}
+       {pawn ? Pawn(pawn) : null}
       </div>
     );
-  }
+}
+
+const FilerField = (color, id, pawn=null) => {
+  let blockClass = 'board__field';
+  return (
+      <div
+       className={classnames(blockClass, blockClass+'--'+color)}
+       key={id}
+       >
+       {pawn ? Pawn(pawn) : null}
+      </div>
+    );
 }
 
 const Pawn = (props) => {
@@ -87,21 +81,25 @@ const Pawn = (props) => {
     >
     {props.id}
     </span>
-  )
+  );
 }
 
 Checkers.propTypes = {
     fetchBoardState: PropTypes.func.isRequired,
     choosePawn: PropTypes.func.isRequired,
-    fieldsData: PropTypes.object.isRequired,
     hasError: PropTypes.bool.isRequired,
     playerTurn: PropTypes.bool.isRequired,
-    pawnChoosed: PropTypes.bool.isRequired
+    pawnChoosed: PropTypes.object.isRequired,
+
+    fields: PropTypes.object.isRequired,
+    pawns: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {
   return {
-    fieldsData: state.stateFetchSuccess,
+    fields: state.fields,
+    pawns: state.pawns,
+    moves: state.moves,
     hasError: state.stateHasError,
     playerTurn: state.statePlayerTurn,
     pawnChoosed: state.pawnChoosed
@@ -111,7 +109,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchBoardState: (url) => dispatch(fetchBoardState(url)),
-    choosePawn: () => dispatch(choosePawn())
+    choosePawn: (pawnData) => dispatch(choosePawn(pawnData))
   };
 }
 

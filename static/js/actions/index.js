@@ -4,13 +4,14 @@ import { fetch as fetchPolyfill } from 'whatwg-fetch'
 export function fetchBoardState(url){
   return dispatch => {
     dispatch(playerTurn(false));
-    
+
     fetchPolyfill(url, {method:'POST'})
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
       else return response;
     })
     .then((response) => response.json())
+    .then((data) => normalizeData(data))
     .then((data) => dispatch(stateFetchSuccess(data)))
     .then(() => dispatch(playerTurn(true)))
     .catch((e) => {
@@ -20,11 +21,39 @@ export function fetchBoardState(url){
   }
 }
 
+//TODO do something with this func added here
+function normalizeData(data){
+  let pawns = data['white_pawns'].concat(data['black_pawns']);
+  let statePart = {fields:{}, pawns:{}, moves:{}};
 
-export function stateFetchSuccess(state){
+  for (var i=0, moveId = 1; i<pawns.length; i++){
+    let fieldKey = pawns[i].y + ' ' + pawns[i].x;
+    let pawnId = i+1;
+
+    let moves = pawns[i].moves != undefined ? pawns[i].moves : [];
+    let pawnMovesId = [];
+    for (let m = 0; m < moves.length; m++) {
+      pawnMovesId.push(moveId);
+      statePart.moves[moveId] = moves[m];
+      moveId++;
+    }
+    pawns[i].moves = pawnMovesId;
+
+    statePart.pawns[pawnId] = pawns[i];
+    delete pawns[i].x
+    delete pawns[i].y
+    statePart.fields[fieldKey] = {'pawn':pawnId};
+  }
+
+  return statePart;
+}
+
+export function stateFetchSuccess(data){
   return {
     type:constatns.STATE_FETCH_SUCCESS,
-    state
+    fields: data.fields,
+    pawns: data.pawns,
+    moves: data.moves
   }
 }
 

@@ -1,4 +1,5 @@
 zrobić:
+  zastanowiś się czy lepiej zrobić osobny obiekt fieldKey : fieldFunc czy lepiej umieścić funkcje w fieldsData ??
   dodać obsługę jeśli w checkers.js this.props.hasError = true
 
 

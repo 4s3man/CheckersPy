@@ -1,15 +1,15 @@
 import * as constants from "../constants/action-types";
 
-export function pawnChoosed(bool){
+export function pawnChoosed(moves){
   return {
     type:constants.PAWN_CHOOSED,
-    clicked:bool
+    choosenPawn:moves
   }
 }
 
-export function choosePawn(){
-  return dispatch => {
-    console.log('ok');
-    dispatch(pawnChoosed(true));
+export function choosePawn(moves){
+  return (dispatch) => {
+    console.log(moves);  
+    dispatch(pawnChoosed(moves));
   }
 }

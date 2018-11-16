@@ -21,29 +21,32 @@ export function stateHasError(state = false, action){
   }
 };
 
-export function stateFetchSuccess(state = {}, action){
+export function fields(state = {}, action){
   switch (action.type) {
     case constants.STATE_FETCH_SUCCESS:
-      return makeFieldsDataFromState(action, state)
+      return action.fields;
 
     default:
       return state;
   }
 };
 
-//TODO do something with this func added here
-function makeFieldsDataFromState(action, stateBefore){
-  if (action.state['white_pawns'] == undefined) return state;
-  let pawns = action.state['white_pawns'].concat(action.state['black_pawns']);
-  let fieldsData = {}
-  for (let i=0; i<pawns.length; i++){
-    if (pawns[i]){
-      let key = pawns[i].y + ' ' + pawns[i].x;
-      fieldsData[key] = {pawn: pawns[i]};
+export function pawns(state = {}, action){
+  switch (action.type) {
+    case constants.STATE_FETCH_SUCCESS:
+      return action.pawns;
 
-      if(pawns[i].moves != undefined && pawns[i].moves.length > 0)
-        fieldsData[key]['moveFunc'] = choosePawn;
-    }
+    default:
+      return state;
   }
-  return fieldsData;
-}
+};
+
+export function moves(state = {}, action){
+  switch (action.type) {
+    case constants.STATE_FETCH_SUCCESS:
+      return action.moves;
+
+    default:
+      return state;
+  }
+};
