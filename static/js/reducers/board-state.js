@@ -1,5 +1,5 @@
 import * as constants from "../constants/action-types"
-import {choosePawn} from "../actions/moves.js"
+import {selectPawn, deselectPawn, makeMove} from "../actions/moves.js"
 
 export function statePlayerTurn(state = false, action){
   switch (action.type) {
@@ -21,15 +21,43 @@ export function stateHasError(state = false, action){
   }
 };
 
+
 export function fields(state = {}, action){
   switch (action.type) {
     case constants.STATE_FETCH_SUCCESS:
+      for (let key in action.fields) {
+        if (action.fields.hasOwnProperty(key)) {
+          let field = action.fields[key];
+          if(field.moves.length)field['funcs'] = 'selectPawn';
+        }
+      }
       return action.fields;
+
+    case constants.SELECT_FIELD_FUNCTIONS_UPDATE:
+      let updatedFields = Object.assign({}, state);
+      cleanPreviousFieldFunctions(updatedFields);
+      updatedFields[action.field].funcs = 'deselectPawn';
+      action.normalizedMoves.forEach((move)=>{
+        updatedFields[move.position_after_move] = {'funcs':'makeMove'};
+      });
+      return updatedFields;
 
     default:
       return state;
   }
 };
+
+function cleanPreviousFieldFunctions(state) {
+  for (let key in state) {
+    if (state.hasOwnProperty(key)) {
+      if (state[key].funcs === 'makeMove' || state[key].funcs === 'deselectPawn') {
+        delete state[key].funcs;
+      }
+      if(state[key].moves && state[key].moves.length)state[key].funcs = 'selectPawn';
+    }
+  }
+}
+
 
 export function pawns(state = {}, action){
   switch (action.type) {

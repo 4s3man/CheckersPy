@@ -22,7 +22,7 @@ class Checkers():
     #     for enemy_pawn in state.enemy_pawns:
     #         if enemy_pawn.id in move.get('beated_pawn_ids', []):
     #             enemy_pawn = None
-    #     pawn.y, pawn.x = move['positon_after_move']
+    #     pawn.y, pawn.x = move['position_after_move']
     #
     #     if pawn.y + pawn.foreward not in range(8):
     #         pawn.type = 'queen'

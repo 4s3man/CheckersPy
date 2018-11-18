@@ -42,7 +42,7 @@ function normalizeData(data){
     statePart.pawns[pawnId] = pawns[i];
     delete pawns[i].x
     delete pawns[i].y
-    statePart.fields[fieldKey] = {'pawn':pawnId};
+    statePart.fields[fieldKey] = {'pawn':pawnId, 'fieldKey':fieldKey, 'moves':pawns[i].moves};
   }
 
   return statePart;

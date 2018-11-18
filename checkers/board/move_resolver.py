@@ -65,11 +65,11 @@ class MoveResolver():
                 if self.pawn_can_jump_in_direction(virtual_queen, pawn_in_line, (y,x), {}):
                     virtual_queen.y = pawn_in_line.y + y
                     virtual_queen.x = pawn_in_line.x + x
-                    jump_moves = self.get_jump_moves(virtual_queen, [], {'positon_after_move':None, 'beated_pawn_ids':[pawn_in_line.id]})
+                    jump_moves = self.get_jump_moves(virtual_queen, [], {'position_after_move':None, 'beated_pawn_ids':[pawn_in_line.id]})
                     if jump_moves:
                         move_list += jump_moves
                     else:
-                        move_list.append({'positon_after_move':(pawn_in_line.y+y, pawn_in_line.x+x), 'beated_pawn_ids':[pawn_in_line.id]})
+                        move_list.append({'position_after_move':(pawn_in_line.y+y, pawn_in_line.x+x), 'beated_pawn_ids':[pawn_in_line.id]})
         return move_list
 
     def get_queen_normal_moves(self, this_pawn: Pawn)->list:
@@ -105,7 +105,7 @@ class MoveResolver():
                     if self.pawn_can_jump_in_direction(pawn, pawn_in_direction, (y, x), move):
                         next_y, next_x = pawn_in_direction.y + y, pawn_in_direction.x + x
 
-                        move_inst = {'positon_after_move':None, 'beated_pawn_ids':[]} if not len(move) else copy.deepcopy(move)
+                        move_inst = {'position_after_move':None, 'beated_pawn_ids':[]} if not len(move) else copy.deepcopy(move)
                         move_inst['beated_pawn_ids'].append(pawn_in_direction.id)
 
                         pawn1 = copy.deepcopy(pawn)
@@ -115,7 +115,7 @@ class MoveResolver():
                         if move_inst not in move_list\
                         and not self.pawn_has_obligatory_move(pawn1, move_inst)\
                         and not self.same_pawns_beated(move_inst, move_list):
-                            move_inst['positon_after_move'] = (next_y, next_x)
+                            move_inst['position_after_move'] = (next_y, next_x)
                             move_list.append(move_inst)
 
                         self.get_jump_moves(pawn1, move_list, move_inst)
@@ -129,7 +129,7 @@ class MoveResolver():
             try:
                 self.get_pawn_in_direction(pawn, (y, x))
             except NoCoinError:
-                move = {"positon_after_move":(pawn.y + y, pawn.x + x)}
+                move = {"position_after_move":(pawn.y + y, pawn.x + x)}
                 move_list.append(move)
             except OutOfBoardError:
                 pass

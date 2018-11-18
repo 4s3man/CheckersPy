@@ -23,25 +23,45 @@ body{
   background-color: #666666;
 }
 
-.board__field--pulse{
-  animation:pulsation 3s infinite alternate;
-  -webkit-animation:pulsation 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
+.pulse--selectPawn{
+  animation:pulsation-yellow 3s infinite alternate;
+  -webkit-animation:pulsation-yellow 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
+}
+.pulse--deselectPawn, .pulse--makeMove{
+  animation:pulsation-green 3s infinite alternate;
+  -webkit-animation:pulsation-green 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
 }
 
-/* ---------------------REGUŁY-ANIMACJI--------------------- */
-@keyframes pulsation
+
+@keyframes pulsation-yellow
 {
 0% { box-shadow: 0px 0px 10px inset yellow; }
 50% { box-shadow: 0px 0px 20px inset yellow; }
 100% { box-shadow: 0px 0px 10px inset yellow; }
 }
 
-@-webkit-keyframes pulsation /* dla Google Chrome, Safari, Opera 15+ */
+@-webkit-keyframes pulsation-yellow /* dla Google Chrome, Safari, Opera 15+ */
 {
   0% { box-shadow: 0px 0px 10px inset yellow; }
   50% { box-shadow: 0px 0px 20px inset yellow; }
   100% { box-shadow: 0px 0px 10px inset yellow; }
 }
+
+@keyframes pulsation-green
+{
+0% { box-shadow: 0px 0px 10px inset green; }
+50% { box-shadow: 0px 0px 20px inset green; }
+100% { box-shadow: 0px 0px 10px inset green; }
+}
+
+@-webkit-keyframes pulsation-green /* dla Google Chrome, Safari, Opera 15+ */
+{
+  0% { box-shadow: 0px 0px 10px inset green; }
+  50% { box-shadow: 0px 0px 20px inset green; }
+  100% { box-shadow: 0px 0px 10px inset green; }
+}
+
+
 .pawn{
   display: flex;
   width: 30px;

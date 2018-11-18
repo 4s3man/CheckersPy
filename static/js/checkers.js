@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { stateFetchSuccess, stateHasError, statePlayerTurn, fetchBoardState} from './actions/index.js'
-import {pawnChoosed, choosePawn} from './actions/moves.js'
+import {pawnChoosed, selectPawn} from './actions/moves.js'
 
 class Checkers extends Component{
   componentDidMount(){
@@ -32,8 +32,11 @@ class Checkers extends Component{
     let field = this.props.fields[fieldKey] || null;
 
     if (!field) return FilerField(color, id);
-    
-    if(field.funcs) return ClickableField(color, id, field.funcs, this.props.pawns[field.pawn]);
+
+    if(field.funcs){
+      let fieldFunc = () => this.props[field.funcs]({'fieldKey':fieldKey, 'moves':this.props.pawns[field.pawn].moves});
+      return ClickableField(color, id, field, fieldFunc, this.props.pawns[field.pawn]);
+    }
     else return FilerField(color, id, this.props.pawns[field.pawn]);
 
   }
@@ -48,13 +51,14 @@ class Checkers extends Component{
 
 }
 
-const ClickableField = (color, id, funcs=null, pawn=null) => {
+const ClickableField = (color, id, field, func, pawn=null) => {
   let blockClass = 'board__field';
+  let pulse = field.funcs ? 'pulse--' + field.funcs : '';
   return (
       <div
-       className={classnames(blockClass, blockClass+'--'+color)}
+       className={classnames(pulse, blockClass, blockClass+'--'+color)}
        key={id}
-       // onClick = {() => moveFun({'fieldKey': this.props.fieldKey, 'moves': this.props.pawnData.moves})}
+       onClick = {() => func()}
        >
        {pawn ? Pawn(pawn) : null}
       </div>
@@ -86,10 +90,9 @@ const Pawn = (props) => {
 
 Checkers.propTypes = {
     fetchBoardState: PropTypes.func.isRequired,
-    choosePawn: PropTypes.func.isRequired,
+    selectPawn: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     playerTurn: PropTypes.bool.isRequired,
-    pawnChoosed: PropTypes.object.isRequired,
 
     fields: PropTypes.object.isRequired,
     pawns: PropTypes.object.isRequired
@@ -100,25 +103,17 @@ const mapStateToProps = (state) => {
     fields: state.fields,
     pawns: state.pawns,
     moves: state.moves,
+
     hasError: state.stateHasError,
     playerTurn: state.statePlayerTurn,
-    pawnChoosed: state.pawnChoosed
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchBoardState: (url) => dispatch(fetchBoardState(url)),
-    choosePawn: (pawnData) => dispatch(choosePawn(pawnData))
+    selectPawn: (moves) => dispatch(selectPawn(moves))
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkers);
-
-function isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
-}
