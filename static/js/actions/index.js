@@ -1,11 +1,17 @@
 import * as constatns from "../constants/action-types"
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
-export function fetchBoardState(url){
+export function fetchBoardState(url, payload={}){
   return dispatch => {
     dispatch(playerTurn(false));
 
-    fetchPolyfill(url, {method:'POST'})
+    fetchPolyfill(url, {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(payload)
+    })
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
       else return response;
@@ -21,7 +27,6 @@ export function fetchBoardState(url){
   }
 }
 
-//TODO do something with this func added here
 function normalizeData(data){
   let pawns = data['white_pawns'].concat(data['black_pawns']);
   let statePart = {fields:{}, pawns:{}, moves:{}};

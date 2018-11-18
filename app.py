@@ -36,5 +36,6 @@ def checkers():
 
 @app.route('/move', methods=['POST'])
 def move():
+    print(request.get_json())
     # time.sleep(2)
     return session['board_state']

@@ -37,7 +37,7 @@ export function fields(state = {}, action){
       let updatedFields = cleanPreviousFieldFunctions(Object.assign({}, state));
       updatedFields[action.field].funcs = 'deselectPawn';
       action.normalizedMoves.forEach((move)=>{
-        updatedFields[move.position_after_move] = {'funcs':'makeMove'};
+        updatedFields[move.position_after_move] = {'funcs':'fetchBoardState'};
       });
       return updatedFields;
 
@@ -52,7 +52,7 @@ export function fields(state = {}, action){
 function cleanPreviousFieldFunctions(state) {
   for (let key in state) {
     if (state.hasOwnProperty(key)) {
-      if (state[key].funcs === 'makeMove' || state[key].funcs === 'deselectPawn') {
+      if (state[key].funcs === 'fetchBoardState' || state[key].funcs === 'deselectPawn') {
         delete state[key].funcs;
       }
       if(state[key].moves && state[key].moves.length)state[key].funcs = 'selectPawn';

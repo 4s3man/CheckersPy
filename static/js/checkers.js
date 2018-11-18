@@ -34,7 +34,17 @@ class Checkers extends Component{
     if (!field) return FilerField(color, id);
 
     if(field.funcs){
-      let fieldFunc = () => this.props[field.funcs]({'fieldKey':fieldKey, 'moves':this.props.pawns[field.pawn].moves});
+      let fieldFunc = null;
+      switch (field.funcs) {
+        case 'deselectPawn':
+          fieldFunc = () => this.props.deselectPawn();
+          break;
+        case 'fetchBoardState':
+          fieldFunc = () => this.props.fetchBoardState('/move', {'stuff':'dono'});
+          break;
+        default:
+          fieldFunc = () => this.props.selectPawn({'fieldKey':fieldKey, 'moves':this.props.pawns[field.pawn].moves});
+      }
       return ClickableField(color, id, field, fieldFunc, this.props.pawns[field.pawn]);
     }
     else return FilerField(color, id, this.props.pawns[field.pawn]);
@@ -113,7 +123,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchBoardState: (url) => dispatch(fetchBoardState(url)),
     selectPawn: (moves) => dispatch(selectPawn(moves)),
-    deselectPawn: (moves) => dispatch(deselectPawn())
+    deselectPawn: () => dispatch(deselectPawn())
   };
 }
 

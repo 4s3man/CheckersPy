@@ -27,7 +27,7 @@ body{
   animation:pulsation-yellow 3s infinite alternate;
   -webkit-animation:pulsation-yellow 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
 }
-.pulse--deselectPawn, .pulse--makeMove{
+.pulse--deselectPawn, .pulse--fetchBoardState{
   animation:pulsation-green 3s infinite alternate;
   -webkit-animation:pulsation-green 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
 }
