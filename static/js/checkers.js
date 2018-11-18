@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { stateFetchSuccess, stateHasError, statePlayerTurn, fetchBoardState} from './actions/index.js'
-import {pawnChoosed, selectPawn} from './actions/moves.js'
+import {deselectPawn, selectPawn} from './actions/moves.js'
 
 class Checkers extends Component{
   componentDidMount(){
@@ -112,7 +112,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchBoardState: (url) => dispatch(fetchBoardState(url)),
-    selectPawn: (moves) => dispatch(selectPawn(moves))
+    selectPawn: (moves) => dispatch(selectPawn(moves)),
+    deselectPawn: (moves) => dispatch(deselectPawn())
   };
 }
 

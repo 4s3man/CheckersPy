@@ -34,13 +34,15 @@ export function fields(state = {}, action){
       return action.fields;
 
     case constants.SELECT_FIELD_FUNCTIONS_UPDATE:
-      let updatedFields = Object.assign({}, state);
-      cleanPreviousFieldFunctions(updatedFields);
+      let updatedFields = cleanPreviousFieldFunctions(Object.assign({}, state));
       updatedFields[action.field].funcs = 'deselectPawn';
       action.normalizedMoves.forEach((move)=>{
         updatedFields[move.position_after_move] = {'funcs':'makeMove'};
       });
       return updatedFields;
+
+    case constants.DESELECT_FIELD_FUNCTIONS_UPDATE:
+      return cleanPreviousFieldFunctions(Object.assign({}, state));;
 
     default:
       return state;
@@ -56,6 +58,7 @@ function cleanPreviousFieldFunctions(state) {
       if(state[key].moves && state[key].moves.length)state[key].funcs = 'selectPawn';
     }
   }
+  return state;
 }
 
 

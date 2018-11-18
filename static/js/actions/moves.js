@@ -8,6 +8,11 @@ export function updateFieldFunc(fieldMoveObj){
   }
 }
 
+export function deselectFieldFunc(){
+  return {
+    type:constants.DESELECT_FIELD_FUNCTIONS_UPDATE
+  }
+}
 
 export function selectPawn(payload){
     return (dispatch, getState) => {
@@ -19,18 +24,10 @@ export function selectPawn(payload){
     }
 }
 
-export function deselectPawn(moves){
-  return (dispatch) => {
-    console.log('pawn deselected');
-    console.log(moves);
-  }
-}
-
-export function makeMove(moves){
-  return (dispatch) => {
-    console.log('move made');
-    console.log(moves);
-  }
+export function deselectPawn(payload){
+    return (dispatch) => {
+      dispatch(deselectFieldFunc());
+    }
 }
 
 function normalizePayloadMoves(getState, payloadSrc){
