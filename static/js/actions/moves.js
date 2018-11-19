@@ -14,13 +14,21 @@ export function deselectFieldFunc(){
   }
 }
 
+export function saveMoveDataForServerTmp(payload){
+  return {
+    type: constants.SAVE_MOVE_DATA_TMP,
+    moveData: payload
+  }
+}
+
 export function selectPawn(payload){
     return (dispatch, getState) => {
-      dispatch(
-        updateFieldFunc(
-          normalizePayloadMoves(getState, payload)
-        )
-      );
+      let state = getState();
+      let normalizedMoves = normalizePayloadMoves(state, payload);
+      let serverDataTmp = makeServerDataTmp(state, payload);
+
+      dispatch(updateFieldFunc(normalizedMoves));
+      dispatch(saveMoveDataForServerTmp(serverDataTmp))
     }
 }
 
@@ -30,9 +38,20 @@ export function deselectPawn(payload){
     }
 }
 
-function normalizePayloadMoves(getState, payloadSrc){
+function makeServerDataTmp(state, payload) {
+  let pawn = state.pawns[state.fields[payload['fieldKey']].pawn];
+  let moves = payload['moves'].map((id)=>state.moves[id]);
+  let serverDataTmp = {};
+  for (let i = 0; i < moves.length; i++) {
+    let fieldKey = moves[i].position_after_move.join(' ');
+    serverDataTmp[fieldKey] = {'pawnType':pawn.type, 'pawnColor':pawn.color, 'pawnId':pawn.id, 'move':moves[i]};
+  }
+
+  return serverDataTmp;
+}
+
+function normalizePayloadMoves(state, payloadSrc){
   let payload = Object.assign({}, payloadSrc);
-  let state = getState();
   let beatedPawnColor = state.pawns[state.fields[payload['fieldKey']].pawn].color === 'white' ?
     'black' : 'white';
   let movesIds = payload['moves'];

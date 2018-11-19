@@ -32,22 +32,24 @@ class Checkers extends Component{
     let field = this.props.fields[fieldKey] || null;
 
     if (!field) return FilerField(color, id);
+    let pawn = this.props.pawns[field.pawn] || null;
 
     if(field.funcs){
       let fieldFunc = null;
+      let pawn = this.props.pawns[field.pawn]
       switch (field.funcs) {
         case 'deselectPawn':
           fieldFunc = () => this.props.deselectPawn();
           break;
         case 'fetchBoardState':
-          fieldFunc = () => this.props.fetchBoardState('/move', {'stuff':'dono'});
+          fieldFunc = () => this.props.fetchBoardState('/move', {'moveData':this.props.moveDataTmp[fieldKey]});
           break;
         default:
-          fieldFunc = () => this.props.selectPawn({'fieldKey':fieldKey, 'moves':this.props.pawns[field.pawn].moves});
+          fieldFunc = () => this.props.selectPawn({'fieldKey':fieldKey, 'moves':pawn.moves});
       }
-      return ClickableField(color, id, field, fieldFunc, this.props.pawns[field.pawn]);
+      return ClickableField(color, id, field, fieldFunc, pawn);
     }
-    else return FilerField(color, id, this.props.pawns[field.pawn]);
+    else return FilerField(color, id, pawn);
 
   }
 
@@ -105,7 +107,8 @@ Checkers.propTypes = {
     playerTurn: PropTypes.bool.isRequired,
 
     fields: PropTypes.object.isRequired,
-    pawns: PropTypes.object.isRequired
+    pawns: PropTypes.object.isRequired,
+    moveDataTmp: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -116,12 +119,13 @@ const mapStateToProps = (state) => {
 
     hasError: state.stateHasError,
     playerTurn: state.statePlayerTurn,
+    moveDataTmp: state.moveDataTmp
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchBoardState: (url) => dispatch(fetchBoardState(url)),
+    fetchBoardState: (url, payload={}) => dispatch(fetchBoardState(url, payload)),
     selectPawn: (moves) => dispatch(selectPawn(moves)),
     deselectPawn: () => dispatch(deselectPawn())
   };
