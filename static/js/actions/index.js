@@ -32,6 +32,7 @@ function normalizeData(data){
   let statePart = {fields:{}, pawns:{}, moves:{}};
 
   for (var i=0, moveId = 1; i<pawns.length; i++){
+    if(!pawns[i])continue;
     let fieldKey = pawns[i].y + ' ' + pawns[i].x;
     let pawnId = i+1;
 

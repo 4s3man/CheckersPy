@@ -14,7 +14,7 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 def checkers():
 
     """For making tests"""
-    # state = for_queen_blocking_pawns_state()
+    # state = queen_extended_circle_state()
     #
     # checkers = Checkers(state)
     # for pawn in state.white_pawns + state.black_pawns:
