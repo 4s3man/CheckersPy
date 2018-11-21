@@ -39,12 +39,13 @@ export function deselectPawn(payload){
 }
 
 function makeServerDataTmp(state, payload) {
-  let pawn = state.pawns[state.fields[payload['fieldKey']].pawn];
+  let pawn = Object.assign({}, state.pawns[state.fields[payload['fieldKey']].pawn]);
   let moves = payload['moves'].map((id)=>state.moves[id]);
   let serverDataTmp = {};
   for (let i = 0; i < moves.length; i++) {
     let fieldKey = moves[i].position_after_move.join(' ');
-    serverDataTmp[fieldKey] = {'pawnType':pawn.type, 'pawnColor':pawn.color, 'pawnId':pawn.id, 'move':moves[i]};
+    delete pawn.moves;
+    serverDataTmp[fieldKey] = {'pawn':pawn, 'move':moves[i]};
   }
 
   return serverDataTmp;

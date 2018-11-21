@@ -9,7 +9,7 @@ def state_1coin():
     state.white_pawns[2] = Pawn('white', 2)
     state.white_pawns[2].set_positon(1,1)
     state.white_pawns[2].set_foreward_vector(1)
-    state.white_pawns[2].moves = {'beated_coin_ids':[1,2,3,4], "fields": [(1,2), (3,4)]}
+    state.white_pawns[2].moves = {'position_after_move':[1,2], 'beated_pawn_ids':[1,2,3]}
     return copy.deepcopy(state)
 
 def test_state_eq_(state_1coin):

@@ -15,6 +15,15 @@ class Checkers():
     def resolve_moves(self, collection: str):
         self.state = self.move_resolver.resolve_moves(self.state, collection)
 
+    def make_move(self, pawn_move: dict):
+        return True
+
+
+    def pawn_move_is_valid(self, pawn_move: dict)->bool:
+        collection = self.state.white_pawns if pawn_move['pawn']['color'] == 'white' else self.state.black_pawns
+        moving_pawn = collection[pawn_move['pawn']['id']]
+
+        return moving_pawn and pawn_move['move'] in moving_pawn.moves
     """TODO TEST THIS"""
     # def make_move(self, pawn: Pawn, move_id: int):
     #     move = pawn.moves[move_id]

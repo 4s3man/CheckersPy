@@ -1,1 +1,1 @@
-__all__ = ['checkers']
+__all__ = ['checkers', 'move_exceptions']

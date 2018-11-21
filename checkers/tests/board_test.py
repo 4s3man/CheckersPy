@@ -1,4 +1,3 @@
-import pytest
 from checkers.board.board import *
 
 def test_place_pawns(initial_state):
