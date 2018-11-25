@@ -15,9 +15,10 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 def checkers():
 
     """For making tests"""
-    # state = queen_extended_circle_state()
+    state = initial_state()
     #
-    # checkers = Checkers(state)
+    checkers = Checkers(state)
+    checkers.resolve_moves('white')
     # for pawn in state.white_pawns + state.black_pawns:
     #     if pawn:
     #         # print(pawn.id, pawn.moves, '\n')
@@ -26,26 +27,26 @@ def checkers():
     #         print("==state."+collection+"[" + str(pawn.id) + "].moves", "\n")
     """For making tests end"""
 
-    test_pawn_move = {'moveData':{'pawn': {'foreward': -1, 'type': 'normal', 'color': 'white', 'id': 2}, 'move': {'position_after_move': [4, 6]}}}
+    # test_pawn_move = {'moveData':{'pawn': {'foreward': -1, 'type': 'normal', 'color': 'white', 'id': 2}, 'move': {'position_after_move': [4, 6]}}}
+    #
+    # try:
+    #     pawn_move = receive_pawn_move(test_pawn_move)
+    #     checkers2 = Checkers(State(session['board_state']))
+    #     if not checkers2.pawn_move_is_valid(pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+    #     print('ok')
+    # except EmptyPawnMove:
+    #     print('EmptyPawnMove')
+    #     pass
+    # except InvalidPawnMove:
+    #     """Handle some error"""
+    #     print('invalidPawnMove Error')
 
-    try:
-        pawn_move = receive_pawn_move(test_pawn_move)
-        checkers2 = Checkers(State(session['board_state']))
-        if not checkers2.pawn_move_is_valid(pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
-        print('ok')
-    except EmptyPawnMove:
-        print('EmptyPawnMove')
-        pass
-    except InvalidPawnMove:
-        """Handle some error"""
-        print('invalidPawnMove Error')
 
-
-    if not 'board_state' in session.keys():
-        checkers = Checkers(InitialState())
-        checkers.resolve_moves('white')
-        session['board_state'] = checkers.state.json_encode()
-        session['turn'] = 'white'
+    # if not 'board_state' in session.keys():
+    #     checkers = Checkers(InitialState())
+    #     checkers.resolve_moves('white')
+    session['board_state'] = checkers.state.json_encode()
+        # session['turn'] = 'white'
 
     return render_template('empty.html')
 
