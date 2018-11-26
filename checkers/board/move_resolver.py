@@ -12,10 +12,16 @@ class MoveResolver():
 
     def resolve_moves(self, state: State, collection: str)->State:
         self.board.place_pawns(state)
+        self.clean_oposite_moves(collection, state)
         collection = state.white_pawns if collection == 'white' else state.black_pawns
         self.resolve_moves_for_pawn_collection(collection)
         self.leave_max_beating_moves_only(collection)
         return state
+    
+    def clean_oposite_moves(self, collection:str, state: State):
+        opposite_collection = state.black_pawns if collection == 'white' else state.white_pawns
+        for pawn in opposite_collection:
+            if pawn.moves: del pawn.moves
 
     def leave_max_beating_moves_only(self, pawn_collection: list):
         """

@@ -31,7 +31,7 @@ class State():
         collection[i] = Pawn(pawn['color'], i, pawn['type'])
         collection[i].set_positon(pawn['y'], pawn['x'])
         collection[i].set_foreward_vector(pawn['foreward'])
-        collection[i].set_moves(pawn.get('moves', {}))
+        collection[i].set_moves(pawn.get('moves', []))
 
 class InitialState(State):
     def __init__(self):

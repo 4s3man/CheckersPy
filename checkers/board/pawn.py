@@ -21,5 +21,5 @@ class Pawn:
         self.y = y
 
     """sets coin moves"""
-    def set_moves(self, moves:dict):
+    def set_moves(self, moves:list):
         self.moves = moves
