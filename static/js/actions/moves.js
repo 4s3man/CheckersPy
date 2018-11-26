@@ -45,7 +45,7 @@ function makeServerDataTmp(state, payload) {
   for (let i = 0; i < moves.length; i++) {
     let fieldKey = moves[i].position_after_move.join(' ');
     delete pawn.moves;
-    serverDataTmp[fieldKey] = {'pawn':pawn, 'move':moves[i]};
+    serverDataTmp[fieldKey] = {'id':pawn.id, 'color':pawn.color, 'move':moves[i]};
   }
 
   return serverDataTmp;

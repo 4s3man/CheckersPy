@@ -1,5 +1,5 @@
 # to use in checkersPy as "sh run"
-gnome-terminal -- sh -c "cd ./static && npm run watch; bash" &
+gnome-terminal --tab -- sh -c "cd ./static && npm run watch; bash" &
 sleep 0.5 && setsid firefox --new-window localhost:5000 &
 setsid atom . &&
 export FLASK_ENV=app.py && export FLASK_DEBUG=1 && . venv/bin/activate && flask run
