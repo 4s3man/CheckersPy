@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session
-from modules import Board as b
 import time
 from checkers.checkers import *
 from checkers.move_exceptions import *
@@ -40,7 +39,6 @@ def checkers():
     # except InvalidPawnMove:
     #     """Handle some error"""
     #     print('invalidPawnMove Error')
-
 
     # if not 'board_state' in session.keys():
     #     checkers = Checkers(InitialState())
