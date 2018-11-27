@@ -26,16 +26,16 @@ def checkers():
     #         print("==state."+collection+"[" + str(pawn.id) + "].moves", "\n")
     """For making tests end"""
 
-    test_pawn_move = {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6]}}
-    print(checkers.pawn_move_is_valid(**test_pawn_move))
+    # test_pawn_move = {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6]}}
+    # print(checkers.pawn_move_is_valid(**test_pawn_move))
     # print(make_move(checkers.state, **test_pawn_move).white_pawns[3].__dict__)
 
 
     # try:
     #     pawn_move = receive_pawn_move(test_pawn_move)
-    # #     checkers2 = Checkers(State(session['board_state']))
-    # #     if not checkers2.pawn_move_is_valid(pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
-    #     print('ok')
+    #     checkers2 = Checkers(State(session['board_state']))
+    #     if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+    #     checkers.make_move(**pawn_move)
     # except EmptyPawnMove:
     #     print('EmptyPawnMove')
     #     pass
@@ -45,27 +45,29 @@ def checkers():
     # session['board_state'] = checkers.state.json_encode()
 
 
-    # if not 'board_state' in session.keys():
-    #     checkers = Checkers(InitialState())
-    #     checkers.resolve_moves('white')
-    #     session['board_state'] = checkers.state.json_encode()
-    #     session['turn'] = 'white'
+    if not 'board_state' in session.keys():
+        checkers = Checkers(InitialState())
+        checkers.resolve_moves('white')
+        session['board_state'] = checkers.state.json_encode()
+        session['turn'] = 'white'
 
     return render_template('empty.html')
 
 @app.route('/move', methods=['POST'])
 def move():
-    print(request.get_json())
-    # try:
-    #     pawn_move = receive_pawn_move(request.get_json())
-    # except EmptyPawnMove:
-    #     print('empty move')
-    #     pass
-    # except InvalidPawnMove:
-    #     """Handle some error"""
-    #     print('invalidPawnMove Error')
-    #     return session['board_state']
-
+    try:
+        pawn_move = receive_pawn_move(request.get_json())
+        checkers = Checkers(State(session['board_state']))
+        if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+        checkers.make_move(**pawn_move)
+        checkers.resolve_moves('white')
+        session['board_state'] = checkers.state.json_encode()
+    except EmptyPawnMove:
+        print('EmptyPawnMove')
+        pass
+    except InvalidPawnMove:
+        """Handle some error"""
+        print('invalidPawnMove Error')
     # print('ok')
     # time.sleep(2)
     return session['board_state']

@@ -1,9 +1,8 @@
 zrobić:
+  przetestować make pawn moves
+  przetestować pawn move is valid
 
-  w resolve_moves dodać usuwanie ruchów dla drugiej kolekcji
-  w checkers dodać funkcję make_move która za pomocą danych z pawn_move będzie mutować State
-  dla testów frontendu i przyjemności zrobić tak żeby raz ruszały się czarne a raz białe
-  przetestować i zrefraktoryzować wszystko co będzie dotyczuło pawn_move
+
 
   gracz ma wchodzi do gry
   dostaje pionki jakiegoś koloru? czy białego?
