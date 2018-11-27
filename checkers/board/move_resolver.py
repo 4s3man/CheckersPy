@@ -17,7 +17,7 @@ class MoveResolver():
         self.resolve_moves_for_pawn_collection(collection)
         self.leave_max_beating_moves_only(collection)
         return state
-    
+
     def clean_oposite_moves(self, collection:str, state: State):
         opposite_collection = state.black_pawns if collection == 'white' else state.white_pawns
         for pawn in opposite_collection:
@@ -75,7 +75,7 @@ class MoveResolver():
                     if jump_moves:
                         move_list += jump_moves
                     else:
-                        move_list.append({'position_after_move':(pawn_in_line.y+y, pawn_in_line.x+x), 'beated_pawn_ids':[pawn_in_line.id]})
+                        move_list.append({'position_after_move':[pawn_in_line.y+y, pawn_in_line.x+x], 'beated_pawn_ids':[pawn_in_line.id]})
         return move_list
 
     def get_queen_normal_moves(self, this_pawn: Pawn)->list:
@@ -88,7 +88,7 @@ class MoveResolver():
                     if pawn_in_line:
                         break
                 except NoCoinError:
-                    move_list.append({'position_after_move':(this_pawn.y + y, this_pawn.x + x)})
+                    move_list.append({'position_after_move':[this_pawn.y + y, this_pawn.x + x]})
                 except OutOfBoardError:
                     pass
         return move_list
@@ -121,7 +121,7 @@ class MoveResolver():
                         if move_inst not in move_list\
                         and not self.pawn_has_obligatory_move(pawn1, move_inst)\
                         and not self.same_pawns_beated(move_inst, move_list):
-                            move_inst['position_after_move'] = (next_y, next_x)
+                            move_inst['position_after_move'] = [next_y, next_x]
                             move_list.append(move_inst)
 
                         self.get_jump_moves(pawn1, move_list, move_inst)
@@ -135,7 +135,7 @@ class MoveResolver():
             try:
                 self.get_pawn_in_direction(pawn, (y, x))
             except NoCoinError:
-                move = {"position_after_move":(pawn.y + y, pawn.x + x)}
+                move = {"position_after_move":[pawn.y + y, pawn.x + x]}
                 move_list.append(move)
             except OutOfBoardError:
                 pass
