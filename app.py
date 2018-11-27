@@ -3,7 +3,6 @@ import time
 from checkers.checkers import *
 from helpers.connection import *
 
-
 """For debug testing purposes"""
 from checkers.tests.fixtures.state_fixtures import *
 """For debug testing purposes end"""
@@ -28,19 +27,22 @@ def checkers():
     """For making tests end"""
 
     test_pawn_move = {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6]}}
+    print(checkers.pawn_move_is_valid(**test_pawn_move))
+    # print(make_move(checkers.state, **test_pawn_move).white_pawns[3].__dict__)
 
-    try:
-        pawn_move = receive_pawn_move(test_pawn_move)
-    #     checkers2 = Checkers(State(session['board_state']))
-    #     if not checkers2.pawn_move_is_valid(pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
-        print('ok')
-    except EmptyPawnMove:
-        print('EmptyPawnMove')
-        pass
-    except InvalidPawnMove:
-        """Handle some error"""
-        print('invalidPawnMove Error')
-    session['board_state'] = checkers.state.json_encode()
+
+    # try:
+    #     pawn_move = receive_pawn_move(test_pawn_move)
+    # #     checkers2 = Checkers(State(session['board_state']))
+    # #     if not checkers2.pawn_move_is_valid(pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+    #     print('ok')
+    # except EmptyPawnMove:
+    #     print('EmptyPawnMove')
+    #     pass
+    # except InvalidPawnMove:
+    #     """Handle some error"""
+    #     print('invalidPawnMove Error')
+    # session['board_state'] = checkers.state.json_encode()
 
 
     # if not 'board_state' in session.keys():
