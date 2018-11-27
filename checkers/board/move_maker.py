@@ -13,8 +13,8 @@ def make_move(state:State, id:int, color:str, move:dict):
         our_pawns[id].type = 'queen'
 
     for enemy in enemy_pawns:
-        if enemy in move.get('beated_pawn_ids', []):
-            enemy = None
+        if enemy and enemy.id in move.get('beated_pawn_ids', []):
+            enemy_pawns[enemy.id] = None
 
     return new_state
 

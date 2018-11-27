@@ -14,8 +14,8 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 def checkers():
 
     """For making tests"""
-    state = initial_state()
-    #
+    state = different_pawns_around_white_state()
+
     checkers = Checkers(state)
     checkers.resolve_moves('white')
     # for pawn in state.white_pawns + state.black_pawns:
@@ -42,14 +42,14 @@ def checkers():
     # except InvalidPawnMove:
     #     """Handle some error"""
     #     print('invalidPawnMove Error')
-    # session['board_state'] = checkers.state.json_encode()
+    session['board_state'] = checkers.state.json_encode()
 
 
-    if not 'board_state' in session.keys():
-        checkers = Checkers(InitialState())
-        checkers.resolve_moves('white')
-        session['board_state'] = checkers.state.json_encode()
-        session['turn'] = 'white'
+    # if not 'board_state' in session.keys():
+    #     checkers = Checkers(InitialState())
+    #     checkers.resolve_moves('white')
+    #     session['board_state'] = checkers.state.json_encode()
+    #     session['turn'] = 'white'
 
     return render_template('empty.html')
 

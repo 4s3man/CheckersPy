@@ -21,7 +21,7 @@ class MoveResolver():
     def clean_oposite_moves(self, collection:str, state: State):
         opposite_collection = state.black_pawns if collection == 'white' else state.white_pawns
         for pawn in opposite_collection:
-            if pawn.moves: del pawn.moves
+            if hasattr(pawn, 'moves'): del pawn.moves
 
     def leave_max_beating_moves_only(self, pawn_collection: list):
         """
