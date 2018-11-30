@@ -326,14 +326,14 @@ def test_resolve_moves_for_all_collections__queen_blocking_state(for_queen_block
     assert [{'position_after_move': [2, 6]}]\
     == state.black_pawns[5].moves
 
-def test_clean_opposite_moves(initial_state):
-    state = initial_state
+def test_clean_opposite_moves(for_queen_blocking_pawns_state):
+    state = for_queen_blocking_pawns_state
     move_res = MoveResolver()
 
     state = move_res.resolve_moves(state, 'white')
     assert len(state.white_pawns[1].moves) > 0
-    assert len(state.black_pawns[9].moves) == 0
+    assert len(state.black_pawns[0].moves) == 0
 
     state = move_res.resolve_moves(state, 'black')
     assert len(state.white_pawns[1].moves) == 0
-    assert len(state.black_pawns[9].moves) > 0
+    assert len(state.black_pawns[0].moves) > 0
