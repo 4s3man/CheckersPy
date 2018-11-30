@@ -15,16 +15,17 @@ def checkers():
 
     """For making tests"""
     state = no_blocked_beating_move_bug()
+    # state = for_queen_blocking_pawns_state()
 
     checkers = Checkers(state)
     checkers.resolve_moves('black')
-    # print(checkers.state.black_pawns[1].moves)
-    # for pawn in state.white_pawns + state.black_pawns:
-    #     if pawn:
-    #         # print(pawn.id, pawn.moves, '\n')
-    #         collection = 'black_pawns' if pawn.color == 'black' else 'white_pawns'
-    #         print("assert", pawn.moves, '\\')
-    #         print("==state."+collection+"[" + str(pawn.id) + "].moves", "\n")
+    print(checkers.state.black_pawns[1].moves)
+    for pawn in state.white_pawns + state.black_pawns:
+        if pawn:
+            # print(pawn.id, pawn.moves, '\n')
+            collection = 'black_pawns' if pawn.color == 'black' else 'white_pawns'
+            print("assert", pawn.moves, '\\')
+            print("==state."+collection+"[" + str(pawn.id) + "].moves", "\n")
     """For making tests end"""
 
     # test_pawn_move = {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6]}}

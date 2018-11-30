@@ -170,20 +170,9 @@ class MoveResolver():
         """false if on field after jump is pawn and it's not the pawn who jumps"""
         field_after_jump = self.board.fields[this_pawn.y + y][this_pawn.x + x]
 
-        ## TODO: activ debug
-        # print(field_after_jump.id, this_pawn.id)
-        # print(field_after_jump.color, this_pawn.color)
+        """false if on field after jump is pawn and its not same pawn who jumps"""
         if isinstance(field_after_jump, Pawn):
-            if (field_after_jump.id == this_pawn.id) and field_after_jump.color == this_pawn.color:
-                return True
-            else:
-                return False
-
-
-        # if isinstance(field_after_jump, Pawn)\
-        # and (field_after_jump.id != this_pawn.id)\
-        # and (field_after_jump.color != this_pawn.color):
-        #     return False
+            if not (field_after_jump.id == this_pawn.id and field_after_jump.color == this_pawn.color): return False
 
         """false if move is calculating and coin_in_direction was already beated"""
         if len(move) and (pawn_to_check.id in move['beated_pawn_ids']): return False

@@ -1,6 +1,31 @@
 import pytest
 from checkers.board.move_resolver import *
 
+def test_no_blocked_beating_move_bug(no_blocked_beating_move_bug):
+    state = no_blocked_beating_move_bug
+    move_res = MoveResolver(state)
+    move_res.resolve_moves(state, 'black')
+
+    assert [] \
+    ==state.white_pawns[1].moves
+
+    assert [{'position_after_move': [4, 2]}, {'position_after_move': [4, 0]}] \
+    ==state.black_pawns[0].moves
+
+    assert [{'position_after_move': [4, 4]}, {'position_after_move': [4, 2]}] \
+    ==state.black_pawns[1].moves
+
+    assert [{'position_after_move': [2, 2]}, {'position_after_move': [2, 0]}] \
+    ==state.black_pawns[4].moves
+
+    assert [{'position_after_move': [2, 6]}] \
+    ==state.black_pawns[5].moves
+
+    assert [{'position_after_move': [2, 3]}] \
+    !=state.black_pawns[5].moves
+
+
+
 def test_resolve_moves__initial_state(initial_state):
     state = initial_state
     move_res = MoveResolver(state)
