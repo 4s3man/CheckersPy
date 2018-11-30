@@ -14,10 +14,11 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 def checkers():
 
     """For making tests"""
-    state = for_queen_blocking_pawns_state()
+    state = no_blocked_beating_move_bug()
 
     checkers = Checkers(state)
-    checkers.resolve_moves('white')
+    checkers.resolve_moves('black')
+    # print(checkers.state.black_pawns[1].moves)
     # for pawn in state.white_pawns + state.black_pawns:
     #     if pawn:
     #         # print(pawn.id, pawn.moves, '\n')

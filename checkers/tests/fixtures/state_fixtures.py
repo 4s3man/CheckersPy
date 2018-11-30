@@ -229,3 +229,39 @@ def queen_extended_circle_state():
             None,
             None]
     })
+
+@pytest.fixture
+def no_blocked_beating_move_bug():
+    return makeState({
+        "white_pawns":
+            [
+            None,
+            {"y": 2, "x": 4,"color": "white", "type": "queen", "foreward": -1, "id": 1, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+        "black_pawns":
+            [
+            {"y": 3, "x": 1,"color": "black", "type": "normal", "foreward": 1, "id": 0, "moves": []},
+            {"y": 3, "x": 3,"color": "black", "type": "normal", "foreward": 1, "id": 1, "moves": []},
+            None,
+            None,
+            {"y": 1, "x": 1,"color": "black", "type": "normal", "foreward": 1, "id": 4, "moves": []},
+            {"y": 1, "x": 5,"color": "black", "type": "normal", "foreward": 1, "id": 5, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
+    })
