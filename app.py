@@ -43,7 +43,7 @@ def checkers():
     #     """Handle some error"""
     #     print('invalidPawnMove Error')
     session['board_state'] = checkers.state.json_encode()
-
+    session['turn'] = 'white'
 
     # if not 'board_state' in session.keys():
     #     checkers = Checkers(InitialState())
@@ -56,11 +56,18 @@ def checkers():
 @app.route('/move', methods=['POST'])
 def move():
     try:
-        pawn_move = receive_pawn_move(request.get_json())
+        pawn_move = receive_pawn_move(request.get_json(), session['turn'])
         checkers = Checkers(State(session['board_state']))
         if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+
+        lost_pawns = [None for x in range(13)]
+        if checkers.state.white_pawns == lost_pawns or checkers.state.black_pawns == lost_pawns: return {'winner':session[turn]}
+        session['turn'] = 'white' if session['turn'] == 'black' else 'black'
+
+
         checkers.make_move(**pawn_move)
-        checkers.resolve_moves('white')
+        checkers.resolve_moves(session['turn'])
+
         session['board_state'] = checkers.state.json_encode()
     except EmptyPawnMove:
         print('EmptyPawnMove')

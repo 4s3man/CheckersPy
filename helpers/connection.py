@@ -5,10 +5,11 @@ Throws:
 EmptyPawnMove
 InvalidPawnMove exceptions
 """
-def receive_pawn_move(pawn_move: dict):
+def receive_pawn_move(pawn_move: dict, turn:str)->dict:
     if(not len(pawn_move)): raise EmptyPawnMove('Move is empty')
     if(type(pawn_move) is not dict): raise InvalidPawnMove('Posted data is not dict')
     try:
+        assert turn == pawn_move['color']
         assert len(pawn_move) == 3
         assert pawn_move['id'] in range(12)
         assert pawn_move['color'] in ['white', 'black']
