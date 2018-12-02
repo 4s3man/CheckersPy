@@ -16,7 +16,7 @@ export function fields(state = {}, action){
       let updatedFields = cleanPreviousFieldFunctions(Object.assign({}, state));
       updatedFields[action.field].funcs = 'deselectPawn';
       action.normalizedMoves.forEach((move)=>{
-        updatedFields[move.position_after_move] = Object.assign({'funcs':'fetchBoardState'}, updatedFields[move.position_after_move]);
+        updatedFields[move.position_after_move] = Object.assign({}, updatedFields[move.position_after_move], {'funcs':'fetchBoardState'});
       });
       return updatedFields;
 

@@ -14,18 +14,18 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 def checkers():
 
     """For making tests"""
-    state = no_blocked_beating_move_bug()
-    # state = for_queen_blocking_pawns_state()
+    # state = no_blocked_beating_move_bug()
+    state = extended_circle_state()
 
     checkers = Checkers(state)
-    checkers.resolve_moves('black')
-    print(checkers.state.black_pawns[1].moves)
-    for pawn in state.white_pawns + state.black_pawns:
-        if pawn:
-            # print(pawn.id, pawn.moves, '\n')
-            collection = 'black_pawns' if pawn.color == 'black' else 'white_pawns'
-            print("assert", pawn.moves, '\\')
-            print("==state."+collection+"[" + str(pawn.id) + "].moves", "\n")
+    checkers.resolve_moves('white')
+    # print(checkers.state.black_pawns[1].moves)
+    # for pawn in state.white_pawns + state.black_pawns:
+    #     if pawn:
+    #         # print(pawn.id, pawn.moves, '\n')
+    #         collection = 'black_pawns' if pawn.color == 'black' else 'white_pawns'
+    #         print("assert", pawn.moves, '\\')
+    #         print("==state."+collection+"[" + str(pawn.id) + "].moves", "\n")
     """For making tests end"""
 
     # test_pawn_move = {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6]}}
@@ -57,6 +57,7 @@ def checkers():
 
 @app.route('/move', methods=['POST'])
 def move():
+    print(request.get_json())
     try:
         pawn_move = receive_pawn_move(request.get_json(), session['turn'])
         checkers = Checkers(State(session['board_state']))
