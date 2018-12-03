@@ -1,4 +1,5 @@
 # to use in checkersPy as "sh run"
+killall python3
 gnome-terminal --tab -- sh -c "cd ./static && npm run watch; bash" &
 sleep 0.5 && setsid firefox --new-window localhost:5000 &
 setsid atom . &&

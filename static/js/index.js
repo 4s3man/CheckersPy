@@ -6,7 +6,7 @@ import configureStore from './store/configureStore'
 import Checkers from './checkers'
 
 const store = configureStore();
-console.log('dono');
+console.log('index.js debug');
 
 render(
   <Provider store={store}>

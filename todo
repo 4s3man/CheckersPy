@@ -1,10 +1,8 @@
 zrobić:
-  zdebugować na frontendzie że kiedy ma skoczyć na to samo pole nie wysyła w ogóle danych
-  po zmianach sprawdzić jaki json jest drukowany ze state po clean_opposite_moves
-
   przetestować make_move
   przetestować pawn move is valid
-  do testów zrobić żeby raz czarne raz biłe się ruszały 1 player
+  zrobic usuwanie redundantnych danych przed wyslaniem na frontend
+
 
   gracz ma wchodzi do gry
   dostaje pionki jakiegoś koloru? czy białego?

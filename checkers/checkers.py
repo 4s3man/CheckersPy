@@ -21,7 +21,4 @@ class Checkers():
 
     def pawn_move_is_valid(self, id:int, color:str, move:dict)->bool:
         pawn_collection = self.state.white_pawns if color == 'white' else self.state.black_pawns
-        print(pawn_collection[id])
-        print(move)
-        print(pawn_collection[id].moves)
         return pawn_collection[id] and move in pawn_collection[id].moves

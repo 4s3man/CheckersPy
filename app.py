@@ -57,7 +57,7 @@ def checkers():
 
 @app.route('/move', methods=['POST'])
 def move():
-    print(request.get_json())
+    # print(request.get_json())
     try:
         pawn_move = receive_pawn_move(request.get_json(), session['turn'])
         checkers = Checkers(State(session['board_state']))
@@ -70,6 +70,8 @@ def move():
 
         checkers.make_move(**pawn_move)
         checkers.resolve_moves(session['turn'])
+        # print(checkers.state.json_encode())
+
 
         session['board_state'] = checkers.state.json_encode()
     except EmptyPawnMove:
