@@ -1,6 +1,4 @@
 zrobić:
-  przetestować make_move
-  przetestować pawn move is valid
   zrobic usuwanie redundantnych danych przed wyslaniem na frontend
 
 
