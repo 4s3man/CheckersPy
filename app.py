@@ -82,4 +82,4 @@ def move():
         print('invalidPawnMove Error')
     # print('ok')
     # time.sleep(2)
-    return session['board_state']
+    return strip_redundant_for_frontend(session['board_state'])

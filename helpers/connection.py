@@ -1,3 +1,5 @@
+import re
+import json
 from helpers.connection_exceptions import *
 
 """
@@ -27,3 +29,9 @@ def receive_pawn_move(pawn_move: dict, turn:str)->dict:
     except (KeyError, AssertionError) as e:
         raise InvalidPawnMove('Posted data does not have required pawn_move data')
     return pawn_move
+
+def strip_redundant_for_frontend(json_state:str)->str:
+    return re.sub(
+            ',\s+}','}',
+            re.sub('"moves": \[\],{0,1}|"foreward": (-\d|\d),{0,1}','', json_state)
+           )

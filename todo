@@ -1,6 +1,12 @@
 zrobić:
-  zrobic usuwanie redundantnych danych przed wyslaniem na frontend
 
+  wygrywanie kontynuuj lub wyjdź + strona główna | z pokojami
+  i teraz pytanie czy robić websocket i gre dla dwóch przez internet
+  potem wygląd całej strony a potem max-mina
+
+  chyba lepiej najpierw max mina i cały serwis a potem opcja vs bot
+  bo będzie już wszystko zrobione a tamta opcja fajnie uzupełni wtedy
+  więc po prostu robić tak żeby dało się zrobić bota
 
   gracz ma wchodzi do gry
   dostaje pionki jakiegoś koloru? czy białego?
