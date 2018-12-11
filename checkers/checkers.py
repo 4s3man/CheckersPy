@@ -1,6 +1,6 @@
 from checkers.board.board import *
 from checkers.board.move_resolver import *
-from checkers.board.move_maker import make_move
+from checkers.board.move_maker import *
 
 class Checkers():
     turn = 'white'

@@ -265,3 +265,38 @@ def no_blocked_beating_move_bug():
             None,
             None]
     })
+
+def only_queens_state():
+    return makeState({
+        "white_pawns":
+            [
+            None,
+            {"y": 4, "x": 2,"color": "white", "type": "queen", "foreward": -1, "id": 1, "moves": []},
+            None,
+            {"y": 5, "x": 1,"color": "white", "type": "queen", "foreward": -1, "id": 3, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+        "black_pawns":
+            [
+            {"y": 3, "x": 1,"color": "black", "type": "queen", "foreward": 1, "id": 0, "moves": []},
+            {"y": 2, "x": 4,"color": "black", "type": "queen", "foreward": 1, "id": 1, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
+    })
