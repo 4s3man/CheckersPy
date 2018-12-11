@@ -1,6 +1,5 @@
 from checkers.board.state import State
 from checkers.board.pawn import Pawn
-from functools import reduce
 import copy
 
 def make_move(state:State, id:int, color:str, move:dict):
@@ -25,20 +24,6 @@ def pawn_should_become_queen(pawn:Pawn):
     if pawn.foreward == -1 and pawn.y == 0 and pawn.type != 'queen':
         return True
     return False
-
-def game_ends_with(state:State)->str:
-    """Output: 'white', 'black', 'draw' or '' """
-    lost_pawns = [None for x in range(13)]
-    if not (hasattr(game_ends_with,'move_counter')): game_ends_with.move_counter = 0
-    if state.white_pawns == lost_pawns or state.black_pawns == lost_pawns:
-        game_ends_with.move_counter = 0;
-        return 'black' if state.white_pawns == lost_pawns else 'white'
-    elif has_only_queens(state):
-        game_ends_with.move_counter +=1;
-        if(game_ends_with.move_counter == 6):
-            return 'draw'
-    else:
-        return ''
 
 def has_only_queens(state:State)->bool:
     for pawn in state.black_pawns + state.white_pawns:

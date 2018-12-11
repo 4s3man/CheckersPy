@@ -301,3 +301,114 @@ def only_queens_state():
             None,
             None]
     })
+@pytest.fixture
+def black_win_state():
+    return makeState({
+        "white_pawns":
+            [
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+        "black_pawns":
+            [
+            {"y": 3, "x": 1,"color": "black", "type": "queen", "foreward": 1, "id": 0, "moves": []},
+            {"y": 2, "x": 4,"color": "black", "type": "queen", "foreward": 1, "id": 1, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
+    })
+@pytest.fixture
+def white_win_state():
+    return makeState({
+        "white_pawns":
+            [
+            {"y": 3, "x": 1,"color": "white", "type": "queen", "foreward": 1, "id": 0, "moves": []},
+            {"y": 2, "x": 4,"color": "white", "type": "queen", "foreward": 1, "id": 1, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+            "black_pawns":
+            [
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ]
+    })
+@pytest.fixture
+def two_queens_state():
+    return makeState({
+        "white_pawns":
+            [
+            {"y": 3, "x": 1,"color": "white", "type": "queen", "foreward": 1, "id": 0, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+            "black_pawns":
+            [
+            {"y": 4, "x": 6,"color": "black", "type": "queen", "foreward": 1, "id": 0, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ]
+    })

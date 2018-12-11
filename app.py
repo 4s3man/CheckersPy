@@ -16,25 +16,30 @@ def checkers():
     #     checkers = Checkers(InitialState())
     #     checkers.resolve_moves('white')
     #     session['board_state'] = checkers.state.json_encode()
-    #     session['turn'] = 'white'
+    session['turn'] = 'white'
+    session['draw_count'] = 0
 
     return render_template('empty.html')
 
 @app.route('/move', methods=['POST'])
 def move():
     # print(request.get_json())
+
     try:
         pawn_move = receive_pawn_move(request.get_json(), session['turn'])
         checkers = Checkers(State(session['board_state']))
         if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
 
-        lost_pawns = [None for x in range(13)]
-        if checkers.state.white_pawns == lost_pawns or checkers.state.black_pawns == lost_pawns: return {'winner':session[turn]}
-        session['turn'] = 'white' if session['turn'] == 'black' else 'black'
-
         checkers.make_move(**pawn_move)
+
+        checkers.state.check_for_win( )
+        if has_only_queens(checkers.state):
+            session['draw_count'] += 1
+            if(session['draw_count'] > 6):
+                checkers.state.game_state = 'draw'
+
+        session['turn'] = 'white' if session['turn'] == 'black' else 'black'
         checkers.resolve_moves(session['turn'])
-        # print(checkers.state.json_encode())
 
 
         session['board_state'] = checkers.state.json_encode()
@@ -46,4 +51,5 @@ def move():
         # print('invalidPawnMove Error')
     # print('ok')
     # time.sleep(2)
+    
     return strip_redundant_for_frontend(session['board_state'])

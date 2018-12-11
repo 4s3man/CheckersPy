@@ -7,13 +7,10 @@ from checkers.tests.fixtures.state_fixtures import *
 from manual_tests.modules import *
 
 # state = no_blocked_beating_move_bug()
-state = only_queens_state()
+state = two_queens_state()
 
 checkers = Checkers(state)
 checkers.resolve_moves('white')
-
-
-print(game_ends_with(checkers.state))
 
 session['board_state'] = checkers.state.json_encode()
 session['turn'] = 'white'

@@ -7,6 +7,7 @@ class State():
     def __init__(self, jsonState: str = ''):
         self.white_pawns = [None] * self.pawns_for_site
         self.black_pawns = [None] * self.pawns_for_site
+        self.game_state = 'pending'
         if jsonState:
             self.json_decode(jsonState)
 
@@ -14,6 +15,12 @@ class State():
         this_obj = json.loads(json.dumps(self, default=(lambda x: x.__dict__)))
         other_obj = json.loads(json.dumps(other, default=(lambda x: x.__dict__)))
         return this_obj == other_obj
+
+    def check_for_win(self):
+        lost_state = [None for x in range(12)]
+        if lost_state == self.white_pawns: self.game_state = 'black_win'
+        elif lost_state == self.black_pawns: self.game_state = 'white_win'
+        else: self.game_state = self.game_state
 
     def json_encode(self):
         return json.dumps(self, default=(lambda x: x.__dict__))
