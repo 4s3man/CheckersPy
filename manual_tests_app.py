@@ -13,7 +13,7 @@ checkers = Checkers(state)
 checkers.resolve_moves('white')
 
 
-print(has_only_queens(checkers.state))
+print(game_ends_with(checkers.state))
 
 session['board_state'] = checkers.state.json_encode()
 session['turn'] = 'white'

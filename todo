@@ -1,6 +1,6 @@
 zrobić:
-  uporządkować testy
-  przetestować has_only_queens oraz win
+  przetestować game_ends_with na ramisie na białych czarnych i niczym
+  wysłać win na frontend tam zrobić jego obsługę
   spytać się o to zrobić takie same importy wielu plików
 
 

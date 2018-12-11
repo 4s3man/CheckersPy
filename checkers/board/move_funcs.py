@@ -26,18 +26,19 @@ def pawn_should_become_queen(pawn:Pawn):
         return True
     return False
 
-def win(state:State)->bool:
+def game_ends_with(state:State)->str:
+    """Output: 'white', 'black', 'draw' or '' """
     lost_pawns = [None for x in range(13)]
-    if not (hasattr(win,'id')): win.id = 0
+    if not (hasattr(game_ends_with,'move_counter')): game_ends_with.move_counter = 0
     if state.white_pawns == lost_pawns or state.black_pawns == lost_pawns:
-        win.id = 0;
-        return True
+        game_ends_with.move_counter = 0;
+        return 'black' if state.white_pawns == lost_pawns else 'white'
     elif has_only_queens(state):
-        win.id +=1;
-        if(win.id == 6):
-            return True
+        game_ends_with.move_counter +=1;
+        if(game_ends_with.move_counter == 6):
+            return 'draw'
     else:
-        return False
+        return ''
 
 def has_only_queens(state:State)->bool:
     for pawn in state.black_pawns + state.white_pawns:

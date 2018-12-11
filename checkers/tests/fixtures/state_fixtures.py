@@ -266,6 +266,7 @@ def no_blocked_beating_move_bug():
             None]
     })
 
+@pytest.fixture
 def only_queens_state():
     return makeState({
         "white_pawns":
