@@ -33,7 +33,7 @@ def move():
         checkers.make_move(**pawn_move)
 
         checkers.state.winner = checkers.state.get_winner()
-        if has_only_queens(checkers.state):
+        if has_only_queens(checkers.state) and not checkers.state.winner:
             session['draw_count'] += 1
             if(session['draw_count'] > 6):
                 checkers.state.winner = 'draw'
@@ -51,5 +51,4 @@ def move():
         # print('invalidPawnMove Error')
     # print('ok')
     # time.sleep(2)
-
     return strip_redundant_for_frontend(session['board_state'])

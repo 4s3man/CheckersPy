@@ -72,6 +72,16 @@ export function moves(state = {}, action){
   }
 };
 
+export function winner(winner = '', action){
+  switch (action.type) {
+    case constants.STATE_FETCH_SUCCESS:
+      return action.winner;
+
+    default:
+      return winner;
+  }
+};
+
 export function statePlayerTurn(state = false, action){
   switch (action.type) {
     case constants.PLAYER_TURN:

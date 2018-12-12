@@ -29,7 +29,9 @@ export function fetchBoardState(url, payload={}){
 
 function normalizeData(data){
   let pawns = data['white_pawns'].concat(data['black_pawns']);
-  let statePart = {fields:{}, pawns:{}, moves:{}};
+  let statePart = {fields:{}, pawns:{}, moves:{}, winner:''};
+
+  if(data['winner'] != undefined)statePart.winner = data['winner'];
 
   for (var i=0, moveId = 1; i<pawns.length; i++){
     if(!pawns[i])continue;
@@ -59,7 +61,8 @@ export function stateFetchSuccess(data){
     type:constatns.STATE_FETCH_SUCCESS,
     fields: data.fields,
     pawns: data.pawns,
-    moves: data.moves
+    moves: data.moves,
+    winner: data.winner
   }
 }
 

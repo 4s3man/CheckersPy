@@ -4,7 +4,7 @@ import {fetch as fetchPolyfill} from 'whatwg-fetch';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { stateFetchSuccess, stateHasError, statePlayerTurn, fetchBoardState} from './actions/index.js'
+import { stateFetchSuccess, stateHasError, statePlayerTurn, winner, fetchBoardState} from './actions/index.js'
 import {deselectPawn, selectPawn} from './actions/moves.js'
 
 class Checkers extends Component{
@@ -116,7 +116,7 @@ const mapStateToProps = (state) => {
     fields: state.fields,
     pawns: state.pawns,
     moves: state.moves,
-
+    winner: state.winner,
     hasError: state.stateHasError,
     playerTurn: state.statePlayerTurn,
     moveDataTmp: state.moveDataTmp
