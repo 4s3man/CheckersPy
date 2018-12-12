@@ -34,7 +34,7 @@ class Checkers extends Component{
     if (!field) return FilerField(color, id);
     let pawn = this.props.pawns[field.pawn] || null;
 
-    if(field.funcs){
+    if(field.funcs && !this.props.winner){
       let fieldFunc = null;
       let pawn = this.props.pawns[field.pawn]
       switch (field.funcs) {
@@ -50,12 +50,16 @@ class Checkers extends Component{
       return ClickableField(color, id, field, fieldFunc, pawn);
     }
     else return FilerField(color, id, pawn);
+  }
 
+  makeDialogWindow(){
+    if(this.props.winner)return GameEndWindow(this.props.winner);
   }
 
   render(){
     return (
       <div className='board'>
+        {this.makeDialogWindow()}
         {this.createFields()}
       </div>
     );
@@ -97,6 +101,20 @@ const Pawn = (props) => {
     >
     {props.id}
     </span>
+  );
+}
+
+const GameEndWindow = (winner) => {
+  return (
+    <div className='board__dialogWindow dialogWindow--winner'>
+        <div className='dialogWindow__info'>
+          {winner} wins!
+        </div>
+      <nav className='dialogWindow__nav'>
+        <a href="">Play again</a>
+        <a href="">Leave</a>
+      </nav>
+    </div>
   );
 }
 
