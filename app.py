@@ -32,17 +32,17 @@ def move():
 
         checkers.make_move(**pawn_move)
 
-        checkers.state.check_for_win( )
+        checkers.state.winner = checkers.state.get_winner()
         if has_only_queens(checkers.state):
             session['draw_count'] += 1
             if(session['draw_count'] > 6):
-                checkers.state.game_state = 'draw'
+                checkers.state.winner = 'draw'
 
         session['turn'] = 'white' if session['turn'] == 'black' else 'black'
         checkers.resolve_moves(session['turn'])
 
-
         session['board_state'] = checkers.state.json_encode()
+        print(session['board_state'] )
     except EmptyPawnMove:
         # print('EmptyPawnMove')
         pass
@@ -51,5 +51,5 @@ def move():
         # print('invalidPawnMove Error')
     # print('ok')
     # time.sleep(2)
-    
+
     return strip_redundant_for_frontend(session['board_state'])

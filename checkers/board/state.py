@@ -4,10 +4,10 @@ import json
 class State():
     board_size = 8
     pawns_for_site = 12
+    winner = ''
     def __init__(self, jsonState: str = ''):
         self.white_pawns = [None] * self.pawns_for_site
         self.black_pawns = [None] * self.pawns_for_site
-        self.game_state = 'pending'
         if jsonState:
             self.json_decode(jsonState)
 
@@ -16,11 +16,12 @@ class State():
         other_obj = json.loads(json.dumps(other, default=(lambda x: x.__dict__)))
         return this_obj == other_obj
 
-    def check_for_win(self):
+    def get_winner(self)->str:
+        """Returns white, black or empty string"""
         lost_state = [None for x in range(12)]
-        if lost_state == self.white_pawns: self.game_state = 'black_win'
-        elif lost_state == self.black_pawns: self.game_state = 'white_win'
-        else: self.game_state = self.game_state
+        if lost_state == self.white_pawns: return 'black'
+        elif lost_state == self.black_pawns: return 'white'
+        else: return ''
 
     def json_encode(self):
         return json.dumps(self, default=(lambda x: x.__dict__))
