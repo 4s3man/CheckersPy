@@ -52,3 +52,6 @@ def move():
     # print('ok')
     # time.sleep(2)
     return strip_redundant_for_frontend(session['board_state'])
+
+# if __name__ == "__main__":
+#    app.run(host="0.0.0.0", port=5009, debug=True)
