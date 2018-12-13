@@ -5,6 +5,8 @@ import {Provider} from 'react-redux'
 import configureStore from './store/configureStore'
 import Checkers from './checkers'
 
+import style from "../css/styles.css";
+
 const store = configureStore();
 console.log('index.js debug');
 

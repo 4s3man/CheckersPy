@@ -1,0 +1,130 @@
+body{
+  background-color: black;
+  color:white;
+}
+.board{
+  position: relative;
+  width: 400px;
+  height: 400px;
+  border:2px solid black;
+  display: flex;
+  flex-flow:row wrap;
+}
+
+.board__field{
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board__field--black{
+  background-color: #666666;
+}
+
+.pulse--selectPawn{
+  animation:pulsation-yellow 3s infinite alternate;
+  -webkit-animation:pulsation-yellow 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
+}
+.pulse--deselectPawn, .pulse--fetchBoardState{
+  animation:pulsation-green 3s infinite alternate;
+  -webkit-animation:pulsation-green 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
+}
+
+.board__dialogWindow{
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.dialogWindow--winner{
+  background-color: green;
+}
+
+.dialogWindow__nav{
+
+}
+
+@keyframes pulsation-yellow
+{
+0% { box-shadow: 0px 0px 10px inset yellow; }
+50% { box-shadow: 0px 0px 20px inset yellow; }
+100% { box-shadow: 0px 0px 10px inset yellow; }
+}
+
+@-webkit-keyframes pulsation-yellow /* dla Google Chrome, Safari, Opera 15+ */
+{
+  0% { box-shadow: 0px 0px 10px inset yellow; }
+  50% { box-shadow: 0px 0px 20px inset yellow; }
+  100% { box-shadow: 0px 0px 10px inset yellow; }
+}
+
+@keyframes pulsation-green
+{
+0% { box-shadow: 0px 0px 10px inset green; }
+50% { box-shadow: 0px 0px 20px inset green; }
+100% { box-shadow: 0px 0px 10px inset green; }
+}
+
+@-webkit-keyframes pulsation-green /* dla Google Chrome, Safari, Opera 15+ */
+{
+  0% { box-shadow: 0px 0px 10px inset green; }
+  50% { box-shadow: 0px 0px 20px inset green; }
+  100% { box-shadow: 0px 0px 10px inset green; }
+}
+
+
+.pawn{
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 80px;
+  /* DEBUG PURPOSES*/
+  color:black;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.pawn--queen{
+  border: 2px solid red;
+}
+
+.pawn--white{
+  background-color: white;
+}
+
+.pawn--black{
+  background-color: brown;
+}
+
+.board::before, .board::after {
+    position: absolute;
+    width: 30px;
+    content: '0 1 2 3 4 5 6 7';
+    text-align: center;
+    width: 10px;
+    line-height: 50px;
+}
+.board::before{
+  right: -40px;
+  height: 404px;
+}
+.board::after{
+  bottom:-40px;
+  width: 404px;
+  height: 30px;
+  letter-spacing: 18px;
+}
+
