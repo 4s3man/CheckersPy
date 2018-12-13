@@ -32,6 +32,29 @@ body{
   -webkit-animation:pulsation-green 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
 }
 
+.board__dialogWindow{
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.dialogWindow--winner{
+  background-color: green;
+}
+
+.dialogWindow__nav{
+
+}
 
 @keyframes pulsation-yellow
 {
