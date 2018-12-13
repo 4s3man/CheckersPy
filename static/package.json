@@ -12,6 +12,7 @@
   "author": "Jakub Kułaga",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^9.4.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.0.4",
     "babel-preset-es2015": "^6.24.1",
@@ -19,6 +20,8 @@
     "classnames": "^2.2.6",
     "css-loader": "^2.0.0",
     "mini-css-extract-plugin": "^0.5.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^3.0.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
