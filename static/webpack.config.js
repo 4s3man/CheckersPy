@@ -3,12 +3,20 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
-    entry:  __dirname + '/src/js/index.js',
+    entry:  {
+      checkersGame: __dirname + '/checkers_game/index.js',
+      service: __dirname + '/service/index.js',
+    },
     output: {
         path: __dirname + '/dist/',
-        filename: 'checkersGame.js',
+        filename: '[name].js',
+        sourceMapFilename: '[name].[hash:8].map',
+        chunkFilename: '[id].js'
     },
     optimization: {
+      splitChunks: {
+
+      },
       minimizer: [
         new OptimizeCssAssetsPlugin({})
       ]
@@ -32,7 +40,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: "[name].css",
-      chunkFilename: "chunkFileName.css"
+      chunkFilename: "[id][hash:8].css"
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/,
