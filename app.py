@@ -22,7 +22,7 @@ def checkers():
     return render_template('empty.html')
 
 @app.route('/move', methods=['POST'])
-def move( ):
+def move():
     # print(request.get_json())
 
     try:

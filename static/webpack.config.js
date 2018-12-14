@@ -14,9 +14,7 @@ module.exports = {
         chunkFilename: '[id].js'
     },
     optimization: {
-      splitChunks: {
-
-      },
+      splitChunks: {},
       minimizer: [
         new OptimizeCssAssetsPlugin({})
       ]
@@ -33,7 +31,16 @@ module.exports = {
         },
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, "css-loader"]
+          use: [MiniCssExtractPlugin.loader, "css-loader",
+            {
+              loader: "postcss-loader",
+              options:{
+                plugins: () => [require('autoprefixer')({
+                    'browsers': ['> 1%', 'last 2 versions']
+                })],
+              }
+            }
+          ]
         }
       ]
     },

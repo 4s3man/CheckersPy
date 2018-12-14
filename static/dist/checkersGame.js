@@ -141,7 +141,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9kaWFsb2dXaW5kb3cuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vY2hlY2tlcnNfZ2FtZS9jc3MvZGlhbG9nV2luZG93LmNzcz8zZmY1Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./checkers_game/css/dialogWindow.css\n");
+eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9kaWFsb2dXaW5kb3cuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vY2hlY2tlcnNfZ2FtZS9jc3MvZGlhbG9nV2luZG93LmNzcz9iNmNkIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./checkers_game/css/dialogWindow.css\n");
 
 /***/ }),
 
@@ -152,7 +152,7 @@ eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceM
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9saW5rLmNzcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2NoZWNrZXJzX2dhbWUvY3NzL2xpbmsuY3NzPzdiN2EiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./checkers_game/css/link.css\n");
+eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9saW5rLmNzcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2NoZWNrZXJzX2dhbWUvY3NzL2xpbmsuY3NzP2E0YjQiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./checkers_game/css/link.css\n");
 
 /***/ }),
 
@@ -163,7 +163,7 @@ eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceM
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9zdHlsZXMuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vY2hlY2tlcnNfZ2FtZS9jc3Mvc3R5bGVzLmNzcz8yZmM2Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./checkers_game/css/styles.css\n");
+eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9zdHlsZXMuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vY2hlY2tlcnNfZ2FtZS9jc3Mvc3R5bGVzLmNzcz9iM2RhIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./checkers_game/css/styles.css\n");
 
 /***/ }),
 
