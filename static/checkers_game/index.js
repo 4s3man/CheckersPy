@@ -5,7 +5,9 @@ import {Provider} from 'react-redux'
 import configureStore from './store/configureStore'
 import Checkers from './checkers'
 
-import style from "./styles.css";
+import "./css/styles.css";
+import "./css/dialogWindow.css"
+import "./css/link.css"
 
 const store = configureStore();
 console.log('index.js debug');

@@ -107,13 +107,13 @@ const Pawn = (props) => {
 const GameEndWindow = (winner) => {
   let text = winner == 'draw' ? winner + '!': winner + ' wins!';
   return (
-    <div className='board__dialogWindow dialogWindow--winner'>
+    <div className='dialogWindow dialogWindow--success'>
         <div className='dialogWindow__info'>
           <h4 className='dialogWindow__title'>{text}</h4>
         </div>
       <nav className='dialogWindow__nav'>
-        <a href="">Play again</a>
-        <a href="">Leave</a>
+        <span className='link'><a href="">Play again</a></span>
+        <span className='link'><a href="">Leave</a></span>
       </nav>
     </div>
   );
