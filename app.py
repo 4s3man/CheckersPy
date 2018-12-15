@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, session
+from flask_socketio import SocketIO, join_room, emit
 import time
 from checkers.checkers import *
 from helpers.connection import *
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
 @app.route('/', methods=['POST', 'GET'])
@@ -42,7 +44,7 @@ def move():
         checkers.resolve_moves(session['turn'])
 
         session['board_state'] = checkers.state.json_encode()
-        print(session['board_state'] )
+        # print(session['board_state'] )
     except EmptyPawnMove:
         # print('EmptyPawnMove')
         pass
@@ -53,5 +55,6 @@ def move():
     # time.sleep(2)
     return strip_redundant_for_frontend(session['board_state'])
 
-# if __name__ == "__main__":
-#    app.run(host="0.0.0.0", port=5009, debug=True)
+if __name__ == "__main__":
+    socketio.run(app, debug=True)
+   # app.run(host="0.0.0.0", port=5009, debug=True)
