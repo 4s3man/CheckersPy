@@ -1,15 +1,5 @@
 /* przeniesc kod dotyczący ustawienia na stronie gdzie indziej */
 /* potrzeba posegregowania tego pliku!! */
-html, body{
-  height: 100%;
-}
-body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  color:white;
-}
 .board{
   position: relative;
   width: 400px;

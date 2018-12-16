@@ -1,6 +1,8 @@
 //io attached in script above in layout.html
-var socket = io.connect('http://' + document.domain + ':' + location.port);
 import "reset-css"
+import "../shared_css/base.css"
+
+var socket = io.connect('http://' + document.domain + ':' + location.port);
 
 socket.on('connect', function() {
     console.log('Websocket connected!');
