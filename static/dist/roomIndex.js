@@ -81,20 +81,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./service/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./roomIndex/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./service/index.js":
-/*!**************************!*\
-  !*** ./service/index.js ***!
-  \**************************/
+/***/ "./roomIndex/index.js":
+/*!****************************!*\
+  !*** ./roomIndex/index.js ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nalert('dono');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zZXJ2aWNlL2luZGV4LmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL3NlcnZpY2UvaW5kZXguanM/OGM3NyJdLCJzb3VyY2VzQ29udGVudCI6WyJhbGVydCgnZG9ubycpO1xuIl0sIm1hcHBpbmdzIjoiOztBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./service/index.js\n");
+eval("\n\n//io attached in script above in layout.html\nvar socket = io.connect('http://' + document.domain + ':' + location.port);\n\nsocket.on('connect', function () {\n    console.log('Websocket connected!');\n    socket.emit('create', {});\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yb29tSW5kZXgvaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vcm9vbUluZGV4L2luZGV4LmpzPzI5NTMiXSwic291cmNlc0NvbnRlbnQiOlsiLy9pbyBhdHRhY2hlZCBpbiBzY3JpcHQgYWJvdmUgaW4gbGF5b3V0Lmh0bWxcbnZhciBzb2NrZXQgPSBpby5jb25uZWN0KCdodHRwOi8vJyArIGRvY3VtZW50LmRvbWFpbiArICc6JyArIGxvY2F0aW9uLnBvcnQpO1xuXG5zb2NrZXQub24oJ2Nvbm5lY3QnLCBmdW5jdGlvbigpIHtcbiAgICBjb25zb2xlLmxvZygnV2Vic29ja2V0IGNvbm5lY3RlZCEnKTtcbiAgICBzb2NrZXQuZW1pdCgnY3JlYXRlJywge30pXG59KTtcbiJdLCJtYXBwaW5ncyI6Ijs7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./roomIndex/index.js\n");
 
 /***/ })
 

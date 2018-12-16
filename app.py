@@ -6,11 +6,27 @@ from helpers.connection import *
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+ROOMS = {}
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
-@app.route('/', methods=['POST', 'GET'])
-def checkers():
+@app.route('/', methods=['GET', 'POST'])
 
+def room_index():
+    return render_template('room_index.jinja2')
+
+@socketio.on('create')
+def on_create(data):
+    room = 2
+    ROOMS[room] = 'dono'
+    join_room(room)
+    emit('join_room', {'room':room})
+    print('dziala\n\n\n\n\n\n\n')
+    print(ROOMS)
+
+
+
+@app.route('/game', methods=['POST', 'GET'])
+def checkers():
     """For local Development"""
     import manual_tests_app
 

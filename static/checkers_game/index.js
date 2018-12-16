@@ -1,3 +1,4 @@
+//socketio attached in script above in layout.html
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
@@ -18,9 +19,3 @@ render(
   </Provider>,
   document.getElementById('JScheckers')
 );
-
-
-var socket = io.connect('http://' + document.domain + ':' + location.port);
-socket.on('connect', function() {
-    console.log('Websocket connected!');
-});
