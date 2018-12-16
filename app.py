@@ -21,7 +21,7 @@ def checkers():
     session['turn'] = 'white'
     session['draw_count'] = 0
 
-    return render_template('empty.html')
+    return render_template('empty.jinja2')
 
 @app.route('/move', methods=['POST'])
 def move():

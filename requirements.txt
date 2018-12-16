@@ -4,5 +4,9 @@
 # Flask Framework
 Flask==1.0.2
 
+# SocketIO
+flask-socketio==3.1.1
+eventlet
+
 # Automated tests
 pytest==3.9.3

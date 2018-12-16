@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.jinja2" %}
 
 {% block title %}
 Min-max checkers
@@ -11,6 +11,5 @@ Min-max checkers
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <script src="{{ url_for('static', filename='dist/checkersGame.js') }}"></script>
 {% endblock %}

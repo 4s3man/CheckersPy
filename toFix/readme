@@ -1,0 +1,5 @@
+webpack have trouble while requiring socket.io
+becouse of this i attached 2nd script tag in layout
+
+this is faster than trying to fix it now but it's highly recommended
+in refractorization process
