@@ -1,4 +1,12 @@
+/* przeniesc kod dotyczący ustawienia na stronie gdzie indziej */
+/* potrzeba posegregowania tego pliku!! */
+html, body{
+  height: 100%;
+}
 body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: black;
   color:white;
 }
@@ -21,6 +29,10 @@ body{
 
 .board__field--black{
   background-color: #666666;
+}
+
+.board__field--white{
+  background-color: black;
 }
 
 .pulse--selectPawn{

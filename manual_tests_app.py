@@ -7,7 +7,7 @@ from checkers.tests.fixtures.state_fixtures import *
 from manual_tests.modules import *
 
 # state = no_blocked_beating_move_bug()
-state = two_queens_state()
+state = initial_state()
 
 checkers = Checkers(state)
 checkers.resolve_moves('white')

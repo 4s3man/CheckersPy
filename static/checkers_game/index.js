@@ -6,7 +6,8 @@ import {Provider} from 'react-redux'
 import configureStore from './store/configureStore'
 import Checkers from './checkers'
 
-import "./css/styles.css";
+import "reset-css"
+import "./css/styles.css"
 import "./css/dialogWindow.css"
 import "./css/link.css"
 
