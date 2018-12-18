@@ -4,8 +4,8 @@ const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
     entry:  {
-      checkersGame: __dirname + '/pages/checkers_game/index.js',
-      roomIndex: __dirname + '/pages/room_index/index.js',
+      choose_game: __dirname + '/pages/choose_game/index.js',
+      game: __dirname + '/pages/game/index.js',
     },
     output: {
         path: __dirname + '/dist/',

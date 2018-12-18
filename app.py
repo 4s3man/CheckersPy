@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session
-from flask_socketio import SocketIO, join_room, emit
+from flask_socketio import SocketIO, join_room, emit, rooms
 import time
 from checkers.checkers import *
 from helpers.connection import *
@@ -21,12 +21,14 @@ def on_create(data):
     join_room(room)
     emit('join_room', {'room':room})
     print('dziala\n\n\n\n\n\n\n')
-    print(ROOMS)
+    print(rooms())
 
 
 
 @app.route('/game', methods=['POST', 'GET'])
 def checkers():
+    print(ROOMS)
+    print('nice')
     """For local Development"""
     import manual_tests_app
 
