@@ -1,0 +1,38 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}
+Room index
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dist/choose_game.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="gridContainer">
+  <section class="chooseGame">
+    <div class="chooseGame__title">
+      <h2 class="title">CheckersPy</h2>
+    </div>
+    <div class='actionWindow'>
+      <nav class="menu">
+        <span class="menu__item">
+          <a href="">Play 2 players same computer</a>
+        </span>
+        <span class="menu__item">
+          <a href="">Play player vs computer</a>
+        </span>
+        <span class="menu__item">
+          <form action="">
+            tutaj będzie flaskowy form
+          </form>
+        </span>
+      </nav>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='dist/choose_game.js') }}"></script>
+{% endblock %}

@@ -12,7 +12,7 @@ app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 @app.route('/', methods=['GET', 'POST'])
 
 def room_index():
-    return render_template('room_index.jinja2')
+    return render_template('choose_game.html')
 
 @socketio.on('create')
 def on_create(data):
@@ -27,8 +27,6 @@ def on_create(data):
 
 @app.route('/game', methods=['POST', 'GET'])
 def checkers():
-    print(ROOMS)
-    print('nice')
     """For local Development"""
     import manual_tests_app
 
@@ -39,7 +37,7 @@ def checkers():
     session['turn'] = 'white'
     session['draw_count'] = 0
 
-    return render_template('empty.jinja2')
+    return render_template('game.jinja2')
 
 @app.route('/move', methods=['POST'])
 def move():

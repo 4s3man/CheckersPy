@@ -1,0 +1,42 @@
+.gridContainer{
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: 'aside_left chooseGame chooseGame aside_right'
+}
+.chooseGame{
+  grid-area: chooseGame;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 20%;
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+.chooseGame__title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top:15%;
+  margin-bottom: 20px;
+  min-height: 20%;
+}
+.actionWindow{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-right: 2px solid green;
+  border-left: 2px solid green;
+  border-radius: 40px;
+}
+.menu{
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+}
+.menu__item {
+  margin: 11% 0%;
+  line-height: 1em;
+  padding: 1em;
+}
