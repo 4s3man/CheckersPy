@@ -12,5 +12,6 @@ state = initial_state()
 checkers = Checkers(state)
 checkers.resolve_moves('white')
 
+
 session['board_state'] = checkers.state.json_encode()
 session['turn'] = 'white'
