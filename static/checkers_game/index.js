@@ -5,9 +5,9 @@ import {Provider} from 'react-redux'
 
 import configureStore from './store/configureStore'
 import Checkers from './checkers'
+import CheckersCtrl from './checkersCtrl'
 
 import "./css/styles.css"
-// import "./css/positioning.css"
 import "./css/dialogWindow.css"
 import "./css/link.css"
 
@@ -16,7 +16,10 @@ console.log('index.js debug');
 
 render(
   <Provider store={store}>
-    <Checkers/>
+    <div>
+      <CheckersCtrl/>
+      <Checkers/>
+    </div>
   </Provider>,
   document.getElementById('JScheckers')
 );

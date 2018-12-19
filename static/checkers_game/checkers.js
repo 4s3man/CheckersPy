@@ -149,5 +149,4 @@ const mapDispatchToProps = (dispatch) => {
     deselectPawn: () => dispatch(deselectPawn())
   };
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Checkers);
