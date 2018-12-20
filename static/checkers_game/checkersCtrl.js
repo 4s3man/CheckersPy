@@ -13,7 +13,7 @@ class CheckersCtrl extends Component{
     var refreshBoard = () => this.props.fetchBoardState('/move');
     let s = {
       'leave': {'func':() => this.requestAction('/game_controller', 'leave_' + this.props.actionSufix).then(data => window.location.assign(data))},
-      'reset': {'func': () => this.requestAction('/game_controller', 'reset_' + this.props.actionSufix).then(data => refreshBoard()) }
+      'play again': {'func': () => this.requestAction('/game_controller', 'reset_' + this.props.actionSufix).then(data => refreshBoard()) }
     }
 
     for (var k in s) {

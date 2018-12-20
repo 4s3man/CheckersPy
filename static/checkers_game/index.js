@@ -17,10 +17,10 @@ console.log('index.js debug');
 export function renderGame(actionSufix){
   render(
     <Provider store={store}>
-    <div>
-    <CheckersCtrl actionSufix='hot_seat'/>
-    <Checkers/>
-    </div>
+      <div>
+        <CheckersCtrl actionSufix={actionSufix}/>
+        <Checkers/>
+      </div>
     </Provider>,
     document.getElementById('JScheckers')
   );

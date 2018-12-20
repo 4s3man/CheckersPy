@@ -34,7 +34,7 @@ def hot_seat():
         session['turn'] = 'white'
         session['draw_count'] = 0
 
-    return render_template('game.jinja2')
+    return render_template('games/hot_seat.jinja2')
 
 @app.route('/game_controller', methods=['POST'])
 def game_controller():
