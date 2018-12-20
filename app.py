@@ -44,7 +44,7 @@ def checkers():
 
 @app.route('/game_controller', methods=['POST'])
 def game_controller():
-    request.get_json()
+    print(request.get_json())
     # print('\n\n\n\n\n\n',request.form)
     # if request.form.get('leave_token', '') == session.get('hot_seat_token', 'no'):
     #     del session['turn']
@@ -63,7 +63,7 @@ def game_controller():
     #
     #     return redirect(url_for('checkers'))
 
-    return redirect(url_for('checkers'))
+    return 'game_controller'
 
 @app.route('/move', methods=['POST'])
 def move():
@@ -88,7 +88,7 @@ def move():
         session['board_state'] = checkers.state.json_encode()
         # print(session['board_state'] )
     except EmptyPawnMove:
-        # print('EmptyPawnMove')
+        print('EmptyPawnMove')
         pass
     except InvalidPawnMove:
         """Handle some error"""

@@ -1,5 +1,8 @@
 zrobić:
 
+  dispatch is not a functino w CheckersCtrl
+
+
   wysłać win na frontend tam zrobić jego obsługę
   spytać się o to zrobić takie same importy wielu plików
   zrobić chyba najlepiej w kontrolerze ze kiedy nie ma ruchów dla gracza który ma je wykonać to przegrywa
