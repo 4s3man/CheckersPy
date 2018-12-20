@@ -5,14 +5,11 @@ Min-max checkers
 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='dist/game.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='dist/game_hot_seat.css') }}">
 {% endblock %}
 
 {% block content %}
-<div id="JScheckers">
-  Aby grać musisz mieć włączony JS
-  <a href="{{url_for('choose_game')}}">Leave</a>
-</div>
+{% include '/games/game.jinja2' %}
 {% endblock %}
 
 {% block scripts %}

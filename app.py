@@ -48,8 +48,10 @@ def game_controller():
         elif cmd == 'leave_hot_seat':
             del_game_sessions()
             return url_for('choose_game')
+        else:
+            return 'unsuported_action'
 
-    return 'game_controller'
+    return 'unsuported_action'
 
 @app.route('/move', methods=['POST'])
 def move():

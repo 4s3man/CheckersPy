@@ -7,13 +7,16 @@ import {fetchBoardState} from './actions/index'
 class CheckersCtrl extends Component{
   constructor(props) {
    super(props);
+   this.actionSufix = this.props.actionSufix || '';
+   if ('' === this.actionSufix)console.log('Missing actionSuffix in CheckersCtrl. Please provide valid one.');
   }
   buttons(){
     let output = [];
     var refreshBoard = () => this.props.fetchBoardState('/move');
     let s = {
-      'leave': {'func':() => this.requestAction('/game_controller', 'leave_' + this.props.actionSufix).then(data => window.location.assign(data))},
-      'play again': {'func': () => this.requestAction('/game_controller', 'reset_' + this.props.actionSufix).then(data => refreshBoard()) }
+      'leave': {'func':() => this.requestAction('/game_controller', 'leave_' + this.actionSufix)
+                            .then(data => data !== 'unsuported_action' ? window.location.assign(data) : console.log(data))},
+      'play again': {'func': () => this.requestAction('/game_controller', 'reset_' + this.actionSufix).then(data => refreshBoard()) }
     }
 
     for (var k in s) {
