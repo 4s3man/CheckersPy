@@ -9,7 +9,10 @@ Min-max checkers
 {% endblock %}
 
 {% block content %}
-{% include '/modules/game.html' %}
+<div id="JScheckers">
+  Aby grać musisz mieć włączony JS
+  <a href="{{url_for('choose_game')}}">Leave</a>
+</div>
 {% endblock %}
 
 {% block scripts %}

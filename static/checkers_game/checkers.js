@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {fetch as fetchPolyfill} from 'whatwg-fetch';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import CheckersCtrl from './checkersCtrl'
 
 import { stateFetchSuccess, stateHasError, statePlayerTurn, winner, fetchBoardState} from './actions/index.js'
 import {deselectPawn, selectPawn} from './actions/moves.js'
@@ -112,8 +113,7 @@ const GameEndWindow = (winner) => {
           <h4 className='dialogWindow__title'>{text}</h4>
         </div>
       <nav className='dialogWindow__nav'>
-        <span className='link'><a href="">Play again</a></span>
-        <span className='link'><a href="">Leave</a></span>
+        <CheckersCtrl actionSufix='hot_seat'/>
       </nav>
     </div>
   );

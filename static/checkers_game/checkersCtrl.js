@@ -2,22 +2,50 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
-
 import {fetchBoardState} from './actions/index'
 
 class CheckersCtrl extends Component{
+  constructor(props) {
+   super(props);
+  }
   buttons(){
     let output = [];
+    var refreshBoard = () => this.props.fetchBoardState('/move');
     let s = {
-      'leave': {'func':() => serverCmd('/game_controller', 'leave', this.props.fetchBoardState('/moves'))},
-      'reset': {'func': () => {}}
+      'leave': {'func':() => this.requestAction('/game_controller', 'leave_' + this.props.actionSufix).then(data => window.location.assign(data))},
+      'reset': {'func': () => this.requestAction('/game_controller', 'reset_' + this.props.actionSufix).then(data => refreshBoard()) }
     }
+
     for (var k in s) {
       output = [ ...output, button(k, output.length + 1, s[k].func)];
     }
 
     return output;
   }
+
+  requestAction(url, action, options={}){
+        return fetchPolyfill(url, {
+          method:'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(action)
+        })
+        .then((response) => {
+          if (!response.ok) throw Error(response.statusText);
+          else return response;
+        })
+        .then((response) => response.text())
+        //TODO remove log
+        // .then(data => {
+        //   console.log('Frontend:',data);
+        //   return data;
+        // })
+        .catch((e) => {
+          console.log(e);
+        });
+  }
+
   render(){
     return (
       <div className='checkers__ctrl'>
@@ -33,28 +61,10 @@ const button = (text, id, func) => {
   );
 }
 
-function serverCmd(url, cmd, updateFunc, options={}){
-      fetchPolyfill(url, {
-        method:'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(cmd)
-      })
-      .then((response) => {
-        if (!response.ok) throw Error(response.statusText);
-        else return response;
-      })
-      .then((response) => response.text())
-      .then(data => console.log(data))
-      .then(() => fetchBoardState('/move'));
-
-}
-
-const mapDispatchToProps = (dispatch) => {
+const ctrlDispathToProps = (dispatch) => {
   return {
     fetchBoardState: (url, payload={}) => dispatch(fetchBoardState(url, payload)),
   };
 }
 
-export default connect(mapDispatchToProps)(CheckersCtrl);
+export default connect(null, ctrlDispathToProps)(CheckersCtrl);

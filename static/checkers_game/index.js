@@ -14,12 +14,14 @@ import "./css/link.css"
 const store = configureStore();
 console.log('index.js debug');
 
-render(
-  <Provider store={store}>
+export function renderGame(actionSufix){
+  render(
+    <Provider store={store}>
     <div>
-      <CheckersCtrl/>
-      <Checkers/>
+    <CheckersCtrl actionSufix='hot_seat'/>
+    <Checkers/>
     </div>
-  </Provider>,
-  document.getElementById('JScheckers')
-);
+    </Provider>,
+    document.getElementById('JScheckers')
+  );
+}
