@@ -1,20 +1,13 @@
 zrobić:
-
-  dispatch is not a functino w CheckersCtrl
-
-
-  wysłać win na frontend tam zrobić jego obsługę
-  spytać się o to zrobić takie same importy wielu plików
+  ostylować CheckersCtrl i okienko wygrywania
   zrobić chyba najlepiej w kontrolerze ze kiedy nie ma ruchów dla gracza który ma je wykonać to przegrywa
+  zrobić osobne sesje dla hot seat i dla vs_computer
+  robić vs computer?
 
   wygrywanie kontynuuj lub wyjdź + strona główna | z pokojami
   i teraz pytanie czy robić websocket i gre dla dwóch przez internet
   potem wygląd całej strony a potem max-mina
   jeszcze przed max-minem można się zastanowić nad refraktoryzacją frontendu
-
-  chyba lepiej najpierw max mina i cały serwis a potem opcja vs bot
-  bo będzie już wszystko zrobione a tamta opcja fajnie uzupełni wtedy
-  więc po prostu robić tak żeby dało się zrobić bota
 
   gracz ma wchodzi do gry
   dostaje pionki jakiegoś koloru? czy białego?
