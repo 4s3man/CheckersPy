@@ -4,5 +4,5 @@ cd ~/webDev/python/CheckersPy/ &&
 gnome-terminal --tab -- sh -c "cd ./static && npm run watch; bash" &
 sleep 0.5 && setsid firefox --new-window localhost:5000 &
 setsid atom . &&
-export FLASK_ENV=app.py && export FLASK_DEBUG=1 && . venv/bin/activate && python3 app.py &
+export FLASK_ENV=development && export FLASK_DEBUG=1 && . venv/bin/activate && python3 app.py &
 gnome-terminal --tab &
