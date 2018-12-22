@@ -10,6 +10,7 @@ import CheckersCtrl from './checkersCtrl'
 import "./css/styles.css"
 import "./css/dialogWindow.css"
 import "./css/link.css"
+import "./css/checkersCtrl.css"
 
 const store = configureStore();
 console.log('index.js debug');
@@ -17,7 +18,7 @@ console.log('index.js debug');
 export function renderGame(actionSufix){
   render(
     <Provider store={store}>
-      <div>
+      <div className='game'>
         <CheckersCtrl actionSufix={actionSufix}/>
         <Checkers/>
       </div>

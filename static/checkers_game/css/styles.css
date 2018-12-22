@@ -1,3 +1,26 @@
+.game{
+  display: flex;
+}
+.checkers__ctrl{
+  display: flex;
+  flex-flow: column nowrap;
+  text-transform: capitalize;
+  align-items: center;
+  padding-top: 12px;
+}
+.checkers__ctrl__item{
+  margin: 10px 5px;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.checkers__ctrl__item:hover{
+  text-shadow: 0px 3px 4px green;
+  border-left: 3px solid green;
+  border-right: 3px solid green;
+  border-radius: 20px;
+}
+
 .board{
   position: relative;
   width: 400px;
@@ -23,6 +46,9 @@
   background-color: black;
 }
 
+.pulse--selectPawn,.pulse--deselectPawn, .pulse--fetchBoardState{
+  cursor: pointer;
+}
 .pulse--selectPawn{
   animation:pulsation-yellow 3s infinite alternate;
   -webkit-animation:pulsation-yellow 3s infinite; /* dla Google Chrome, Safari, Opera 15+ */
