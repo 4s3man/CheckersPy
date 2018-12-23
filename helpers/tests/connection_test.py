@@ -3,14 +3,14 @@ from helpers.connection import *
 
 def test_receive_pawn_move():
     goodMove1 =  {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6]}}
-    assert goodMove1 == receive_pawn_move(goodMove1)
+    assert goodMove1 == receive_pawn_move(goodMove1, 'white')
 
     goodMove2 =  {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6], 'beated_pawn_ids':[1,2,3]}}
-    assert goodMove2 == receive_pawn_move(goodMove2)
+    assert goodMove2 == receive_pawn_move(goodMove2,'white')
 
     emptyMove = {}
     with pytest.raises(EmptyPawnMove):
-        assert receive_pawn_move(emptyMove)
+        assert receive_pawn_move(emptyMove, 'white')
 
     invalidMoves = {
         'tooLongMoveData': {'id': 3, 'color': 'white', 'move': {'position_after_move': [4, 6]}, 'badThings':[1,2,3]},
@@ -21,4 +21,4 @@ def test_receive_pawn_move():
     }
     for key, value in invalidMoves.items():
         with pytest.raises(InvalidPawnMove):
-            assert receive_pawn_move(value)
+            assert receive_pawn_move(value, 'white')

@@ -14,7 +14,7 @@ def one_pawn_at_1_1_state():
     "white_pawns":
         [
         {"y": 1, "x": 1,"color": "white", "type": "normal", "foreward": -1, "id": 0, "moves": []},
-        None,
+        null,
         None, None, None, None, None, None, None, None, None, None
         ],
     "black_pawns":
@@ -412,3 +412,6 @@ def two_queens_state():
             None
             ]
     })
+@pytest.fixture
+def no_moves_for_black():
+    return State('{"white_pawns": [{"color": "white", "id": 0, "type": "queen", "x": 1, "y": 1, "foreward": -1, "moves": []}, null, null, {"color": "white", "id": 3, "type": "normal", "x": 7, "y": 3, "foreward": -1, "moves": []}, null, null, {"color": "white", "id": 6, "type": "normal", "x": 3, "y": 5, "foreward": -1, "moves": []}, {"color": "white", "id": 7, "type": "normal", "x": 7, "y": 5, "foreward": -1, "moves": []}, {"color": "white", "id": 8, "type": "normal", "x": 1, "y": 7, "foreward": -1, "moves": []}, {"color": "white", "id": 9, "type": "normal", "x": 5, "y": 3, "foreward": -1, "moves": []}, {"color": "white", "id": 10, "type": "normal", "x": 6, "y": 6, "foreward": -1, "moves": []}, {"color": "white", "id": 11, "type": "normal", "x": 7, "y": 7, "foreward": -1, "moves": []}], "black_pawns": [null, null, null, null, null, null, null, null, {"color": "black", "id": 8, "type": "normal", "x": 0, "y": 6, "foreward": 1, "moves": []}, null, null, null], "winner": ""}')

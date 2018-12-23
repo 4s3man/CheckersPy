@@ -4,6 +4,8 @@ import time
 from checkers.checkers import *
 from helpers.connection import *
 
+from checkers.tests.fixtures.state_fixtures import *
+
 app = Flask(__name__)
 # socketio = SocketIO(app)
 ROOMS = {}
@@ -25,10 +27,17 @@ def choose_game():
 @app.route('/game/hotseat', methods=['POST', 'GET'])
 def hot_seat():
     # """For local Development"""
-    # import manual_tests_app
+    state = no_moves_for_black()
+    # state = initial_state()
 
-    if not 'board_state' in session.keys():
-        set_initial_game_sessions()
+    checkers = Checkers(state)
+    checkers.resolve_moves('white')
+
+
+    session['board_state'] = checkers.state.json_encode()
+    session['turn'] = 'white'
+    # if not 'board_state' in session.keys():
+    #     set_initial_game_sessions()
 
     return render_template('games/hot_seat.jinja2')
 
@@ -68,17 +77,18 @@ def move():
 
         session['turn'] = 'white' if session['turn'] == 'black' else 'black'
         checkers.resolve_moves(session['turn'])
+        
 
         session['board_state'] = checkers.state.json_encode()
         # print(session['board_state'] )
     except EmptyPawnMove:
-        # print('EmptyPawnMove')
+        print('EmptyPawnMove')
         pass
     except InvalidPawnMove:
         """Handle some error"""
-        # print('invalidPawnMove Error')
+        print('invalidPawnMove Error')
     except KeyError:
-        set_initial_game_sessions()
+        # set_initial_game_sessions()
         print('key error reseting game')
     # print('ok')
     # time.sleep(2)
@@ -100,7 +110,6 @@ def del_game_sessions():
     session_keys = session.keys()
     for key in ['turn', 'draw_count', 'board_state']:
         if key in session_keys: del session[key]
-    set_initial_game_sessions()
 
 
 if __name__ == "__main__":
