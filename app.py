@@ -28,11 +28,7 @@ def hot_seat():
     # import manual_tests_app
 
     if not 'board_state' in session.keys():
-        checkers = Checkers(InitialState())
-        checkers.resolve_moves('white')
-        session['board_state'] = checkers.state.json_encode()
-        session['turn'] = 'white'
-        session['draw_count'] = 0
+        set_initial_game_sessions()
 
     return render_template('games/hot_seat.jinja2')
 

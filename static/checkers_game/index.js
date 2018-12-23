@@ -13,12 +13,12 @@ import "./css/dialogWindow.css"
 const store = configureStore();
 console.log('index.js debug');
 
-export function renderGame(actionSufix){
+export function renderGame(moveUrl, actionSufix){
   render(
     <Provider store={store}>
       <div className='game'>
         <CheckersCtrl actionSufix={actionSufix}/>
-        <Checkers/>
+        <Checkers moveUrl={moveUrl}/>
       </div>
     </Provider>,
     document.getElementById('JScheckers')

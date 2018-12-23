@@ -9,8 +9,13 @@ import { stateFetchSuccess, stateHasError, statePlayerTurn, winner, fetchBoardSt
 import {deselectPawn, selectPawn} from './actions/moves.js'
 
 class Checkers extends Component{
+  constructor(props) {
+   super(props);
+   this.moveUrl = this.props.moveUrl || '';
+   if ('' === this.moveUrl)console.log('Missing actionSuffix in CheckersCtrl. Please provide valid one.');
+  }
   componentDidMount(){
-    this.props.fetchBoardState('/move');
+    this.props.fetchBoardState(this.moveUrl);
   }
 
   createFields(){
