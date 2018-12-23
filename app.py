@@ -36,6 +36,7 @@ def hot_seat():
 
     session['board_state'] = checkers.state.json_encode()
     session['turn'] = 'white'
+
     # if not 'board_state' in session.keys():
     #     set_initial_game_sessions()
 
@@ -46,12 +47,12 @@ def game_controller():
     if request.method == 'POST':
         cmd = request.get_json()
         if cmd == 'reset_hot_seat':
-            del_game_sessions()
-            set_initial_game_sessions()
+            del_game_sessions('hot_seat')
+            set_initial_game_sessions('hot_seat')
 
             return 'ok'
         elif cmd == 'leave_hot_seat':
-            del_game_sessions()
+            del_game_sessions('hot_seat')
             return url_for('choose_game')
         else:
             return 'unsuported_action'
@@ -61,7 +62,46 @@ def game_controller():
 @app.route('/move', methods=['POST'])
 def move():
     # print(request.get_json())
+    handle_move('hot_seat')
+    # try:
+    #     pawn_move = receive_pawn_move(request.get_json(), session['turn'])
+    #     checkers = Checkers(State(session['board_state']))
+    #     if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+    #
+    #     checkers.make_move(**pawn_move)
+    #
+    #     checkers.state.winner = checkers.state.get_winner()
+    #     if has_only_queens(checkers.state) and not checkers.state.winner:
+    #         session['draw_count'] += 1
+    #         if(session['draw_count'] > 6):
+    #             checkers.state.winner = 'draw'
+    #
+    #     session['turn'] = 'white' if session['turn'] == 'black' else 'black'
+    #     checkers.resolve_moves(session['turn'])
+    #
+    #     if not checkers.state.collection_has_moves(session['turn']):
+    #         checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
+    #
+    #     session['board_state'] = checkers.state.json_encode()
+    # except EmptyPawnMove:
+    #     print('EmptyPawnMove')
+    #     pass
+    # except InvalidPawnMove:
+    #     """Handle some error"""
+    #     print('invalidPawnMove Error')
+    # except KeyError:
+    #     set_initial_game_sessions()
+    #     print('key error reseting game')
+    # print('ok')
+    # time.sleep(2)
+    return strip_redundant_for_frontend(session['board_state'])
 
+@app.route('/leave', methods=['GET'])
+def leave():
+    del_game_sessions()
+    return redirect(url_for('choose_game'))
+
+def handle_move(sufix:str):
     try:
         pawn_move = receive_pawn_move(request.get_json(), session['turn'])
         checkers = Checkers(State(session['board_state']))
@@ -77,10 +117,11 @@ def move():
 
         session['turn'] = 'white' if session['turn'] == 'black' else 'black'
         checkers.resolve_moves(session['turn'])
-        
+
+        if not checkers.state.collection_has_moves(session['turn']):
+            checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
 
         session['board_state'] = checkers.state.json_encode()
-        # print(session['board_state'] )
     except EmptyPawnMove:
         print('EmptyPawnMove')
         pass
@@ -88,29 +129,20 @@ def move():
         """Handle some error"""
         print('invalidPawnMove Error')
     except KeyError:
-        # set_initial_game_sessions()
+        set_initial_game_sessions()
         print('key error reseting game')
-    # print('ok')
-    # time.sleep(2)
-    return strip_redundant_for_frontend(session['board_state'])
 
-@app.route('/leave', methods=['GET'])
-def leave():
-    del_game_sessions()
-    return redirect(url_for('choose_game'))
-
-def set_initial_game_sessions():
+def set_initial_game_sessions(sufix:str):
     checkers = Checkers(InitialState())
     checkers.resolve_moves('white')
     session['board_state'] = checkers.state.json_encode()
     session['turn'] = 'white'
     session['draw_count'] = 0
 
-def del_game_sessions():
+def del_game_sessions(sufix:str):
     session_keys = session.keys()
     for key in ['turn', 'draw_count', 'board_state']:
         if key in session_keys: del session[key]
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

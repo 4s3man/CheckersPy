@@ -41,6 +41,12 @@ class State():
         collection[i].set_foreward_vector(pawn['foreward'])
         collection[i].set_moves(pawn.get('moves', []))
 
+    def collection_has_moves(self, collection:str)->bool:
+        collection = self.white_pawns if collection == 'white' else self.black_pawns;
+        for pawn in collection:
+            if pawn is not None and len(pawn.moves)>0:return True
+        return False
+
 class InitialState(State):
     def __init__(self):
         self.white_pawns = [Pawn('white', id) for id in range(self.pawns_for_site)]
