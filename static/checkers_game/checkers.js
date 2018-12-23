@@ -59,7 +59,7 @@ class Checkers extends Component{
 
   render(){
     return (
-      <div className='board'>
+      <div className='game_board board'>
         {this.makeDialogWindow()}
         {this.createFields()}
       </div>

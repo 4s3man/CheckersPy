@@ -6,3 +6,7 @@ body{
   color:white;
   height: 100%;
 }
+.gridContainer{
+  min-height: 100%;
+  display: grid;
+}

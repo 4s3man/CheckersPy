@@ -1,5 +1,23 @@
 body{
+  display: grid;
+}
+.gridContainer--hotSeats{
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "aside_left game game aside_right"
+}
+#JScheckers{
+  grid-area: game;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width:576px){
+  .gridContainer--hotSeats{
+    grid-template-columns: 1fr;
+    grid-template-areas: "game";
+  }
 }

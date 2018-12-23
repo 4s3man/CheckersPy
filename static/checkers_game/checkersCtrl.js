@@ -51,7 +51,7 @@ class CheckersCtrl extends Component{
 
   render(){
     return (
-      <div className='checkers__ctrl'>
+      <div className='game__ctrl ctrl'>
       {this.buttons()}
       </div>
     );
@@ -60,7 +60,7 @@ class CheckersCtrl extends Component{
 
 const button = (text, id, func) => {
   return (
-    <div key={id} onClick={() => func()} className='checkers__ctrl__item button button--checkersCtrl'>{text}</div>
+    <div key={id} onClick={() => func()} className='ctrl__item button button--ctrl'>{text}</div>
   );
 }
 
