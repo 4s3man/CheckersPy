@@ -146,17 +146,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 /***/ }),
 
-/***/ "./checkers_game/css/checkersCtrl.css":
-/*!********************************************!*\
-  !*** ./checkers_game/css/checkersCtrl.css ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9jaGVja2Vyc0N0cmwuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vY2hlY2tlcnNfZ2FtZS9jc3MvY2hlY2tlcnNDdHJsLmNzcz9mM2IwIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./checkers_game/css/checkersCtrl.css\n");
-
-/***/ }),
-
 /***/ "./checkers_game/css/dialogWindow.css":
 /*!********************************************!*\
   !*** ./checkers_game/css/dialogWindow.css ***!
@@ -168,25 +157,14 @@ eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceM
 
 /***/ }),
 
-/***/ "./checkers_game/css/link.css":
+/***/ "./checkers_game/css/game.css":
 /*!************************************!*\
-  !*** ./checkers_game/css/link.css ***!
+  !*** ./checkers_game/css/game.css ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9saW5rLmNzcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2NoZWNrZXJzX2dhbWUvY3NzL2xpbmsuY3NzP2E0YjQiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./checkers_game/css/link.css\n");
-
-/***/ }),
-
-/***/ "./checkers_game/css/styles.css":
-/*!**************************************!*\
-  !*** ./checkers_game/css/styles.css ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9zdHlsZXMuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vY2hlY2tlcnNfZ2FtZS9jc3Mvc3R5bGVzLmNzcz9iM2RhIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./checkers_game/css/styles.css\n");
+eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2Nzcy9nYW1lLmNzcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2NoZWNrZXJzX2dhbWUvY3NzL2dhbWUuY3NzP2UzZTgiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./checkers_game/css/game.css\n");
 
 /***/ }),
 
@@ -198,7 +176,7 @@ eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceM
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.renderGame = renderGame;\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\nvar _reactRedux = __webpack_require__(/*! react-redux */ \"./node_modules/react-redux/es/index.js\");\n\nvar _configureStore = __webpack_require__(/*! ./store/configureStore */ \"./checkers_game/store/configureStore.js\");\n\nvar _configureStore2 = _interopRequireDefault(_configureStore);\n\nvar _checkers = __webpack_require__(/*! ./checkers */ \"./checkers_game/checkers.js\");\n\nvar _checkers2 = _interopRequireDefault(_checkers);\n\nvar _checkersCtrl = __webpack_require__(/*! ./checkersCtrl */ \"./checkers_game/checkersCtrl.js\");\n\nvar _checkersCtrl2 = _interopRequireDefault(_checkersCtrl);\n\n__webpack_require__(/*! ./css/styles.css */ \"./checkers_game/css/styles.css\");\n\n__webpack_require__(/*! ./css/dialogWindow.css */ \"./checkers_game/css/dialogWindow.css\");\n\n__webpack_require__(/*! ./css/link.css */ \"./checkers_game/css/link.css\");\n\n__webpack_require__(/*! ./css/checkersCtrl.css */ \"./checkers_game/css/checkersCtrl.css\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n//socketio attached in script above in layout.html\nvar store = (0, _configureStore2.default)();\nconsole.log('index.js debug');\n\nfunction renderGame(actionSufix) {\n  (0, _reactDom.render)(_react2.default.createElement(\n    _reactRedux.Provider,\n    { store: store },\n    _react2.default.createElement(\n      'div',\n      { className: 'game' },\n      _react2.default.createElement(_checkersCtrl2.default, { actionSufix: actionSufix }),\n      _react2.default.createElement(_checkers2.default, null)\n    )\n  ), document.getElementById('JScheckers'));\n}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2luZGV4LmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2NoZWNrZXJzX2dhbWUvaW5kZXguanM/NzBkMCJdLCJzb3VyY2VzQ29udGVudCI6WyIvL3NvY2tldGlvIGF0dGFjaGVkIGluIHNjcmlwdCBhYm92ZSBpbiBsYXlvdXQuaHRtbFxuaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0J1xuaW1wb3J0IHtyZW5kZXJ9IGZyb20gJ3JlYWN0LWRvbSdcbmltcG9ydCB7UHJvdmlkZXJ9IGZyb20gJ3JlYWN0LXJlZHV4J1xuXG5pbXBvcnQgY29uZmlndXJlU3RvcmUgZnJvbSAnLi9zdG9yZS9jb25maWd1cmVTdG9yZSdcbmltcG9ydCBDaGVja2VycyBmcm9tICcuL2NoZWNrZXJzJ1xuaW1wb3J0IENoZWNrZXJzQ3RybCBmcm9tICcuL2NoZWNrZXJzQ3RybCdcblxuaW1wb3J0IFwiLi9jc3Mvc3R5bGVzLmNzc1wiXG5pbXBvcnQgXCIuL2Nzcy9kaWFsb2dXaW5kb3cuY3NzXCJcbmltcG9ydCBcIi4vY3NzL2xpbmsuY3NzXCJcbmltcG9ydCBcIi4vY3NzL2NoZWNrZXJzQ3RybC5jc3NcIlxuXG5jb25zdCBzdG9yZSA9IGNvbmZpZ3VyZVN0b3JlKCk7XG5jb25zb2xlLmxvZygnaW5kZXguanMgZGVidWcnKTtcblxuZXhwb3J0IGZ1bmN0aW9uIHJlbmRlckdhbWUoYWN0aW9uU3VmaXgpe1xuICByZW5kZXIoXG4gICAgPFByb3ZpZGVyIHN0b3JlPXtzdG9yZX0+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT0nZ2FtZSc+XG4gICAgICAgIDxDaGVja2Vyc0N0cmwgYWN0aW9uU3VmaXg9e2FjdGlvblN1Zml4fS8+XG4gICAgICAgIDxDaGVja2Vycy8+XG4gICAgICA8L2Rpdj5cbiAgICA8L1Byb3ZpZGVyPixcbiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnSlNjaGVja2VycycpXG4gICk7XG59XG4iXSwibWFwcGluZ3MiOiI7Ozs7O0FBaUJBO0FBQ0E7QUFqQkE7QUFDQTs7O0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBOzs7QUFBQTtBQUNBOzs7QUFBQTtBQUNBOzs7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBOzs7QUFiQTtBQWNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUFBO0FBQ0E7QUFDQTtBQUZBO0FBREE7QUFRQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./checkers_game/index.js\n");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.renderGame = renderGame;\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\nvar _reactRedux = __webpack_require__(/*! react-redux */ \"./node_modules/react-redux/es/index.js\");\n\nvar _configureStore = __webpack_require__(/*! ./store/configureStore */ \"./checkers_game/store/configureStore.js\");\n\nvar _configureStore2 = _interopRequireDefault(_configureStore);\n\nvar _checkers = __webpack_require__(/*! ./checkers */ \"./checkers_game/checkers.js\");\n\nvar _checkers2 = _interopRequireDefault(_checkers);\n\nvar _checkersCtrl = __webpack_require__(/*! ./checkersCtrl */ \"./checkers_game/checkersCtrl.js\");\n\nvar _checkersCtrl2 = _interopRequireDefault(_checkersCtrl);\n\n__webpack_require__(/*! ./css/game.css */ \"./checkers_game/css/game.css\");\n\n__webpack_require__(/*! ./css/dialogWindow.css */ \"./checkers_game/css/dialogWindow.css\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n//socketio attached in script above in layout.html\nvar store = (0, _configureStore2.default)();\nconsole.log('index.js debug');\n\nfunction renderGame(actionSufix) {\n  (0, _reactDom.render)(_react2.default.createElement(\n    _reactRedux.Provider,\n    { store: store },\n    _react2.default.createElement(\n      'div',\n      { className: 'game' },\n      _react2.default.createElement(_checkersCtrl2.default, { actionSufix: actionSufix }),\n      _react2.default.createElement(_checkers2.default, null)\n    )\n  ), document.getElementById('JScheckers'));\n}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jaGVja2Vyc19nYW1lL2luZGV4LmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2NoZWNrZXJzX2dhbWUvaW5kZXguanM/NzBkMCJdLCJzb3VyY2VzQ29udGVudCI6WyIvL3NvY2tldGlvIGF0dGFjaGVkIGluIHNjcmlwdCBhYm92ZSBpbiBsYXlvdXQuaHRtbFxuaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0J1xuaW1wb3J0IHtyZW5kZXJ9IGZyb20gJ3JlYWN0LWRvbSdcbmltcG9ydCB7UHJvdmlkZXJ9IGZyb20gJ3JlYWN0LXJlZHV4J1xuXG5pbXBvcnQgY29uZmlndXJlU3RvcmUgZnJvbSAnLi9zdG9yZS9jb25maWd1cmVTdG9yZSdcbmltcG9ydCBDaGVja2VycyBmcm9tICcuL2NoZWNrZXJzJ1xuaW1wb3J0IENoZWNrZXJzQ3RybCBmcm9tICcuL2NoZWNrZXJzQ3RybCdcblxuaW1wb3J0IFwiLi9jc3MvZ2FtZS5jc3NcIlxuaW1wb3J0IFwiLi9jc3MvZGlhbG9nV2luZG93LmNzc1wiXG5cbmNvbnN0IHN0b3JlID0gY29uZmlndXJlU3RvcmUoKTtcbmNvbnNvbGUubG9nKCdpbmRleC5qcyBkZWJ1ZycpO1xuXG5leHBvcnQgZnVuY3Rpb24gcmVuZGVyR2FtZShhY3Rpb25TdWZpeCl7XG4gIHJlbmRlcihcbiAgICA8UHJvdmlkZXIgc3RvcmU9e3N0b3JlfT5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPSdnYW1lJz5cbiAgICAgICAgPENoZWNrZXJzQ3RybCBhY3Rpb25TdWZpeD17YWN0aW9uU3VmaXh9Lz5cbiAgICAgICAgPENoZWNrZXJzLz5cbiAgICAgIDwvZGl2PlxuICAgIDwvUHJvdmlkZXI+LFxuICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdKU2NoZWNrZXJzJylcbiAgKTtcbn1cbiJdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFlQTtBQUNBO0FBZkE7QUFDQTs7O0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBOzs7QUFBQTtBQUNBOzs7QUFBQTtBQUNBOzs7QUFDQTtBQUNBO0FBQUE7QUFDQTs7O0FBWEE7QUFZQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFBQTtBQUNBO0FBQ0E7QUFGQTtBQURBO0FBUUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./checkers_game/index.js\n");
 
 /***/ }),
 

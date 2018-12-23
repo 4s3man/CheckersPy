@@ -7,10 +7,8 @@ import configureStore from './store/configureStore'
 import Checkers from './checkers'
 import CheckersCtrl from './checkersCtrl'
 
-import "./css/styles.css"
+import "./css/game.css"
 import "./css/dialogWindow.css"
-import "./css/link.css"
-import "./css/checkersCtrl.css"
 
 const store = configureStore();
 console.log('index.js debug');
