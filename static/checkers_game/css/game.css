@@ -34,6 +34,7 @@
 }
 
 .board__field{
+  cursor: default;
   width: 3em;
   height: 3em;
   display: flex;
@@ -49,7 +50,7 @@
   background-color: black;
 }
 
-.pulse--selectPawn,.pulse--deselectPawn, .pulse--fetchBoardState{
+.board__field .pulse--selectPawn, .board__field .pulse--deselectPawn, .pulse--deselectPawn, .pulse--selectPawn, .pulse--fetchBoardState{
   cursor: pointer;
 }
 .pulse--selectPawn{
@@ -95,6 +96,7 @@
   width: 2em;
   height: 2em;
   border-radius: 80px;
+  cursor: inherit;
   /* DEBUG PURPOSES*/
   color:black;
   justify-content: center;
