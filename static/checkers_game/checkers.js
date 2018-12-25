@@ -12,7 +12,7 @@ class Checkers extends Component{
   constructor(props) {
    super(props);
    this.moveUrl = this.props.moveUrl || '';
-   if ('' === this.moveUrl)console.log('Missing actionSuffix in CheckersCtrl. Please provide valid one.');
+   if ('' === this.moveUrl)console.log('Missing moveUrl in Checkers. Please provide valid one.');
   }
   componentDidMount(){
     this.props.fetchBoardState(this.moveUrl);
