@@ -1,8 +1,7 @@
 zrobić:
-  ostylować CheckersCtrl i okienko wygrywania
-  zrobić chyba najlepiej w kontrolerze ze kiedy nie ma ruchów dla gracza który ma je wykonać to przegrywa
   zrobić osobne sesje dla hot seat i dla vs_computer
-  robić vs computer?
+  loader podczas ładowania stanu gry
+  robić vs computer
 
   wygrywanie kontynuuj lub wyjdź + strona główna | z pokojami
   i teraz pytanie czy robić websocket i gre dla dwóch przez internet

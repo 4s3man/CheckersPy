@@ -116,7 +116,7 @@
   background-color: brown;
 }
 
-.board::before, .board::after {
+/* .board::before, .board::after {
     position: absolute;
     width: 30px;
     content: '0 1 2 3 4 5 6 7';
@@ -133,7 +133,7 @@
   width: 404px;
   height: 30px;
   letter-spacing: 18px;
-}
+} */
 
 @media (max-width:576px){
   .game{
