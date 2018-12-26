@@ -1,15 +1,17 @@
-class Pawn:
+from checkers.board.abstract_game_obj import Game_Obj
+class Pawn(Game_Obj):
     id = 0
     color = ''
     foreward = 0
     type = ''
-    moves = {}
+    moves = []
     x = 0
     y = 0
     def __init__(self, color:str, id:int, type:str='normal'):
         self.color = color
         self.id = id
         self.type = type
+        self.moves = []
 
     """direction for coin normal moves"""
     def set_foreward_vector(self, vector:int):

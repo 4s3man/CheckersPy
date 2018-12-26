@@ -6,7 +6,7 @@ def makeState(dict_state: dict):
 
 @pytest.fixture
 def initial_state():
-    return InitialState()
+    return State()
 
 @pytest.fixture
 def one_pawn_at_1_1_state():

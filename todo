@@ -1,4 +1,11 @@
 zrobić:
+  refraktoryzacja:
+  - osobny obiekt move
+  - funkcje  move resolver do state
+  - make move przenieść do state
+  - initial state robiony za każdym razem kiedy nie jest podany jsonowy state do konstruktora state
+  - move ma mieć id, id ma być wybierane na frontendzie i wysyłane na back
+  - przenieść funkcje z move_funcs i zlikwidować ten plik
   zrobić osobne sesje dla hot seat i dla vs_computer
   loader podczas ładowania stanu gry
   robić vs computer
