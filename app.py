@@ -26,11 +26,8 @@ def choose_game():
 
 @app.route('/game/hotseat', methods=['POST', 'GET'])
 def hot_seat():
-    json_state = State().json_encode()
-    state_from_json = State(json_state)
-    s = no_blocked_beating_move_bug()
-    print(s == State())
-
+    # s = State()
+    # s.make_move(1, Color('white'), {})
 
     # """For local Development"""
     # state = no_moves_for_black()
@@ -44,8 +41,8 @@ def hot_seat():
     # session['turn'] = 'white'
 
     # TODO: comment for refractor
-    # if not 'board_state' in session.keys():
-    #     set_initial_game_sessions()
+    if not 'board_state' in session.keys():
+        set_initial_game_sessions()
 
     return render_template('games/hot_seat.jinja2')
 
@@ -71,39 +68,39 @@ def game_controller():
 @app.route('/move', methods=['POST'])
 def move():
     # print(request.get_json())
-    # TODO: comment for refractor
-    # try:
-    #     pawn_move = receive_pawn_move(request.get_json(), session['turn'])
-    #     checkers = Checkers(State(session['board_state']))
-    #     if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
-    #
-    #     checkers.make_move(**pawn_move)
-    #
-    #     checkers.state.winner = checkers.state.get_winner()
-    #     if has_only_queens(checkers.state) and not checkers.state.winner:
-    #         session['draw_count'] += 1
-    #         if(session['draw_count'] > 6):
-    #             checkers.state.winner = 'draw'
-    #
-    #     session['turn'] = 'white' if session['turn'] == 'black' else 'black'
-    #     checkers.resolve_moves(session['turn'])
-    #
-    #     if not checkers.state.collection_has_moves(session['turn']):
-    #         checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
-    #
-    #     session['board_state'] = checkers.state.json_encode()
-    # except EmptyPawnMove:
-    #     print('EmptyPawnMove')
-    #     pass
-    # except InvalidPawnMove:
-    #     """Handle some error"""
-    #     print('invalidPawnMove Error')
-    # except KeyError:
-    #     set_initial_game_sessions()
-    #     print('key error reseting game')
-    # print('ok')
-    # time.sleep(2)
-    return ''#strip_redundant_for_frontend(session['board_state'])
+    try:
+        pawn_move = receive_pawn_move(request.get_json(), session['turn'])
+        checkers = Checkers(State(session['board_state']))
+        if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+
+        # TODO:przejść do modyfikowania ruchów i frontendu
+        checkers.make_move(**pawn_move)
+
+        checkers.state.winner = checkers.state.get_winner()
+        if checkers.state.has_only_queens() and not checkers.state.winner:
+            session['draw_count'] += 1
+            if(session['draw_count'] > 6):
+                checkers.state.winner = 'draw'
+
+        session['turn'] = 'white' if session['turn'] == 'black' else 'black'
+        checkers.resolve_moves(session['turn'])
+
+        if not checkers.state.collection_has_moves(session['turn']):
+            checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
+
+        session['board_state'] = checkers.state.json_encode()
+    except EmptyPawnMove:
+        print('EmptyPawnMove')
+        pass
+    except InvalidPawnMove:
+        """Handle some error"""
+        print('invalidPawnMove Error')
+    except KeyError:
+        set_initial_game_sessions()
+        print('key error reseting game')
+    # # print('ok')
+    # # time.sleep(2)
+    return strip_redundant_for_frontend(session['board_state'])
 
 @app.route('/leave', methods=['GET'])
 def leave():
@@ -112,17 +109,17 @@ def leave():
 
 def set_initial_game_sessions(sufix:str=''):
     """Empty sufix used for hot_seats"""
-    # checkers = Checkers(State())
-    # checkers.resolve_moves('white')
-    # session['board_state' + sufix] = checkers.state.json_encode()
-    # session['turn' + sufix] = 'white'
-    # session['draw_count'+ sufix] = 0
+    checkers = Checkers(State())
+    checkers.resolve_moves('white')
+    session['board_state' + sufix] = checkers.state.json_encode()
+    session['turn' + sufix] = 'white'
+    session['draw_count'+ sufix] = 0
 
 def del_game_sessions(sufix:str=''):
     """Empty sufix used for hot_seats"""
-    # session_keys = session.keys()
-    # for key in ['turn'+ sufix, 'draw_count'+ sufix, 'board_state'+ sufix]:
-    #     if key in session_keys: del session[key]
+    session_keys = session.keys()
+    for key in ['turn'+ sufix, 'draw_count'+ sufix, 'board_state'+ sufix]:
+        if key in session_keys: del session[key]
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

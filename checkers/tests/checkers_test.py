@@ -9,6 +9,7 @@ def test_make_move(extended_circle_state):
     checkers.make_move(pawn.id, pawn.color, pawn.moves[0])
     """Assert pawn moved"""
     assert checkers.state.white_pawns[1].y == 5 and checkers.state.white_pawns[1].x == 3
+
     """Assert beat enemy pawns"""
     for enemy_id in pawn.moves[0]['beated_pawn_ids']:
         assert checkers.state.black_pawns[enemy_id] == None

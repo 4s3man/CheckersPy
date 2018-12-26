@@ -13,15 +13,22 @@ class Pawn(Game_Obj):
         self.type = type
         self.moves = []
 
-    """direction for coin normal moves"""
     def set_foreward_vector(self, vector:int):
+        """direction for coin normal moves"""
         self.foreward = vector
 
-    """sets coin position: y, x"""
     def set_positon(self, y:int, x:int):
+        """sets coin position: y, x"""
         self.x = x
         self.y = y
 
-    """sets coin moves"""
     def set_moves(self, moves:list):
+        """sets coin moves"""
         self.moves = moves
+
+    def should_become_queen(self):
+        if self.foreward == 1 and self.y == 7 and self.type != 'queen':
+            return True
+        if self.foreward == -1 and self.y == 0 and self.type != 'queen':
+            return True
+        return False
