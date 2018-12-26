@@ -26,23 +26,20 @@ def choose_game():
 
 @app.route('/game/hotseat', methods=['POST', 'GET'])
 def hot_seat():
-    # s = State()
-    # s.make_move(1, Color('white'), {})
 
     # """For local Development"""
-    # state = no_moves_for_black()
-    # state = initial_state()
+    state = extended_circle_state()
 
-    # checkers = Checkers(state)
-    # checkers.resolve_moves('white')
-    #
-    #
-    # session['board_state'] = checkers.state.json_encode()
-    # session['turn'] = 'white'
+    checkers = Checkers(state)
+    checkers.new_resolve_moves(Color('white'))
+
+
+    session['board_state'] = checkers.state.json_encode()
+    session['turn'] = 'white'
 
     # TODO: comment for refractor
-    if not 'board_state' in session.keys():
-        set_initial_game_sessions()
+    # if not 'board_state' in session.keys():
+    #     set_initial_game_sessions()
 
     return render_template('games/hot_seat.jinja2')
 
@@ -52,13 +49,13 @@ def game_controller():
         cmd = request.get_json()
         if cmd == 'reset_hot_seat':
             # TODO: comment for refractor
-            # del_game_sessions()
-            # set_initial_game_sessions()
+            del_game_sessions()
+            set_initial_game_sessions()
 
             return 'ok'
         elif cmd == 'leave_hot_seat':
             # TODO: comment for refractor
-            # del_game_sessions()
+            del_game_sessions()
             return url_for('choose_game')
         else:
             return 'unsuported_action'
@@ -69,6 +66,9 @@ def game_controller():
 def move():
     # print(request.get_json())
     try:
+        moving_side = Color(session['turn'])
+        opposite_side = moving_side.opposite()
+
         pawn_move = receive_pawn_move(request.get_json(), session['turn'])
         checkers = Checkers(State(session['board_state']))
         if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
@@ -82,11 +82,12 @@ def move():
             if(session['draw_count'] > 6):
                 checkers.state.winner = 'draw'
 
-        session['turn'] = 'white' if session['turn'] == 'black' else 'black'
+        session['turn'] = opposite_side.value
         checkers.resolve_moves(session['turn'])
 
-        if not checkers.state.collection_has_moves(session['turn']):
-            checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
+
+        if not checkers.state.collection_has_moves(opposite_side):
+            checkers.state.winner = moving_side.value
 
         session['board_state'] = checkers.state.json_encode()
     except EmptyPawnMove:

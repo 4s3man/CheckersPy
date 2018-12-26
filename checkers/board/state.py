@@ -81,14 +81,14 @@ class State(Game_Obj):
         return True
 
     def collection_has_moves(self, color:Color)->bool:
-        pawn_collection = get_pawn_collection(color)
+        pawn_collection = self.get_pawn_collection(color)
         for pawn in pawn_collection:
             if pawn is not None and len(pawn.moves)>0:return True
         return False
 
     def get_pawn_collection(self, color:Color)->list:
         return self.white_pawns if color.name == 'WHITE' else self.black_pawns
-    
+
     def get_winner(self)->str:
         """Returns white, black or empty string"""
         lost_state = [None for x in range(12)]

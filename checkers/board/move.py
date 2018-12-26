@@ -1,4 +1,4 @@
-from abstract_Game_Obj import Game_Obj
+from checkers.board.abstract_game_obj import Game_Obj
 class Move(Game_Obj):
     id = 0;
     position_after_move = []
