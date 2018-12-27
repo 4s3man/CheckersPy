@@ -31,8 +31,7 @@ def hot_seat():
     state = extended_circle_state()
 
     checkers = Checkers(state)
-    checkers.new_resolve_moves(Color('white'))
-
+    moves = checkers.new_resolve_moves(Color('white'))
 
     session['board_state'] = checkers.state.json_encode()
     session['turn'] = 'white'

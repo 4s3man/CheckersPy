@@ -16,6 +16,9 @@ class MoveResolverNew():
         self.board.place_pawns(state)
         pawn_collection = state.get_pawn_collection(pawns_color)
         moves = self.resolve_moves_for_pawn_collection(pawn_collection)
+
+        for move in moves:
+            print(move.id, ':', move.pawn_id, ':', move.visited_fields, ';', move.beated_pawn_ids)
         # self.leave_max_beating_moves_only(collection)
         return moves
 
@@ -24,13 +27,14 @@ class MoveResolverNew():
         for pawn in pawn_collection:
             if pawn:
                 if pawn.type == 'normal':
-                    moves.append(self.get_moves_for_pawn(pawn))
+                    moves.append(*self.get_moves_for_pawn(pawn))
                 elif pawn.type == 'queen':
-                    moves.append(self.get_moves_for_queen(pawn))
+                    moves.append(*self.get_moves_for_queen(pawn))
                 else:
                     pass
         return moves
 
+    # TODO: refractor for moves
     def leave_max_beating_moves_only(self, pawn_collection: list):
         """
         Modifies pawn collection so it has only moves who beat biggest amount of pawns
@@ -58,6 +62,7 @@ class MoveResolverNew():
     def get_moves_for_pawn(self, pawn: Pawn)-> list:
         return self.get_most_beating_moves(self.get_jump_moves(pawn, [])) or self.get_normal_pawn_moves(pawn)
 
+    # TODO: refractor move
     def get_queen_jump_moves(self, pawn:Pawn)->list:
         move_list = []
         for y, x in self.directions:
@@ -76,6 +81,7 @@ class MoveResolverNew():
                         move_list.append({'position_after_move':[pawn_in_line.y+y, pawn_in_line.x+x], 'beated_pawn_ids':[pawn_in_line.id]})
         return move_list
 
+    # TODO: refractor move
     def get_queen_normal_moves(self, this_pawn: Pawn)->list:
         move_list = []
         for direction in self.directions:
@@ -109,41 +115,36 @@ class MoveResolverNew():
                     if self.pawn_can_jump_in_direction(pawn, pawn_in_direction, (y, x), move):
                         next_y, next_x = pawn_in_direction.y + y, pawn_in_direction.x + x
 
-                        move_inst = {'refractor':[], 'position_after_move':None, 'beated_pawn_ids':[]} if not len(move) else copy.deepcopy(move)
-                        move_inst['beated_pawn_ids'].append(pawn_in_direction.id)
+                        carrier = {'visited_fields':[], 'beated_pawn_ids':[]} if not len(move) else copy.deepcopy(move)
+                        carrier['beated_pawn_ids'].append(pawn_in_direction.id)
 
                         pawn1 = copy.deepcopy(pawn)
                         pawn1.y = next_y
                         pawn1.x = next_x
 
-                        # TODO: refractorization
-                        # print(pawn.id, ':', move, ':', (next_y, next_x))
-                        move_inst['refractor'].append([next_y, next_x])
-                        # print(move_inst['refractor'])
-                        # TODO: refractorization end
+                        carrier['visited_fields'].append([next_y, next_x])
 
-                        if move_inst not in move_list\
-                        and not self.pawn_has_obligatory_move(pawn1, move_inst)\
-                        and not self.same_pawns_beated(move_inst, move_list):
-                        # TODO: refractorization
-                            move_inst['position_after_move'] = [next_y, next_x]
-                            move_list.append(move_inst)
-                            print(pawn.id, ':', {'refractor':val['refractor'] for val in move_list})
-                            # TODO: refractorization END
+                        if carrier not in move_list\
+                        and not self.pawn_has_obligatory_move(pawn1, carrier)\
+                        and not self.same_pawns_beated(carrier, move_list):
+                            moveI = Move(pawn.id, carrier['visited_fields'], carrier['beated_pawn_ids'])
+                            move_list.append(moveI)
 
-                        self.get_jump_moves(pawn1, move_list, move_inst)
+                        self.get_jump_moves(pawn1, move_list, carrier)
                 except BoardError:
                     pass
         return move_list
 
+    # TODO: refractor
     def get_normal_pawn_moves(self, pawn: Pawn)-> list:
         move_list = []
         for y,x in [(pawn.foreward, 1), (pawn.foreward, -1)]:
             try:
                 self.get_pawn_in_direction(pawn, (y, x))
             except NoCoinError:
-                move = {"position_after_move":[pawn.y + y, pawn.x + x]}
-                move_list.append(move)
+                move_list.append(
+                    Move(pawn.id, [pawn.y + y, pawn.x + x])
+                )
             except OutOfBoardError:
                 pass
         return move_list
@@ -188,19 +189,19 @@ class MoveResolverNew():
 
     def same_pawns_beated(self, move: dict, move_list: list)-> bool:
         for move_l in move_list:
-            if set(move_l['beated_pawn_ids']) == set(move['beated_pawn_ids']): return True
+            if set(move_l.beated_pawn_ids) == set(move['beated_pawn_ids']): return True
         return False
 
     def get_most_beating_moves(self, move_list: list)->list:
         """Returns list of moves which has longest beated_pawn_ids"""
         if len(move_list):
             max_beated_pawns = self.get_max_beated_pawns_from_move_list(move_list)
-            return [move for move in move_list if len(move['beated_pawn_ids']) == max_beated_pawns]
+            return [move for move in move_list if len(move.beated_pawn_ids) == max_beated_pawns]
         else:
             return move_list
 
     def get_max_beated_pawns_from_move_list(self, move_list: list)->int:
         if len(move_list):
-            return len(max(move_list, key=lambda x: len(x.get('beated_pawn_ids', []))).get('beated_pawn_ids', []))
+            return len(max(move_list, key=lambda x: len(x.beated_pawn_ids)).beated_pawn_ids)
         else:
             return 0
