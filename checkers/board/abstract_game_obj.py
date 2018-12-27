@@ -1,6 +1,6 @@
 from abc import ABC
 
-class Game_Obj(ABC):
+class GameObj(ABC):
     def __eq__(self, compare)->bool:
         if not isinstance(compare, type(self)): return False
         for key in self.__dict__.keys():

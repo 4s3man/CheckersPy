@@ -1,11 +1,11 @@
-from checkers.board.abstract_game_obj import Game_Obj
+from checkers.board.abstract_game_obj import GameObj
 from itertools import count
 
-class Move(Game_Obj):
+class Move(GameObj):
     _ids = count(1);
+    pawn_id = 0;
     position_after_move = []
     beated_pawns_id = []
-    pawn_id = 0;
 
     def __init__(self, pawn_id:int, visited_fields:list, beated_pawn_ids:list=[]):
         self.id = next(self._ids)

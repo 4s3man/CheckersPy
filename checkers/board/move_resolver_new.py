@@ -17,9 +17,8 @@ class MoveResolverNew():
         pawn_collection = state.get_pawn_collection(pawns_color)
         moves = self.resolve_moves_for_pawn_collection(pawn_collection)
 
-        for move in moves:
-            print(move.id, ':', move.pawn_id, ':', move.visited_fields, ';', move.beated_pawn_ids)
-        # self.leave_max_beating_moves_only(collection)
+        self.leave_max_beating_moves_only(moves)
+
         return moves
 
     def resolve_moves_for_pawn_collection(self, pawn_collection: list)->list:
@@ -27,34 +26,35 @@ class MoveResolverNew():
         for pawn in pawn_collection:
             if pawn:
                 if pawn.type == 'normal':
-                    moves.append(*self.get_moves_for_pawn(pawn))
+                    moves += self.get_moves_for_pawn(pawn)
                 elif pawn.type == 'queen':
-                    moves.append(*self.get_moves_for_queen(pawn))
+                    moves += self.get_moves_for_queen(pawn)
                 else:
                     pass
         return moves
 
     # TODO: refractor for moves
-    def leave_max_beating_moves_only(self, pawn_collection: list):
+    def leave_max_beating_moves_only(self, moves: list):
         """
         Modifies pawn collection so it has only moves who beat biggest amount of pawns
         if there are no beating moves it leaves all of them
         important for performance, and becouse most beating moves are obligatory according to rules
         """
-        max_beated_pawns = max(
-                map(
-                    lambda pawn: self.get_max_beated_pawns_from_move_list(pawn.moves) if pawn != None else 0,
-                     pawn_collection
-                    )
-             )
-        for pawn in pawn_collection:
-            if pawn:
-                pawn.moves = list(
-                                filter(
-                                    lambda moves:len(moves.get('beated_pawn_ids', [])) == max_beated_pawns,
-                                    pawn.moves
-                                    )
-                                )
+        for move in moves:
+            print(move.id, ':', move.pawn_id, ':', move.visited_fields, ';', move.beated_pawn_ids)
+        # max_beated_pawns = max(
+        #         map(
+        #             lambda move: self.get_max_beated_pawns_from_move_list(move),
+        #              moves_collection
+        #             )
+        #      )
+        # for move in moves_collection:
+        #     move = list(
+        #                 filter(
+        #                     lambda move:len(moves.beated_pawn_ids) == max_beated_pawns,
+        #                     pawn.moves
+        #                     )
+        #                 )
 
     def get_moves_for_queen(self, queen: Pawn)->list:
         return self.get_most_beating_moves(self.get_queen_jump_moves(queen)) or self.get_queen_normal_moves(queen)
@@ -62,7 +62,6 @@ class MoveResolverNew():
     def get_moves_for_pawn(self, pawn: Pawn)-> list:
         return self.get_most_beating_moves(self.get_jump_moves(pawn, [])) or self.get_normal_pawn_moves(pawn)
 
-    # TODO: refractor move
     def get_queen_jump_moves(self, pawn:Pawn)->list:
         move_list = []
         for y, x in self.directions:
@@ -74,14 +73,15 @@ class MoveResolverNew():
                 if self.pawn_can_jump_in_direction(virtual_queen, pawn_in_line, (y,x), {}):
                     virtual_queen.y = pawn_in_line.y + y
                     virtual_queen.x = pawn_in_line.x + x
-                    jump_moves = self.get_jump_moves(virtual_queen, [], {'position_after_move':None, 'beated_pawn_ids':[pawn_in_line.id]})
+                    jump_moves = self.get_jump_moves(virtual_queen, [], {'visited_fields':[[virtual_queen.y, virtual_queen.x]], 'beated_pawn_ids':[pawn_in_line.id]})
                     if jump_moves:
                         move_list += jump_moves
                     else:
-                        move_list.append({'position_after_move':[pawn_in_line.y+y, pawn_in_line.x+x], 'beated_pawn_ids':[pawn_in_line.id]})
+                        move_list.append(
+                            Move(pawn.id, [pawn_in_line.y+y, pawn_in_line.x+x], [pawn_in_line.id])
+                        )
         return move_list
 
-    # TODO: refractor move
     def get_queen_normal_moves(self, this_pawn: Pawn)->list:
         move_list = []
         for direction in self.directions:
@@ -92,7 +92,7 @@ class MoveResolverNew():
                     if pawn_in_line:
                         break
                 except NoCoinError:
-                    move_list.append({'position_after_move':[this_pawn.y + y, this_pawn.x + x]})
+                    move_list.append(Move(this_pawn.id, [this_pawn.y + y, this_pawn.x + x]))
                 except OutOfBoardError:
                     pass
         return move_list

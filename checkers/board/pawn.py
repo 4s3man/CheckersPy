@@ -1,5 +1,5 @@
-from checkers.board.abstract_game_obj import Game_Obj
-class Pawn(Game_Obj):
+from checkers.board.abstract_game_obj import GameObj
+class Pawn(GameObj):
     id = 0
     color = ''
     foreward = 0

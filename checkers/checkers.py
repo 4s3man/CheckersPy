@@ -2,6 +2,8 @@ from checkers.board.board import *
 from checkers.board.move_resolver import *
 from checkers.board.move_resolver_new import MoveResolverNew
 
+from flask import session
+
 class Checkers():
     turn = 'white'
     state = None
@@ -27,3 +29,8 @@ class Checkers():
 
     def new_resolve_moves(self, pawns_color:Color):
         self.move_resolver_new.resolve_moves(self.state, pawns_color)
+
+    # TODO: refractor
+    # def dono(self, session:session):
+    #     session['em'] = 'oho'
+        # print('ok')

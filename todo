@@ -1,9 +1,6 @@
 zrobić:
   refraktoryzacja:
-  - zastanowić się nad tym co bym zrobił jeśli move nie miałby beated pawns
-  - zrefraktryzować resztę move_resolver_new
-  - zmienić game_obj na GameObj
-  - zrobić testy dla move resolver new
+  - zrobić działające testy dla move_resolver_new
   - zmienić frontend żeby obsługiwał ruchy i zwracał moveid
   - zrobić żeby do checkers miał kontrolę nad sesją i miał metody jak init game, handle_move, handle computer move itp
 

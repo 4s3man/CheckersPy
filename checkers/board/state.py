@@ -1,10 +1,10 @@
-from checkers.board.abstract_game_obj import Game_Obj
+from checkers.board.abstract_game_obj import GameObj
 from checkers.board.pawn import Pawn
 from checkers.board.color import Color
 from copy import deepcopy
 import json
 
-class State(Game_Obj):
+class State(GameObj):
     board_size = 8
     pawns_for_site = 12
     winner = ''
