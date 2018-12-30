@@ -1,6 +1,10 @@
 zrobić:
   refraktoryzacja:
+  - przenieść funkcje z board do state i usunąć board zmienić funkcje wykonywane na board
+  - zrobić obiekt response który będzie wysyłany na frontend zamiast całego state
   - zrobić działające testy dla move_resolver_new
+  - zrobić leave max beating moves only dla nowego move_resolvera
+  - zrobić resztę testów
   - zmienić frontend żeby obsługiwał ruchy i zwracał moveid
   - zrobić żeby do checkers miał kontrolę nad sesją i miał metody jak init game, handle_move, handle computer move itp
 

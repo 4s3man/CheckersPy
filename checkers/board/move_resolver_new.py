@@ -17,7 +17,7 @@ class MoveResolverNew():
         pawn_collection = state.get_pawn_collection(pawns_color)
         moves = self.resolve_moves_for_pawn_collection(pawn_collection)
 
-        self.leave_max_beating_moves_only(moves)
+        # self.leave_max_beating_moves_only(moves)
 
         return moves
 
@@ -135,7 +135,6 @@ class MoveResolverNew():
                     pass
         return move_list
 
-    # TODO: refractor
     def get_normal_pawn_moves(self, pawn: Pawn)-> list:
         move_list = []
         for y,x in [(pawn.foreward, 1), (pawn.foreward, -1)]:

@@ -28,7 +28,7 @@ def choose_game():
 def hot_seat():
 
     # """For local Development"""
-    state = no_blocked_beating_move_bug()
+    state = different_pawns_around_white_state()
 
     checkers = Checkers(state)
     moves = checkers.new_resolve_moves(Color('white'))

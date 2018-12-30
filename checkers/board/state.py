@@ -10,6 +10,7 @@ class State(GameObj):
     winner = ''
     white_pawns = [None]*pawns_for_site
     black_pawns = [None]*pawns_for_site
+    fields = [[]]
 
     def __init__(self, jsonState: str = ''):
         """ Construct object from json string or initial state"""
@@ -95,3 +96,9 @@ class State(GameObj):
         if lost_state == self.white_pawns: return 'black'
         elif lost_state == self.black_pawns: return 'white'
         else: return ''
+
+    def make_fields():
+        self.fields = [[None for x in range(self.board_size)] for y in range(self.board_size)]
+
+        self.place_pawns_from_collection(state.white_pawns)
+        self.place_pawns_from_collection(state.black_pawns)
