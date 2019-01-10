@@ -59,7 +59,7 @@ class Checkers extends Component{
   }
 
   makeDialogWindow(){
-    if(this.props.winner)return GameEndWindow(this.props.winner);
+    if(this.props.winner)return GameEndWindow(this.props.winner, this.props.actionSufix);
   }
 
   render(){
@@ -110,7 +110,7 @@ const Pawn = (props) => {
   );
 }
 
-const GameEndWindow = (winner) => {
+const GameEndWindow = (winner, actionSuffix='') => {
   let text = winner == 'draw' ? winner + '!': winner + ' wins!';
   return (
     <div className='dialogWindow dialogWindow--success'>
@@ -118,7 +118,7 @@ const GameEndWindow = (winner) => {
           <h4 className='dialogWindow__title'>{text}</h4>
         </div>
       <nav className='dialogWindow__nav'>
-        <CheckersCtrl actionSufix='hot_seat'/>
+        <CheckersCtrl actionSufix={actionSuffix}/>
       </nav>
     </div>
   );

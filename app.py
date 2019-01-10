@@ -37,6 +37,7 @@ def hot_seat():
 def game_controller():
     if request.method == 'POST':
         cmd = request.get_json()
+        print(cmd)
         if cmd == 'reset_hot_seat':
             del_game_sessions()
             set_initial_game_sessions()

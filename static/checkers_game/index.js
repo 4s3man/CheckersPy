@@ -18,7 +18,7 @@ export function renderGame(moveUrl, actionSufix){
     <Provider store={store}>
       <div className='game'>
         <CheckersCtrl moveUrl={moveUrl} actionSufix={actionSufix}/>
-        <Checkers moveUrl={moveUrl}/>
+        <Checkers moveUrl={moveUrl} actionSufix={actionSufix}/>
       </div>
     </Provider>,
     document.getElementById('JScheckers')
