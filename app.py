@@ -130,7 +130,7 @@ def move_vs_computer():
         checkers.resolve_moves(session['turn_vs_computer'])
 
         if not checkers.state.collection_has_moves(session['turn_vs_computer']):
-            checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
+            checkers.state.winner = 'white' if session['turn_vs_computer'] == 'black' else 'black'
 
         session['board_state_vs_computer'] = checkers.state.json_encode()
     except EmptyPawnMove:
@@ -139,9 +139,9 @@ def move_vs_computer():
     except InvalidPawnMove:
         """Handle some error"""
         print('invalidPawnMove Error')
-    except KeyError:
-        set_initial_game_sessions('_vs_computer')
-        print('key error reseting game')
+    # except KeyError:
+    #     set_initial_game_sessions('_vs_computer')
+    #     print('key error reseting game')
     # print('ok')
     # time.sleep(2)
     return strip_redundant_for_frontend(session['board_state_vs_computer'])
