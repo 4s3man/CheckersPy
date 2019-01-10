@@ -48,7 +48,7 @@ class Checkers extends Component{
           fieldFunc = () => this.props.deselectPawn();
           break;
         case 'fetchBoardState':
-          fieldFunc = () => this.props.fetchBoardState('/move', this.props.moveDataTmp[fieldKey]);
+          fieldFunc = () => this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey]);
           break;
         default:
           fieldFunc = () => this.props.selectPawn({'fieldKey':fieldKey, 'moves':pawn.moves});

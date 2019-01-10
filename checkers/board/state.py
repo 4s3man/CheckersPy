@@ -47,6 +47,11 @@ class State():
             if pawn is not None and len(pawn.moves)>0:return True
         return False
 
+    # def get_all_moves(self, color: str):
+    #     pawns =  self.white_pawns if color == 'white' else self.black_pawns
+    #     """Returns all pawn moves"""
+    #     return (move for moves in pawns)
+
 class InitialState(State):
     def __init__(self):
         self.white_pawns = [Pawn('white', id) for id in range(self.pawns_for_site)]

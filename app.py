@@ -8,7 +8,7 @@ from checkers.tests.fixtures.state_fixtures import *
 
 app = Flask(__name__)
 # socketio = SocketIO(app)
-ROOMS = {}
+# ROOMS = {}
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
 @app.route('/', methods=['GET', 'POST'])
@@ -95,6 +95,49 @@ def move():
     # time.sleep(2)
     return strip_redundant_for_frontend(session['board_state'])
 
+@app.route('/game/vs_computer', methods=['POST', 'GET'])
+def vs_computer():
+    if not 'board_state_vs_computer' in session.keys():
+        set_initial_game_sessions('_vs_computer')
+
+    return render_template('games/vs_computer.jinja2')
+
+@app.route('/move_vs_computer', methods=['POST'])
+def move_vs_computer():
+    # print(request.get_json())
+    try:
+        pawn_move = receive_pawn_move(request.get_json(), session['turn_vs_computer'])
+        checkers = Checkers(State(session['board_state_vs_computer']))
+        if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+
+        checkers.make_move(**pawn_move)
+
+        checkers.state.winner = checkers.state.get_winner()
+        if has_only_queens(checkers.state) and not checkers.state.winner:
+            session['draw_count_vs_computer'] += 1
+            if(session['draw_count_vs_computer'] > 6):
+                checkers.state.winner = 'draw'
+
+        session['turn_vs_computer'] = 'white' if session['turn_vs_computer'] == 'black' else 'black'
+        checkers.resolve_moves(session['turn_vs_computer'])
+
+        if not checkers.state.collection_has_moves(session['turn_vs_computer']):
+            checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
+
+        session['board_state_vs_computer'] = checkers.state.json_encode()
+    except EmptyPawnMove:
+        print('EmptyPawnMove')
+        pass
+    except InvalidPawnMove:
+        """Handle some error"""
+        print('invalidPawnMove Error')
+    except KeyError:
+        set_initial_game_sessions('_vs_computer')
+        print('key error reseting game')
+    # print('ok')
+    # time.sleep(2)
+    return strip_redundant_for_frontend(session['board_state_vs_computer'])
+
 @app.route('/leave', methods=['GET'])
 def leave():
     del_game_sessions()
@@ -106,7 +149,7 @@ def set_initial_game_sessions(sufix:str=''):
     checkers.resolve_moves('white')
     session['board_state' + sufix] = checkers.state.json_encode()
     session['turn' + sufix] = 'white'
-    session['draw_count'+ sufix] = 0
+    session['draw_count' + sufix] = 0
 
 def del_game_sessions(sufix:str=''):
     """Empty sufix used for hot_seats"""
