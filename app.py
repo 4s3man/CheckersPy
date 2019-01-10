@@ -5,6 +5,7 @@ from checkers.checkers import *
 from helpers.connection import *
 
 from checkers.tests.fixtures.state_fixtures import *
+from checkers.maxmin import *
 
 app = Flask(__name__)
 # socketio = SocketIO(app)
@@ -26,22 +27,12 @@ def choose_game():
 
 @app.route('/game/hotseat', methods=['POST', 'GET'])
 def hot_seat():
-    # """For local Development"""
-    # state = no_moves_for_black()
-    # state = initial_state()
-
-    # checkers = Checkers(state)
-    # checkers.resolve_moves('white')
-    #
-    #
-    # session['board_state'] = checkers.state.json_encode()
-    # session['turn'] = 'white'
-
     if not 'board_state' in session.keys():
         set_initial_game_sessions()
 
     return render_template('games/hot_seat.jinja2')
 
+# todo podłączyć controller vs_computer do game_controller
 @app.route('/game_controller', methods=['POST'])
 def game_controller():
     if request.method == 'POST':
@@ -53,6 +44,12 @@ def game_controller():
             return 'ok'
         elif cmd == 'leave_hot_seat':
             del_game_sessions()
+            return url_for('choose_game')
+        elif cmd == 'reset_vs_computer':
+            del_game_sessions('_vs_computer')
+            set_initial_game_sessions('_vs_computer')
+        elif cmd == 'leave_vs_computer':
+            del_game_sessions('_vs_computer')
             return url_for('choose_game')
         else:
             return 'unsuported_action'
@@ -118,7 +115,17 @@ def move_vs_computer():
             if(session['draw_count_vs_computer'] > 6):
                 checkers.state.winner = 'draw'
 
-        session['turn_vs_computer'] = 'white' if session['turn_vs_computer'] == 'black' else 'black'
+        computer_color = 'white' if session['turn_vs_computer'] == 'black' else 'black'
+        move = pick_computer_move(checkers.state, computer_color)
+        if move:
+            checkers.make_move(**move)
+
+        checkers.state.winner = checkers.state.get_winner()
+        if has_only_queens(checkers.state) and not checkers.state.winner:
+            session['draw_count_vs_computer'] += 1
+            if(session['draw_count_vs_computer'] > 6):
+                checkers.state.winner = 'draw'
+
         checkers.resolve_moves(session['turn_vs_computer'])
 
         if not checkers.state.collection_has_moves(session['turn_vs_computer']):
@@ -142,6 +149,24 @@ def move_vs_computer():
 def leave():
     del_game_sessions()
     return redirect(url_for('choose_game'))
+
+def handle_move(move):
+    checkers = Checkers(State(session['board_state_vs_computer']))
+    if not checkers.pawn_move_is_valid(**move): raise InvalidPawnMove('No such pawn or move for pawn')
+
+    checkers.make_move(**move)
+
+    checkers.state.winner = checkers.state.get_winner()
+    if has_only_queens(checkers.state) and not checkers.state.winner:
+        session['draw_count_vs_computer'] += 1
+        if (session['draw_count_vs_computer'] > 6):
+            checkers.state.winner = 'draw'
+
+    session['turn_vs_computer'] = 'white' if session['turn_vs_computer'] == 'black' else 'black'
+    checkers.resolve_moves(session['turn_vs_computer'])
+
+    if not checkers.state.collection_has_moves(session['turn_vs_computer']):
+        checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
 
 def set_initial_game_sessions(sufix:str=''):
     """Empty sufix used for hot_seats"""

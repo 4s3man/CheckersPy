@@ -8,13 +8,14 @@ class CheckersCtrl extends Component{
   constructor(props) {
    super(props);
    this.actionSufix = this.props.actionSufix || '';
+   this.url = this.props.actionSufix ? 'move_' + this.props.actionSufix : '/move';
    if ('' === this.actionSufix)console.log('Missing actionSuffix in CheckersCtrl. Please provide valid one.');
   }
   buttons(){
     let output = [];
-    var refreshBoard = () => this.props.fetchBoardState('/move');
+    var refreshBoard = () => this.props.fetchBoardState(this.url);
     let s = {
-      'play again': {'func': () => this.requestAction('/game_controller', 'reset_' + this.actionSufix).then(data => refreshBoard()) },
+      'play again': {'func': () => this.requestAction('/game_controller', 'reset_' + this.props.action).then(data => refreshBoard()) },
       'leave': {'func':() => this.requestAction('/game_controller', 'leave_' + this.actionSufix)
                             .then(data => data !== 'unsuported_action' ? window.location.assign(data) : console.log(data))}
     }

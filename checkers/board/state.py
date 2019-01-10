@@ -47,10 +47,11 @@ class State():
             if pawn is not None and len(pawn.moves)>0:return True
         return False
 
-    # def get_all_moves(self, color: str):
-    #     pawns =  self.white_pawns if color == 'white' else self.black_pawns
-    #     """Returns all pawn moves"""
-    #     return (move for moves in pawns)
+    def get_pawns(self, color: str):
+        return self.white_pawns if color == 'white' else self.black_pawns
+
+    def get_pawns_oposite(self, color: str):
+        return self.white_pawns if color == 'black' else self.black_pawns
 
 class InitialState(State):
     def __init__(self):
