@@ -5,7 +5,7 @@ body{
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas: "aside_left game game aside_right"
 }
-#JScheckers{
+.checkers{
   grid-area: game;
   margin-top: 10px;
   margin-bottom: 10px;

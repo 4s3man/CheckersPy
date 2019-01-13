@@ -17,15 +17,22 @@ Room index
     <div class='actionWindow'>
       <nav class="menu">
         <span class="menu__item">
-          <a href="{{url_for('hot_seat')}}">Play 2 players same computer</a>
+          <a class="menu__item__title" href="{{url_for('hot_seat')}}">Play 2 players same computer</a>
         </span>
         <span class="menu__item">
-          <a href="{{ url_for('vs_computer') }}">Play player vs computer</a>
+          <a class="menu__item__title" href="{{ url_for('vs_computer') }}">Play player vs computer</a>
         </span>
         <span class="menu__item">
-          <form action="">
-            tutaj będzie flaskowy form
-          </form>
+            <span class="menu__item__title">online vs other player</span>
+            <form class="menu__item__form" action="/" method="post">
+                <input type="submit" name="cmd" value="create_room">
+                <input type="submit" name="cmd" value="join_any_room">
+                <br>
+                <span>Joinable rooms amount</span>
+                <div id="JS-activeRooms" class="JS-activeRooms">
+                    {{ rooms_number }}
+                </div>
+            </form>
         </span>
       </nav>
     </div>

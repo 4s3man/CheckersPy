@@ -1,0 +1,19 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}
+Min-max checkers
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dist/game_hot_seat.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class='gridContainer gridContainer--hotSeats'>
+  {% include '/games/game.jinja2' %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{#<script src="{{ url_for('static', filename='dist/game_vs_computer.js') }}"></script>#}
+{% endblock %}

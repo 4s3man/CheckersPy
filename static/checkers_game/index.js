@@ -21,6 +21,6 @@ export function renderGame(moveUrl, actionSufix){
         <Checkers moveUrl={moveUrl} actionSufix={actionSufix}/>
       </div>
     </Provider>,
-    document.getElementById('JScheckers')
+    document.getElementById('JS-checkers')
   );
 }

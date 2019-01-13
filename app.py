@@ -1,29 +1,50 @@
 from flask import Flask, render_template, request, session, url_for, redirect
-# from flask_socketio import SocketIO, join_room, emit, rooms
-import time
 from checkers.checkers import *
 from helpers.connection import *
+from checkers.room_index import *
 
 from checkers.tests.fixtures.state_fixtures import *
+from checkers.tests.fixtures.room_fixtures import *
 from checkers.maxmin import *
 
 app = Flask(__name__)
-# socketio = SocketIO(app)
-# ROOMS = {}
+ROOMS = RoomIndex()
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
 @app.route('/', methods=['GET', 'POST'])
 def choose_game():
-    return render_template('choose_game.html')
+    if request.method == 'POST':
+        if request.form['cmd'] == 'create_room':
+            session['pid'] = uuid4().hex
+            session['rid'] = uuid4().hex
+            ROOMS[session['rid']] = Room(session['pid'])
+            return redirect(url_for('through_net'))
+        if request.form['cmd'] == 'join_any_room':
+            room_id = ROOMS.get_free_room_id()
+            if room_id:
+                session['jid'] = uuid4().hex
+                session['rid'] = room_id
+                ROOMS.join_room(room_id, session['jid'])
+                return redirect(url_for('through_net'))
+            else:
+                #todo jakiś flash message?
+                pass
+    return render_template('choose_game.html', rooms_number=str(ROOMS.count_joinable()))
 
-# @socketio.on('create')
-# def on_create(data):
-#     room = 2
-#     ROOMS[room] = 'dono'
-#     join_room(room)
-#     emit('join_room', {'room':room})
-#     print('dziala\n\n\n\n\n\n\n')
-#     print(rooms())
+@app.route('/fetch_rooms', methods=['POST'])
+def fetch_rooms():
+    return str(ROOMS.count_joinable())
+
+#todo do zrobienia
+@app.route('/game/through_net', methods=['POST', 'GET'])
+def through_net():
+    return render_template('games/through_net.jinja2')
+
+
+
+
+
+
 
 @app.route('/game/hotseat', methods=['POST', 'GET'])
 def hot_seat():
@@ -150,24 +171,6 @@ def move_vs_computer():
 def leave():
     del_game_sessions()
     return redirect(url_for('choose_game'))
-
-def handle_move(move):
-    checkers = Checkers(State(session['board_state_vs_computer']))
-    if not checkers.pawn_move_is_valid(**move): raise InvalidPawnMove('No such pawn or move for pawn')
-
-    checkers.make_move(**move)
-
-    checkers.state.winner = checkers.state.get_winner()
-    if has_only_queens(checkers.state) and not checkers.state.winner:
-        session['draw_count_vs_computer'] += 1
-        if (session['draw_count_vs_computer'] > 6):
-            checkers.state.winner = 'draw'
-
-    session['turn_vs_computer'] = 'white' if session['turn_vs_computer'] == 'black' else 'black'
-    checkers.resolve_moves(session['turn_vs_computer'])
-
-    if not checkers.state.collection_has_moves(session['turn_vs_computer']):
-        checkers.state.winner = 'white' if session['turn'] == 'black' else 'black'
 
 def set_initial_game_sessions(sufix:str=''):
     """Empty sufix used for hot_seats"""
