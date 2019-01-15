@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./pages/game/vs_computer.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./pages/game/through_net.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -798,15 +798,15 @@ eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceM
 
 /***/ }),
 
-/***/ "./pages/game/vs_computer.js":
+/***/ "./pages/game/through_net.js":
 /*!***********************************!*\
-  !*** ./pages/game/vs_computer.js ***!
+  !*** ./pages/game/through_net.js ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n__webpack_require__(/*! ./bundle_styles */ \"./pages/game/bundle_styles.js\");\n\nvar _index = __webpack_require__(/*! ../../checkers_game/index.js */ \"./checkers_game/index.js\");\n\n//io attached in script above in layout.html\n(0, _index.renderGame)('/move_vs_computer', 'vs_computer');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9nYW1lL3ZzX2NvbXB1dGVyLmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL3BhZ2VzL2dhbWUvdnNfY29tcHV0ZXIuanM/NGIyYyJdLCJzb3VyY2VzQ29udGVudCI6WyIvL2lvIGF0dGFjaGVkIGluIHNjcmlwdCBhYm92ZSBpbiBsYXlvdXQuaHRtbFxuaW1wb3J0IFwiLi9idW5kbGVfc3R5bGVzXCJcbmltcG9ydCB7cmVuZGVyR2FtZX0gZnJvbSBcIi4uLy4uL2NoZWNrZXJzX2dhbWUvaW5kZXguanNcIlxuXG5yZW5kZXJHYW1lKCcvbW92ZV92c19jb21wdXRlcicsICd2c19jb21wdXRlcicpO1xuIl0sIm1hcHBpbmdzIjoiOztBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBSEE7QUFJQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./pages/game/vs_computer.js\n");
+eval("\n\n__webpack_require__(/*! reset-css */ \"./node_modules/reset-css/reset.css\");\n\n__webpack_require__(/*! ../shared_css/base.css */ \"./pages/shared_css/base.css\");\n\n__webpack_require__(/*! ./bundle_styles */ \"./pages/game/bundle_styles.js\");\n\nvar _index = __webpack_require__(/*! ../../checkers_game/index.js */ \"./checkers_game/index.js\");\n\n//io attached in script above in layout.html\n(0, _index.renderGame__withConnection)('/move_through_net', 'through_net');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9nYW1lL3Rocm91Z2hfbmV0LmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL3BhZ2VzL2dhbWUvdGhyb3VnaF9uZXQuanM/OWEyYSJdLCJzb3VyY2VzQ29udGVudCI6WyIvL2lvIGF0dGFjaGVkIGluIHNjcmlwdCBhYm92ZSBpbiBsYXlvdXQuaHRtbFxuaW1wb3J0IFwicmVzZXQtY3NzXCJcbmltcG9ydCBcIi4uL3NoYXJlZF9jc3MvYmFzZS5jc3NcIlxuXG5pbXBvcnQgXCIuL2J1bmRsZV9zdHlsZXNcIlxuaW1wb3J0IHtyZW5kZXJHYW1lX193aXRoQ29ubmVjdGlvbn0gZnJvbSBcIi4uLy4uL2NoZWNrZXJzX2dhbWUvaW5kZXguanNcIlxuXG5yZW5kZXJHYW1lX193aXRoQ29ubmVjdGlvbignL21vdmVfdGhyb3VnaF9uZXQnLCAndGhyb3VnaF9uZXQnKTtcbiJdLCJtYXBwaW5ncyI6Ijs7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBTkE7QUFPQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./pages/game/through_net.js\n");
 
 /***/ }),
 

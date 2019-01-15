@@ -18,17 +18,18 @@ def choose_game():
             session['pid'] = uuid4().hex
             session['rid'] = uuid4().hex
             ROOMS[session['rid']] = Room(session['pid'])
-            return redirect(url_for('through_net'))
         if request.form['cmd'] == 'join_any_room':
             room_id = ROOMS.get_free_room_id()
             if room_id:
-                session['jid'] = uuid4().hex
+                if not 'pid' in session.keys():
+                    session['pid'] = uuid4().hex
                 session['rid'] = room_id
-                ROOMS.join_room(room_id, session['jid'])
-                return redirect(url_for('through_net'))
+                ROOMS.join_room(room_id, session['pid'])
             else:
                 #todo jakiś flash message?
                 pass
+        return redirect(url_for('through_net'))
+
     return render_template('choose_game.html', rooms_number=str(ROOMS.count_joinable()))
 
 @app.route('/fetch_rooms', methods=['POST'])
@@ -40,7 +41,26 @@ def fetch_rooms():
 def through_net():
     return render_template('games/through_net.jinja2')
 
+#todo ma za pierwszym razem ściągać session[pid] i session[room_id i zapisać u siebie
+# a potem sprawdzać czyja kolej w danym pokoju
+# jeśli usera z danym session[pid] wyęlij wiadomość że jego
+@app.route('/through_net_connection', methods=['POST'])
+def thorugh_net_connection():
+    if request.method == 'POST':
+        if ROOMS.room_exists(session['rid']):
+            print('room_ok ')
+            room = ROOMS[session['rid']]
+            player_id = session['pid']
+            return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != ''})
+        else:
+            print('room_error')
+            return json.dumps({'room_error': url_for('choose_game')})
 
+#todo ma zwracać board state
+# @app.route('/move_through_net', methods=['POST'])
+# def move_through_net():
+#     if request.method =='POST':
+#         return ''
 
 
 

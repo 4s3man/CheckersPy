@@ -6,6 +6,7 @@ import {Provider} from 'react-redux'
 import configureStore from './store/configureStore'
 import Checkers from './checkers'
 import CheckersCtrl from './checkersCtrl'
+import Connection from './connection'
 
 import "./css/game.css"
 import "./css/dialogWindow.css"
@@ -18,6 +19,18 @@ export function renderGame(moveUrl, actionSufix){
     <Provider store={store}>
       <div className='game'>
         <CheckersCtrl moveUrl={moveUrl} actionSufix={actionSufix}/>
+        <Checkers moveUrl={moveUrl} actionSufix={actionSufix}/>
+      </div>
+    </Provider>,
+    document.getElementById('JS-checkers')
+  );
+}
+
+export function renderGame__withConnection(moveUrl, actionSufix){
+  render(
+    <Provider store={store}>
+      <div className='game'>
+        <Connection/>
         <Checkers moveUrl={moveUrl} actionSufix={actionSufix}/>
       </div>
     </Provider>,

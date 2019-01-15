@@ -12,6 +12,7 @@ class Room():
     def __init__(self, creator_id:int):
         self.creator_id = creator_id
         self.create_time = datetime.now()
+        self.turn = creator_id
 
     def __repr__(self):
         return str(self.__dict__)

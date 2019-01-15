@@ -1,5 +1,7 @@
 from checkers.room import Room
 import datetime
+from checkers.board.state import *
+import json
 
 class InvalidArgument(Exception):
     pass
@@ -38,6 +40,9 @@ class RoomIndex(dict):
 
     def join_room(self, room_id:str, joiner_id: str):
         self[room_id].joiner_id = joiner_id
+
+    def room_exists(self, room_id: str)->bool:
+        return room_id in self.keys()
 
     #todo przetestować usuwanie rzeczy z room index nie jest teraz najważniejsz zostawić na potem
     def delete_too_long_waiting_for_join(self):
