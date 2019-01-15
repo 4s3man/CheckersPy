@@ -1,39 +1,22 @@
 import React, {Component} from 'react'
 import {fetch as fetchPolyfill} from "whatwg-fetch"
 import {connect} from 'react-redux'
-import {connectionPlayerTurn} from './actions/index'
-import {statePlayerTurn} from "./reducers/board-state";
+import {fetchBoardState, playerTurn} from './actions/index'
 import PropTypes from 'prop-types';
 
 class Connection extends Component{
 
-    // #todo ma ściągać rid i pid do sprawdzania czyja kolej i jesli jego to odblokowywać fetchMove w checkers
-    componentWillMount() {
-        // this.init_connection();
-    }
-
     componentDidMount() {
-        this.props.dispatchPlayerTurn('/through_net_connection', 'get_turn');
-        // this.timer = setInterval(this.fetch_rooms.bind(this), 1000);
+        if (this.props.playerTurn == false) {
+            this.timer = setInterval(this.fetch_rooms.bind(this), 1000);
+        }else{
+            this.props.fetchBoardState('move_through_net', {});
+            clearInterval(this.timer);
+        }
     }
 
     componentWillUnmount() {
-        // clearInterval(this.timer);
-    }
-
-    init_connection() {
-        // fetchPolyfill('/through_net_connection', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify('init')
-        // })
-        //     .then((response) => {
-        //         if (!response.ok) throw Error(response.statusText);
-        //         else return response;
-        //     })
-        //     .then((response) => response.json())
+        clearInterval(this.timer);
     }
 
     fetch_rooms(){
@@ -42,20 +25,24 @@ class Connection extends Component{
             headers: {
                 'Content-Type': 'application/json'
             },
-            body:JSON.stringify('')
+            body: JSON.stringify('')
         })
-        .then((response) => {
-          if (!response.ok) throw Error(response.statusText);
-          else return response;
-        })
-        .then((response) => response.json())
-        .then((data)=>{
-            if(data['room_error'] != undefined){
-                window.location.assign(data['room_error']);
-            }
-            if (data['turn'] != undefined){
-            }
-        });
+            .then((response) => {
+                if (!response.ok) throw Error(response.statusText);
+                else return response;
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data['room_error'] != undefined) {
+                    window.location.assign(data['room_error']);
+                }
+                if (data['playerTurn'] != undefined && data['joined'] == true) {
+                    this.props.setPlayerTurn(data['playerTurn']);
+                    if(this.props.playerTurn == true){
+                        this.props.fetchBoardState('move_through_net', {});
+                    }
+                }
+            });
     }
 
     render() {
@@ -78,7 +65,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchPlayerTurn: (url, payload) => dispatch(connectionPlayerTurn(url, payload))
+        setPlayerTurn: (bool) => dispatch(playerTurn(bool)),
+        fetchBoardState: (url, payload) => dispatch(fetchBoardState((url, payload)))
     }
 }
 

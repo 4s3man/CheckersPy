@@ -12,10 +12,11 @@ class Checkers extends Component{
   constructor(props) {
    super(props);
    this.moveUrl = this.props.moveUrl || '';
+   this.through_net = this.props.through_net || false;
    if ('' === this.moveUrl)console.log('Missing moveUrl in Checkers. Please provide valid one.');
   }
   componentDidMount(){
-    this.props.fetchBoardState(this.moveUrl);
+      this.props.fetchBoardState(this.moveUrl);
   }
 
   createFields(){
@@ -39,6 +40,10 @@ class Checkers extends Component{
 
     if (!field) return FilerField(color, id);
     let pawn = this.props.pawns[field.pawn] || null;
+
+    if(field.funcs && this.through_net && this.props.playerTurn == false){
+      return FilerField(color, id, pawn);
+    }
 
     if(field.funcs && !this.props.winner){
       let fieldFunc = null;
