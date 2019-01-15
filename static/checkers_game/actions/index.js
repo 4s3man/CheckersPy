@@ -18,7 +18,6 @@ export function fetchBoardState(url, payload={}){
     .then((response) => response.json())
     .then((data) => normalizeData(data))
     .then((data) => dispatch(stateFetchSuccess(data)))
-    .then(() => dispatch(playerTurn(false)))
     .catch((e) => {
       console.log(e);
       return dispatch(stateHasError(true));

@@ -25,7 +25,9 @@ def choose_game():
                     session['pid'] = uuid4().hex
                 session['rid'] = room_id
                 ROOMS.join_room(room_id, session['pid'])
-                ROOMS[room_id].board_state = InitialState().json_encode()
+                checkers = Checkers(InitialState())
+                checkers.resolve_moves('white')
+                ROOMS[room_id].board_state = checkers.state.json_encode()
             else:
                 #todo jakiś flash message?
                 pass
