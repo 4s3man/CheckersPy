@@ -25,6 +25,7 @@ def choose_game():
                     session['pid'] = uuid4().hex
                 session['rid'] = room_id
                 ROOMS.join_room(room_id, session['pid'])
+                ROOMS[room_id].board_state = InitialState().json_encode()
             else:
                 #todo jakiś flash message?
                 pass
@@ -41,26 +42,51 @@ def fetch_rooms():
 def through_net():
     return render_template('games/through_net.jinja2')
 
-#todo ma za pierwszym razem ściągać session[pid] i session[room_id i zapisać u siebie
-# a potem sprawdzać czyja kolej w danym pokoju
-# jeśli usera z danym session[pid] wyęlij wiadomość że jego
 @app.route('/through_net_connection', methods=['POST'])
 def thorugh_net_connection():
     if request.method == 'POST':
         if ROOMS.room_exists(session['rid']):
-            print('room_ok ')
             room = ROOMS[session['rid']]
             player_id = session['pid']
             return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != ''})
         else:
-            print('room_error')
             return json.dumps({'room_error': url_for('choose_game')})
 
-#todo ma zwracać board state
-# @app.route('/move_through_net', methods=['POST'])
-# def move_through_net():
-#     if request.method =='POST':
-#         return ''
+
+@app.route('/move_through_net', methods=['POST'])
+def move_through_net():
+    print(request.get_json())
+    room = ROOMS[session['rid']]
+    player_id = session['pid']
+    print('ok')
+    try:
+        pawn_move = receive_pawn_move(request.get_json(), room.get_turn_color())
+        checkers = Checkers(State(room.board_state))
+
+        if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
+
+        checkers.make_move(**pawn_move)
+
+        checkers.state.winner = checkers.state.get_winner()
+        if has_only_queens(checkers.state) and not checkers.state.winner:
+            room.draw_count_vs_computer += 1
+            if(room.draw_count_vs_computer > 6):
+                checkers.state.winner = 'draw'
+
+        room.change_turn()
+        checkers.resolve_moves(room.get_turn_color())
+
+        if not checkers.state.collection_has_moves(room.get_turn_color()):
+            checkers.state.winner = 'white' if room.get_turn_color() == 'black' else 'black'
+
+        room.board_state = checkers.state.json_encode()
+    except EmptyPawnMove:
+        print('EmptyPawnMove')
+        pass
+    except InvalidPawnMove:
+        """Handle some error"""
+        print('invalidPawnMove Error')
+    return strip_redundant_for_frontend(room.board_state)
 
 
 

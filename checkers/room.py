@@ -6,6 +6,7 @@ class Room():
     turn = ''
     winner = ''
     board_state = ''
+    draw_count = 0
     last_move_time = None
     create_time = None
 
@@ -16,3 +17,9 @@ class Room():
 
     def __repr__(self):
         return str(self.__dict__)
+
+    def get_turn_color(self):
+        return 'white' if self.turn == self.creator_id else 'black'
+
+    def change_turn(self):
+        self.turn = self.creator_id if self.turn == self.joiner_id else self.joiner_id

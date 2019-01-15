@@ -39,7 +39,7 @@ class Connection extends Component{
                 if (data['playerTurn'] != undefined && data['joined'] == true) {
                     this.props.setPlayerTurn(data['playerTurn']);
                     if(this.props.playerTurn == true){
-                        this.props.fetchBoardState('move_through_net', {});
+                        this.props.fetchBoardState('/move_through_net');
                     }
                 }
             });
@@ -56,6 +56,8 @@ class Connection extends Component{
 
 Connection.propTypes = {
     playerTurn: PropTypes.bool.isRequired,
+    fetchBoardState: PropTypes.func.isRequired,
+    setPlayerTurn: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -66,7 +68,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setPlayerTurn: (bool) => dispatch(playerTurn(bool)),
-        fetchBoardState: (url, payload) => dispatch(fetchBoardState((url, payload)))
+        fetchBoardState: (url, payload={}) => dispatch(fetchBoardState(url, payload)),
     }
 }
 

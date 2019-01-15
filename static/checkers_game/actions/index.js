@@ -2,6 +2,7 @@ import * as constatns from "../constants/action-types"
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
 export function fetchBoardState(url, payload={}){
+  console.log(url);
   return dispatch => {
     fetchPolyfill(url, {
       method:'POST',
