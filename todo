@@ -1,4 +1,11 @@
 zrobić:
+    akcje timer w akcji, potem używać jej w connection
+    akcja ma fetchować board state dopóki serwer zwraca player turn jako false
+    inczej clear inverval
+
+    po ruchu wykonaj tą akcję
+
+
     jak działa gra w wersji through_net:
         zrób pokój:
             przekierowanie na strone through_net tam jeśli gracz nie ma id to ustawia się mu id

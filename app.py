@@ -46,6 +46,7 @@ def through_net():
 
 @app.route('/through_net_connection', methods=['POST'])
 def thorugh_net_connection():
+    print(ROOMS)
     if request.method == 'POST':
         if ROOMS.room_exists(session['rid']):
             room = ROOMS[session['rid']]

@@ -2,7 +2,6 @@ import * as constatns from "../constants/action-types"
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
 export function fetchBoardState(url, payload={}){
-  console.log(url);
   return dispatch => {
     fetchPolyfill(url, {
       method:'POST',
@@ -18,8 +17,14 @@ export function fetchBoardState(url, payload={}){
     .then((response) => response.json())
     .then((data) => normalizeData(data))
     .then((data) => dispatch(stateFetchSuccess(data)))
+        .then((data)=> {
+          if(payload.id != undefined){
+            dispatch(playerTurn(false));
+            dispatch(connection());
+          }
+        })
     .catch((e) => {
-      console.log(e);
+      // console.log(e);
       return dispatch(stateHasError(true));
     });
   }
@@ -75,5 +80,61 @@ export function playerTurn(bool){
   return {
     type:constatns.PLAYER_TURN,
     playerTurn:bool
+  }
+}
+
+export function connection(){
+  return dispatch => {
+      fetchPolyfill('/through_net_connection', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify('')
+        })
+          .then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+            else return response;
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data['room_error'] != undefined) {
+              window.location.assign(data['room_error']);
+            }
+            if (data['playerTurn'] != undefined && data['joined'] == true) {
+              dispatch(playerTurn(data['playerTurn']));
+              if(data['playerTurn'] == true){
+                dispatch(fetchBoardState('/move_through_net'));
+              }
+            }
+          });
+
+      var timer = setInterval(function (){
+        fetchPolyfill('/through_net_connection', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify('')
+        })
+          .then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+            else return response;
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data['room_error'] != undefined) {
+              window.location.assign(data['room_error']);
+            }
+            if (data['playerTurn'] != undefined && data['joined'] == true) {
+              dispatch(playerTurn(data['playerTurn']));
+              if(data['playerTurn'] == true){
+                dispatch(fetchBoardState('/move_through_net'));
+                clearInterval(timer);
+              }
+            }
+          });
+
+      }, 1000);
   }
 }
