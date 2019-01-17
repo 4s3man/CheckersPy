@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, session, url_for, redirect
 from checkers.checkers import *
 from helpers.connection import *
 from checkers.room_index import *
-
-from checkers.tests.fixtures.state_fixtures import *
-from checkers.tests.fixtures.room_fixtures import *
 from checkers.maxmin import *
+from uuid import uuid4
+
+# from checkers.tests.fixtures.state_fixtures import *
+# from checkers.tests.fixtures.room_fixtures import *
 
 app = Flask(__name__)
 ROOMS = RoomIndex()
@@ -46,7 +47,6 @@ def through_net():
 
 @app.route('/through_net_connection', methods=['POST'])
 def thorugh_net_connection():
-    print(ROOMS)
     if request.method == 'POST':
         if ROOMS.room_exists(session['rid']):
             room = ROOMS[session['rid']]
@@ -58,10 +58,8 @@ def thorugh_net_connection():
 
 @app.route('/move_through_net', methods=['POST'])
 def move_through_net():
-    print(request.get_json())
     room = ROOMS[session['rid']]
     player_id = session['pid']
-    print('ok')
     try:
         pawn_move = receive_pawn_move(request.get_json(), room.get_turn_color())
         checkers = Checkers(State(room.board_state))
@@ -107,7 +105,6 @@ def hot_seat():
 def game_controller():
     if request.method == 'POST':
         cmd = request.get_json()
-        print(cmd)
         if cmd == 'reset_hot_seat':
             del_game_sessions()
             set_initial_game_sessions()
@@ -137,7 +134,6 @@ def game_controller():
 
 @app.route('/move', methods=['POST'])
 def move():
-    # print(request.get_json())
     try:
         pawn_move = receive_pawn_move(request.get_json(), session['turn'])
         checkers = Checkers(State(session['board_state']))
@@ -167,8 +163,6 @@ def move():
     except KeyError:
         set_initial_game_sessions()
         print('key error reseting game')
-    # print('ok')
-    # time.sleep(2)
     return strip_redundant_for_frontend(session['board_state'])
 
 @app.route('/game/vs_computer', methods=['POST', 'GET'])
@@ -217,11 +211,9 @@ def move_vs_computer():
     except InvalidPawnMove:
         """Handle some error"""
         print('invalidPawnMove Error')
-    # except KeyError:
-    #     set_initial_game_sessions('_vs_computer')
-    #     print('key error reseting game')
-    # print('ok')
-    # time.sleep(2)
+    except KeyError:
+        set_initial_game_sessions('_vs_computer')
+        print('key error reseting game')
     return strip_redundant_for_frontend(session['board_state_vs_computer'])
 
 @app.route('/leave', methods=['GET'])

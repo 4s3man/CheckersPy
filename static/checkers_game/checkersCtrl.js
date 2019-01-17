@@ -8,7 +8,7 @@ class CheckersCtrl extends Component{
   constructor(props) {
    super(props);
    this.actionSufix = this.props.actionSufix || '';
-   this.url = this.props.actionSufix ? '/move_' + this.props.actionSufix : '/move';
+   this.url = this.props.actionSufix != 'hot_seat' ? '/move_' + this.props.actionSufix : '/move';
    if ('' === this.actionSufix)console.log('Missing actionSuffix in CheckersCtrl. Please provide valid one.');
   }
   buttons(){

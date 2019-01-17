@@ -143,7 +143,6 @@ export function connection(){
             if (data['room_error'] != undefined) {
               window.location.assign(data['room_error']);
             }
-            console.log(data);
             if (data['winner'] != ''){
               dispatch(winner(data['winner']));
             }
