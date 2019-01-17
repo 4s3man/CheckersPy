@@ -83,6 +83,13 @@ export function playerTurn(bool){
   }
 }
 
+export function joined(bool){
+  return {
+    type:constatns.JOINED,
+    joined:bool
+  }
+}
+
 export function connection(){
   return dispatch => {
       fetchPolyfill('/through_net_connection', {
@@ -98,6 +105,7 @@ export function connection(){
           })
           .then((response) => response.json())
           .then((data) => {
+            dispatch(joined(data['joined'] == true));
             if (data['room_error'] != undefined) {
               window.location.assign(data['room_error']);
             }
@@ -123,6 +131,7 @@ export function connection(){
           })
           .then((response) => response.json())
           .then((data) => {
+            dispatch(joined(data['joined'] == true));
             if (data['room_error'] != undefined) {
               window.location.assign(data['room_error']);
             }

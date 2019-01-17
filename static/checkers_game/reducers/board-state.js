@@ -101,3 +101,13 @@ export function stateHasError(state = false, action){
     return state;
   }
 };
+
+export function joined(state = false, action){
+  switch (action.type) {
+    case constants.JOINED:
+    return action.joined;
+
+    default:
+    return state;
+  }
+};

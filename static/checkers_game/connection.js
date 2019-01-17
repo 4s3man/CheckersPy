@@ -7,51 +7,16 @@ import PropTypes from 'prop-types';
 class Connection extends Component{
 
     componentDidMount() {
-        // if (this.props.playerTurn == false) {
         this.props.connection();
-        // this.timer = setInterval(this.fetch_rooms.bind(this), 1000);
-        // }else{
-        //     this.props.fetchBoardState('move_through_net', {});
-        //     clearInterval(this.timer);
-        // }
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timer);
-    }
-
-    fetch_rooms(){
-        // fetchPolyfill('/through_net_connection', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify('')
-        // })
-        //     .then((response) => {
-        //         if (!response.ok) throw Error(response.statusText);
-        //         else return response;
-        //     })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         if (data['room_error'] != undefined) {
-        //             window.location.assign(data['room_error']);
-        //         }
-        //         if (data['playerTurn'] != undefined && data['joined'] == true) {
-        //             this.props.setPlayerTurn(data['playerTurn']);
-        //             console.log(this.props.playerTurn);
-        //             if(this.props.playerTurn == true){
-        //                 clearInterval(this.timer);
-        //                 this.props.fetchBoardState('/move_through_net');
-        //             }
-        //         }
-        //     });
     }
 
     render() {
+        let msg = this.props.joined == true? '' : 'waiting for other player';
+        let cssClass = this.props.joined == true? '' : 'blink';
+        msg = this.props.playerTurn == true ? 'your turn' : 'otherg player turn';
         return (
-                <div>
-                    ok
+                <div className={cssClass}>
+                    {msg}
                 </div>
         );
     }
@@ -59,19 +24,18 @@ class Connection extends Component{
 
 Connection.propTypes = {
     playerTurn: PropTypes.bool.isRequired,
-    fetchBoardState: PropTypes.func.isRequired,
-    setPlayerTurn: PropTypes.func.isRequired,
+    connection: PropTypes.func.isRequired,
+    joined: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
     return {
         playerTurn: state.statePlayerTurn,
+        joined: state.joined
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        setPlayerTurn: (bool) => dispatch(playerTurn(bool)),
-        fetchBoardState: (url, payload={}) => dispatch(fetchBoardState(url, payload)),
         connection: () => dispatch(connection()),
     }
 }
