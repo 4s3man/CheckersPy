@@ -106,6 +106,9 @@ export function connection(){
           .then((response) => response.json())
           .then((data) => {
             dispatch(joined(data['joined'] == true));
+            if (data['winner'] == true){
+                dispatch(fetchBoardState('/move_through_net', {}, true));
+            }
             if (data['room_error'] != undefined) {
               window.location.assign(data['room_error']);
             }
@@ -132,11 +135,16 @@ export function connection(){
           .then((response) => response.json())
           .then((data) => {
             dispatch(joined(data['joined'] == true));
+            if (data['winner'] == true){
+                dispatch(fetchBoardState('/move_through_net', {}, true));
+                clearInterval(timer);
+            }
             if (data['room_error'] != undefined) {
               window.location.assign(data['room_error']);
             }
             if (data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
+              console.log(data);
               if(data['playerTurn'] == true){
                 dispatch(fetchBoardState('/move_through_net', {}, true));
                 clearInterval(timer);

@@ -14,7 +14,7 @@ class CheckersCtrl extends Component{
   buttons(){
     let output = [];
     var refreshBoard = () => this.props.fetchBoardState(this.url);
-    let s = {
+    let s = this.actionSufix != 'through_net'? {
       'play again': {'func': () => this.requestAction('/game_controller', 'reset_' + this.actionSufix).then(data => {
 
           refreshBoard();
@@ -22,7 +22,12 @@ class CheckersCtrl extends Component{
       },
       'leave': {'func':() => this.requestAction('/game_controller', 'leave_' + this.actionSufix)
                             .then(data => data !== 'unsuported_action' ? window.location.assign(data) : console.log(data))}
-    }
+    } :
+        {
+        'leave': {'func':() => this.requestAction('/game_controller', 'leave_' + this.actionSufix)
+                      .then(data => data !== 'unsuported_action' ? window.location.assign(data) : console.log(data))}
+
+        }
 
     for (var k in s) {
       output = [ ...output, button(k, output.length + 1, s[k].func)];

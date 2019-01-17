@@ -3,6 +3,8 @@ import {fetch as fetchPolyfill} from "whatwg-fetch"
 import {connect} from 'react-redux'
 import {fetchBoardState, playerTurn, connection} from './actions/index'
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
 
 class Connection extends Component{
 
@@ -14,10 +16,10 @@ class Connection extends Component{
         let msg = this.props.joined == true? '' : 'waiting for other player';
         let cssClass = this.props.joined == true? '' : 'blink';
         if(this.props.joined == true){
-            msg = this.props.playerTurn == true ? 'your turn' : 'otherg player turn';
+            msg = this.props.playerTurn == true ? 'your turn' : 'other player turn';
         }
         return (
-                <div className={cssClass}>
+                <div className={classnames('blink--position', cssClass)}>
                     {msg}
                 </div>
         );

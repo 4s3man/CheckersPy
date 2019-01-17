@@ -41,8 +41,10 @@
 }
 .blink{
   animation:blink 1s infinite alternate;
-  position:absolute;
-  top:0;
+}
+.blink--position{
+    position:absolute;
+    top:0;
 }
 
 @keyframes blink

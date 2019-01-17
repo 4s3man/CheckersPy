@@ -51,7 +51,7 @@ def thorugh_net_connection():
         if ROOMS.room_exists(session['rid']):
             room = ROOMS[session['rid']]
             player_id = session['pid']
-            return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != ''})
+            return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != '', 'winner': room.winner != ''})
         else:
             return json.dumps({'room_error': url_for('choose_game')})
 
@@ -121,6 +121,14 @@ def game_controller():
             set_initial_game_sessions('_vs_computer')
         elif cmd == 'leave_vs_computer':
             del_game_sessions('_vs_computer')
+            return url_for('choose_game')
+        elif cmd == 'leave_through_net':
+            room = ROOMS[session['rid']]
+            winner = 'black' if session['pid'] == room.creator_id else 'white';
+            checkers = Checkers(State(room.board_state))
+            checkers.state.winner = winner
+            ROOMS[session['rid']].board_state = checkers.state.json_encode()
+            room.winner = winner
             return url_for('choose_game')
         else:
             return 'unsuported_action'
