@@ -13,7 +13,9 @@ class Connection extends Component{
     render() {
         let msg = this.props.joined == true? '' : 'waiting for other player';
         let cssClass = this.props.joined == true? '' : 'blink';
-        msg = this.props.playerTurn == true ? 'your turn' : 'otherg player turn';
+        if(this.props.joined == true){
+            msg = this.props.playerTurn == true ? 'your turn' : 'otherg player turn';
+        }
         return (
                 <div className={cssClass}>
                     {msg}

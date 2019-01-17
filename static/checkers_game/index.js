@@ -31,6 +31,7 @@ export function renderGame__withConnection(moveUrl, actionSufix){
     <Provider store={store}>
       <div className='game'>
         <Connection/>
+          <CheckersCtrl moveUrl={moveUrl} actionSufix={actionSufix}/>
         <Checkers moveUrl={moveUrl} actionSufix={actionSufix} through_net={true}/>
       </div>
     </Provider>,
