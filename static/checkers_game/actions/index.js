@@ -1,7 +1,7 @@
 import * as constatns from "../constants/action-types"
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
-export function fetchBoardState(url, payload={}){
+export function fetchBoardState(url, payload={}, through_net = false){
   return dispatch => {
     fetchPolyfill(url, {
       method:'POST',
@@ -18,7 +18,7 @@ export function fetchBoardState(url, payload={}){
     .then((data) => normalizeData(data))
     .then((data) => dispatch(stateFetchSuccess(data)))
         .then((data)=> {
-          if(payload.id != undefined){
+          if(payload.id != undefined && through_net == true){
             dispatch(playerTurn(false));
             dispatch(connection());
           }
@@ -104,7 +104,7 @@ export function connection(){
             if (data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
               if(data['playerTurn'] == true){
-                dispatch(fetchBoardState('/move_through_net'));
+                dispatch(fetchBoardState('/move_through_net', {}, true));
               }
             }
           });
@@ -129,7 +129,7 @@ export function connection(){
             if (data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
               if(data['playerTurn'] == true){
-                dispatch(fetchBoardState('/move_through_net'));
+                dispatch(fetchBoardState('/move_through_net', {}, true));
                 clearInterval(timer);
               }
             }

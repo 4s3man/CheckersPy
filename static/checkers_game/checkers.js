@@ -16,7 +16,11 @@ class Checkers extends Component{
    if ('' === this.moveUrl)console.log('Missing moveUrl in Checkers. Please provide valid one.');
   }
   componentDidMount(){
+    if (!this.through_net) {
       this.props.fetchBoardState(this.moveUrl);
+    } else {
+      this.props.fetchBoardState(this.moveUrl, {}, true);
+    }
   }
 
   createFields(){
@@ -53,7 +57,11 @@ class Checkers extends Component{
           fieldFunc = () => this.props.deselectPawn();
           break;
         case 'fetchBoardState':
-          fieldFunc = () => this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey]);
+          if(!this.through_net) {
+            fieldFunc = () => this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey]);
+          } else {
+            fieldFunc = () => this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey], true);
+          }
           break;
         default:
           fieldFunc = () => this.props.selectPawn({'fieldKey':fieldKey, 'moves':pawn.moves});
@@ -154,7 +162,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchBoardState: (url, payload={}) => dispatch(fetchBoardState(url, payload)),
+    fetchBoardState: (url, payload={}, through_net=false) => dispatch(fetchBoardState(url, payload, through_net)),
     selectPawn: (moves) => dispatch(selectPawn(moves)),
     deselectPawn: () => dispatch(deselectPawn())
   };
