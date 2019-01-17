@@ -76,6 +76,8 @@ export function winner(winner = '', action){
   switch (action.type) {
     case constants.STATE_FETCH_SUCCESS:
       return action.winner;
+    case constants.SET_WINNER:
+      return action.winner;
 
     default:
       return winner;

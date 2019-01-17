@@ -51,7 +51,7 @@ def thorugh_net_connection():
         if ROOMS.room_exists(session['rid']):
             room = ROOMS[session['rid']]
             player_id = session['pid']
-            return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != '', 'winner': room.winner != ''})
+            return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != '', 'winner': room.winner})
         else:
             return json.dumps({'room_error': url_for('choose_game')})
 
