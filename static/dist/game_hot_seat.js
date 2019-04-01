@@ -783,7 +783,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n__webpack_require__(/*! reset-css */ \"./node_modules/reset-css/reset.css\");\n\n__webpack_require__(/*! ../shared_css/base.css */ \"./pages/shared_css/base.css\");\n\n__webpack_require__(/*! ./css/positioning.css */ \"./pages/game/css/positioning.css\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9nYW1lL2J1bmRsZV9zdHlsZXMuanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vcGFnZXMvZ2FtZS9idW5kbGVfc3R5bGVzLmpzP2IxYzUiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFwicmVzZXQtY3NzXCJcbmltcG9ydCBcIi4uL3NoYXJlZF9jc3MvYmFzZS5jc3NcIlxuaW1wb3J0IFwiLi9jc3MvcG9zaXRpb25pbmcuY3NzXCJcbiJdLCJtYXBwaW5ncyI6Ijs7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./pages/game/bundle_styles.js\n");
+eval("\n\n__webpack_require__(/*! reset-css */ \"./node_modules/reset-css/reset.css\");\n\n__webpack_require__(/*! ../shared_css/base.css */ \"./pages/shared_css/base.css\");\n\n__webpack_require__(/*! ./css/positioning.css */ \"./pages/game/css/positioning.css\");\n\n__webpack_require__(/*! ../shared_css/rules.css */ \"./pages/shared_css/rules.css\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9nYW1lL2J1bmRsZV9zdHlsZXMuanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vcGFnZXMvZ2FtZS9idW5kbGVfc3R5bGVzLmpzP2IxYzUiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFwicmVzZXQtY3NzXCJcbmltcG9ydCBcIi4uL3NoYXJlZF9jc3MvYmFzZS5jc3NcIlxuaW1wb3J0IFwiLi9jc3MvcG9zaXRpb25pbmcuY3NzXCJcbmltcG9ydCBcIi4uL3NoYXJlZF9jc3MvcnVsZXMuY3NzXCIiXSwibWFwcGluZ3MiOiI7O0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./pages/game/bundle_styles.js\n");
 
 /***/ }),
 
@@ -818,6 +818,17 @@ eval("\n\n__webpack_require__(/*! ./bundle_styles */ \"./pages/game/bundle_style
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9zaGFyZWRfY3NzL2Jhc2UuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcGFnZXMvc2hhcmVkX2Nzcy9iYXNlLmNzcz8zNzg5Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./pages/shared_css/base.css\n");
+
+/***/ }),
+
+/***/ "./pages/shared_css/rules.css":
+/*!************************************!*\
+  !*** ./pages/shared_css/rules.css ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9zaGFyZWRfY3NzL3J1bGVzLmNzcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3BhZ2VzL3NoYXJlZF9jc3MvcnVsZXMuY3NzP2Y5NjUiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./pages/shared_css/rules.css\n");
 
 /***/ })
 

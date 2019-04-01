@@ -21,7 +21,7 @@ def choose_game():
             ROOMS[session['rid']] = Room(session['pid'])
         if request.form['cmd'] == 'join_any_room':
             room_id = ROOMS.get_free_room_id()
-            if room_id:
+            if 0 != ROOMS.count_joinable() and room_id:
                 if not 'pid' in session.keys():
                     session['pid'] = uuid4().hex
                 session['rid'] = room_id
@@ -36,11 +36,15 @@ def choose_game():
 
     return render_template('choose_game.html', rooms_number=str(ROOMS.count_joinable()))
 
+@app.route('/history', methods=['GET'])
+def checkers_history():
+    return render_template('history.jinja2x`')
+
+
 @app.route('/fetch_rooms', methods=['POST'])
 def fetch_rooms():
     return str(ROOMS.count_joinable())
 
-#todo do zrobienia
 @app.route('/game/through_net', methods=['POST', 'GET'])
 def through_net():
     return render_template('games/through_net.jinja2')

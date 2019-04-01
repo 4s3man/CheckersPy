@@ -272,7 +272,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n__webpack_require__(/*! reset-css */ \"./node_modules/reset-css/reset.css\");\n\n__webpack_require__(/*! ../shared_css/base.css */ \"./pages/shared_css/base.css\");\n\n__webpack_require__(/*! ./css/positioning.css */ \"./pages/choose_game/css/positioning.css\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9jaG9vc2VfZ2FtZS9idW5kbGVfc3R5bGVzLmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL3BhZ2VzL2Nob29zZV9nYW1lL2J1bmRsZV9zdHlsZXMuanM/NzM4NSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgXCJyZXNldC1jc3NcIlxuaW1wb3J0IFwiLi4vc2hhcmVkX2Nzcy9iYXNlLmNzc1wiXG5pbXBvcnQgXCIuL2Nzcy9wb3NpdGlvbmluZy5jc3NcIlxuIl0sIm1hcHBpbmdzIjoiOztBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./pages/choose_game/bundle_styles.js\n");
+eval("\n\n__webpack_require__(/*! reset-css */ \"./node_modules/reset-css/reset.css\");\n\n__webpack_require__(/*! ../shared_css/base.css */ \"./pages/shared_css/base.css\");\n\n__webpack_require__(/*! ./css/positioning.css */ \"./pages/choose_game/css/positioning.css\");\n\n__webpack_require__(/*! ../shared_css/rules.css */ \"./pages/shared_css/rules.css\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9jaG9vc2VfZ2FtZS9idW5kbGVfc3R5bGVzLmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL3BhZ2VzL2Nob29zZV9nYW1lL2J1bmRsZV9zdHlsZXMuanM/NzM4NSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgXCJyZXNldC1jc3NcIlxuaW1wb3J0IFwiLi4vc2hhcmVkX2Nzcy9iYXNlLmNzc1wiXG5pbXBvcnQgXCIuL2Nzcy9wb3NpdGlvbmluZy5jc3NcIlxuaW1wb3J0IFwiLi4vc2hhcmVkX2Nzcy9ydWxlcy5jc3NcIiJdLCJtYXBwaW5ncyI6Ijs7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./pages/choose_game/bundle_styles.js\n");
 
 /***/ }),
 
@@ -307,6 +307,17 @@ eval("\n\n__webpack_require__(/*! ./bundle_styles.js */ \"./pages/choose_game/bu
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9zaGFyZWRfY3NzL2Jhc2UuY3NzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcGFnZXMvc2hhcmVkX2Nzcy9iYXNlLmNzcz8zNzg5Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpbiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./pages/shared_css/base.css\n");
+
+/***/ }),
+
+/***/ "./pages/shared_css/rules.css":
+/*!************************************!*\
+  !*** ./pages/shared_css/rules.css ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9zaGFyZWRfY3NzL3J1bGVzLmNzcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3BhZ2VzL3NoYXJlZF9jc3MvcnVsZXMuY3NzP2Y5NjUiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./pages/shared_css/rules.css\n");
 
 /***/ })
 
