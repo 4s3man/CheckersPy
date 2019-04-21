@@ -1,0 +1,39 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/choose_game.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="form gridContainer gridContainer--withCenter">
+        <h2 class="title">Login</h2>
+        <div class="form-outer gridContainer--center">
+            <form method="post" action="" class="form">
+                <label for="login" class="form__label">
+                    Login
+                </label>
+                <input name="login" type="text" class="form__input" value="{{ login }}">
+
+                <label for="password" class="form__label">
+                    Password
+                </label>
+                <input name="password" type="password" class="form__input" value="{{ password }}">
+
+                <div for="captcha" class="form_captcha">
+                    Captcha
+                    <br>
+                    <br>
+                    {{ captcha|default('') }} =
+                    <input name="captcha" type="text" class="form__input">
+                </div>
+
+                <input type="submit" class="form_submit" value="login">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

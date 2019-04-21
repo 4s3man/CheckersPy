@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, session, url_for, redirect
+import sqlite3
+from flask import Flask, flash, render_template, request, session, url_for, redirect, g
 from checkers.checkers import *
 from helpers.connection import *
 from checkers.room_index import *
 from checkers.maxmin import *
 from uuid import uuid4
+from bundles.Connection import Connection
+from bundles.User import User
+from bundles.Captcha import Captcha
 
 # from checkers.tests.fixtures.state_fixtures import *
 # from checkers.tests.fixtures.room_fixtures import *
@@ -12,8 +16,16 @@ app = Flask(__name__)
 ROOMS = RoomIndex()
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
+connection = Connection()
+connection.init_db(app)
+
+@app.teardown_appcontext
+def close_connection(exception):
+    connection.maybe_close_db()
+
 @app.route('/', methods=['GET', 'POST'])
 def choose_game():
+    ROOMS.delete_too_long_waiting_for_join()
     if request.method == 'POST':
         if request.form['cmd'] == 'create_room':
             session['pid'] = uuid4().hex
@@ -36,10 +48,88 @@ def choose_game():
 
     return render_template('choose_game.html', rooms_number=str(ROOMS.count_joinable()))
 
+@app.route('/ranking', methods=['GET', 'POST'])
+def ranking():
+    #TODO dokończyć ranking, dodać tekst o histori warcab
+    return render_template('ranking.jinja2')
+
+@app.route('/logout', methods=['GET'])
+def logut():
+    session['user'] = None
+    flash('logged out', 'success')
+    return redirect('/')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    user = User()
+    login = ''
+    password = ''
+    if request.method == 'POST':
+        login = request.form.get('login')
+        password = request.form.get('password')
+        if request.form['captcha'] != str(session.get('captcha')):
+            flash('invalid captcha', 'error')
+        elif not user.validate(login):
+            flash('login must contain only ' + user.getAllowedChars(), 'error')
+        elif not user.validate(password):
+            flash('password must contain only ' + user.getAllowedChars(), 'error')
+        elif not user.login_already_exists(login):
+            flash('no such login', 'error')
+        else:
+            user_dict = user.get_user_dict(login, password)
+            if user_dict is not None:
+                session['user'] = user_dict
+                flash('logged in as ' + session['user']['login'], 'success')
+                return redirect('/')
+            else:
+                flash('invalid password', 'error')
+
+    captcha = Captcha().get_captcha()
+    session['captcha'] = captcha[Captcha.RESULT]
+
+    return render_template('login.jinja2',
+                           captcha=captcha[Captcha.QUESTION],
+                           login=login,
+                           password=password
+                           )
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    user = User()
+    login = ''
+    password = ''
+
+    if request.method == 'POST':
+        login = request.form.get('login')
+        password = request.form.get('password')
+        if user.login_already_exists(login):
+            flash('login already in use', 'error')
+        elif request.form['password'] != request.form['password_confirm']:
+            flash('repeated passowrd is not the same as original', 'error')
+        elif not user.validate(login):
+            flash('login must contain only ' + user.getAllowedChars(), 'error')
+        elif not user.validate(password):
+            flash('password must contain only ' + user.getAllowedChars(), 'error')
+        elif user.login_already_exists(login):
+            flash('login already in use', 'error')
+        elif request.form['captcha'] != str(session.get('captcha')):
+            flash('invalid captcha', 'error')
+        else:
+            user.create(login, password)
+            flash('successfully registered', 'success')
+
+    captcha = Captcha().get_captcha()
+    session['captcha'] = captcha[Captcha.RESULT]
+
+    return render_template('register.jinja2',
+                           captcha=captcha[Captcha.QUESTION],
+                           login=login,
+                           password=password
+                           )
+
 @app.route('/history', methods=['GET'])
 def checkers_history():
-    return render_template('history.jinja2x`')
-
+    return render_template('history.jinja2')
 
 @app.route('/fetch_rooms', methods=['POST'])
 def fetch_rooms():
@@ -92,10 +182,6 @@ def move_through_net():
         """Handle some error"""
         print('invalidPawnMove Error')
     return strip_redundant_for_frontend(room.board_state)
-
-
-
-
 
 @app.route('/game/hotseat', methods=['POST', 'GET'])
 def hot_seat():
@@ -178,7 +264,6 @@ def vs_computer():
 
 @app.route('/move_vs_computer', methods=['POST'])
 def move_vs_computer():
-    # print(request.get_json())
     try:
         pawn_move = receive_pawn_move(request.get_json(), session['turn_vs_computer'])
         checkers = Checkers(State(session['board_state_vs_computer']))

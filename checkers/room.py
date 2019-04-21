@@ -10,7 +10,7 @@ class Room():
     last_move_time = None
     create_time = None
 
-    def __init__(self, creator_id:int):
+    def __init__(self, creator_id: int):
         self.creator_id = creator_id
         self.create_time = datetime.now()
         self.turn = creator_id

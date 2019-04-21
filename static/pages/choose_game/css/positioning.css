@@ -1,9 +1,5 @@
-.gridContainer--chooseGame{
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas: 'aside_left chooseGame chooseGame aside_right'
-}
 .chooseGame{
-  grid-area: chooseGame;
+  grid-area: center;
   margin-top: 10px;
   margin-bottom: 10px;
   min-height: 20%;

@@ -116,25 +116,6 @@
   background-color: brown;
 }
 
-.board::before, .board::after {
-    position: absolute;
-    width: 30px;
-    content: '0 1 2 3 4 5 6 7';
-    text-align: center;
-    width: 10px;
-    line-height: 50px;
-}
-.board::before{
-  right: -40px;
-  height: 404px;
-}
-.board::after{
-  bottom:-40px;
-  width: 404px;
-  height: 30px;
-  letter-spacing: 18px;
-}
-
 @media (max-width:576px){
   .game{
     font-size:12px;

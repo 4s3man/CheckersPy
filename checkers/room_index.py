@@ -1,5 +1,5 @@
 from checkers.room import Room
-import datetime
+from datetime import datetime
 from checkers.board.state import *
 import json
 
@@ -20,9 +20,8 @@ class RoomIndex(dict):
     grater than 40 sec"""
     time_after_last_move = 40
 
-
     def __setitem__(self, key, value):
-        if not isinstance(value, Room): raise InvalidArgument('Do rooms można dodawać tylko obiekt typu room')
+        if not isinstance(value, Room): raise InvalidArgument('RoomIndex accepts only arguments of type Room')
         if len(self) >= 1000: TooManyRoomsAtOnce()
         super().__setitem__(key, value)
 
@@ -46,6 +45,11 @@ class RoomIndex(dict):
 
     #todo przetestować usuwanie rzeczy z room index nie jest teraz najważniejsz zostawić na potem
     def delete_too_long_waiting_for_join(self):
-        waiting_rooms_to_delete = (id for (id, room) in self.items() if room.joiner_id=='' and (datetime.now() - room.create_time).seconds > self.winned_room_duration)
-        for id in (id for (id, room) in self.items() if (datetime.now() - room.create_time).seconds > self.winned_room_duration):
-            del self[id]
+        for id in self.make_room_gen():
+            print('id')
+        # waiting_rooms_to_delete = (id for (id, room) in self.items() if room.joiner_id =='' and (datetime.now() - room.create_time).seconds > self.winned_room_duration)
+        # for id in (id for (id, room) in self.items() if (datetime.now() - room.create_time).seconds > self.winned_room_duration):
+        #     del self[id]
+
+    def make_room_gen(self, condifions = []):
+        return (id for (id, room) in self.items() if room.joiner_id == '')

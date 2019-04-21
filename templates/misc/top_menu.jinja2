@@ -1,0 +1,33 @@
+<div class="topMenu">
+    <div class="topMenu__container">
+        <div class="topMenu__item">
+            <a href="/">
+                choose game
+{#                <img src="{{ url_for('static', filename='images/home.svg') }}" alt="menu_home">#}
+            </a>
+        </div>
+        <div class="topMenu__item">
+            <a href="/history">history</a>
+        </div>
+        <div class="topMenu__item">
+            <a href="/ranking">ranking</a>
+        </div>
+    </div>
+    <div class="topMenu__container topMenu__container--left">
+        {%  if session.get('user') == None %}
+        <div class="topMenu__item login">
+            <a href="/login">login</a>
+        </div>
+        <div class="topMenu__item register">
+            <a href="/register">register</a>
+        </div>
+        {% else %}
+        <div class="topMenu__item">
+            logged in as {{ session['user']['login'] }}
+        </div>
+        <div class="topMenu__item logout">
+            <a href="/logout">logout</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
