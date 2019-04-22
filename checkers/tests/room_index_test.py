@@ -20,8 +20,7 @@ def test_set_item_instance(waiting_room):
     rooms[id] = waiting_room
     assert rooms[id].create_time != ''
     assert rooms[id].creator_id != ''
-    print(rooms[id])
-    # assert rooms[id].turn == 'white'
+    assert rooms[id].get_turn_color() == 'white'
 
 def test_get_free_room_id(waiting_room):
     rooms = RoomIndex()
@@ -38,3 +37,7 @@ def test_join_room(waiting_room):
     pid = uuid4().hex
     rooms.join_room(id, pid)
     assert rooms[id].joiner_id == pid
+
+# MAKE ROOMS GEN
+def test_waiting_rooms_gen(roomIndex_all_kind_of_rooms):
+    roomIndex = roomIndex_all_kind_of_rooms

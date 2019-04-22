@@ -9,8 +9,11 @@ from bundles.Connection import Connection
 from bundles.User import User
 from bundles.Captcha import Captcha
 
+import re
+
+
 # from checkers.tests.fixtures.state_fixtures import *
-# from checkers.tests.fixtures.room_fixtures import *
+from checkers.tests.fixtures.room_fixtures import *
 
 app = Flask(__name__)
 ROOMS = RoomIndex()
@@ -25,11 +28,11 @@ def close_connection(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def choose_game():
-    ROOMS.delete_too_long_waiting_for_join()
+    ROOMS.cultivate()
     if request.method == 'POST':
         if request.form['cmd'] == 'create_room':
-            session['pid'] = uuid4().hex
-            session['rid'] = uuid4().hex
+            session['pid'] = session.get('pid', uuid4().hex)
+            session['rid'] = session.get('rid', uuid4().hex)
             ROOMS[session['rid']] = Room(session['pid'])
         if request.form['cmd'] == 'join_any_room':
             room_id = ROOMS.get_free_room_id()
@@ -42,15 +45,16 @@ def choose_game():
                 checkers.resolve_moves('white')
                 ROOMS[room_id].board_state = checkers.state.json_encode()
             else:
-                #todo jakiś flash message?
-                pass
+                flash('no rooms to join', 'error')
+                return redirect(url_for('choose_game'))
+
         return redirect(url_for('through_net'))
 
     return render_template('choose_game.html', rooms_number=str(ROOMS.count_joinable()))
 
 @app.route('/ranking', methods=['GET', 'POST'])
 def ranking():
-    #TODO dokończyć ranking, dodać tekst o histori warcab
+    #TODO dokończyć ranking, dodać tekst o histori warcab, zrobic 40 sec na ruch w through net i wygrywanie po tym czasie, zrobic lepsza captche
     return render_template('ranking.jinja2')
 
 @app.route('/logout', methods=['GET'])
@@ -137,6 +141,7 @@ def fetch_rooms():
 
 @app.route('/game/through_net', methods=['POST', 'GET'])
 def through_net():
+    ROOMS.cultivate()
     return render_template('games/through_net.jinja2')
 
 @app.route('/through_net_connection', methods=['POST'])

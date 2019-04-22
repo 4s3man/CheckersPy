@@ -1,5 +1,5 @@
 from checkers.room import Room
-from datetime import datetime
+from datetime import datetime, timedelta
 from checkers.board.state import *
 import json
 
@@ -9,17 +9,6 @@ class TooManyRoomsAtOnce(Exception):
     pass
 
 class RoomIndex(dict):
-    """room lasts for this amount of seconds if"""
-    """already winned"""
-    winned_room_duration = 1 * 60
-
-    """created and nobody joined"""
-    waiting_room_duration = 10 * 60
-
-    """room will be set to won for not currently moving if time from last move was
-    grater than 40 sec"""
-    time_after_last_move = 40
-
     def __setitem__(self, key, value):
         if not isinstance(value, Room): raise InvalidArgument('RoomIndex accepts only arguments of type Room')
         if len(self) >= 1000: TooManyRoomsAtOnce()
@@ -43,13 +32,17 @@ class RoomIndex(dict):
     def room_exists(self, room_id: str)->bool:
         return room_id in self.keys()
 
-    #todo przetestować usuwanie rzeczy z room index nie jest teraz najważniejsz zostawić na potem
-    def delete_too_long_waiting_for_join(self):
-        for id in self.make_room_gen():
-            print('id')
-        # waiting_rooms_to_delete = (id for (id, room) in self.items() if room.joiner_id =='' and (datetime.now() - room.create_time).seconds > self.winned_room_duration)
-        # for id in (id for (id, room) in self.items() if (datetime.now() - room.create_time).seconds > self.winned_room_duration):
-        #     del self[id]
+    def cultivate(self):
+        now = datetime.now()
+        self.delete_old_unjoined_or_winned(now)
+        self.win_too_long_unmoved(now)
 
-    def make_room_gen(self, condifions = []):
-        return (id for (id, room) in self.items() if room.joiner_id == '')
+    def delete_old_unjoined_or_winned(self, now: datetime):
+        ids = [id for (id, room) in self.items() if room.is_old_waiting(now) or room.is_old_winned(now)]
+        for id in ids:
+            del self[id]
+
+    def win_too_long_unmoved(self, now: datetime):
+        ids = [id for (id, room) in self.items() if room.is_old_waiting(now)]
+        for id in ids:
+            self[id].win_too_long_unmoved(now)
