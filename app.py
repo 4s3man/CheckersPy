@@ -54,7 +54,8 @@ def choose_game():
 
 @app.route('/ranking', methods=['GET', 'POST'])
 def ranking():
-    #TODO dokończyć ranking, dodać tekst o histori warcab, zrobic 40 sec na ruch w through net i wygrywanie po tym czasie, zrobic lepsza captche
+    #TODO dokończyć ranking, dodać tekst o histori warcab, zrobic 40 sec na ruch w through net i wygrywanie po tym czasie
+    #todo captcha z google
     return render_template('ranking.jinja2')
 
 @app.route('/logout', methods=['GET'])
@@ -150,6 +151,7 @@ def thorugh_net_connection():
         if ROOMS.room_exists(session['rid']):
             room = ROOMS[session['rid']]
             player_id = session['pid']
+
             return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != '', 'winner': room.winner})
         else:
             return json.dumps({'room_error': url_for('choose_game')})
@@ -195,7 +197,6 @@ def hot_seat():
 
     return render_template('games/hot_seat.jinja2')
 
-# todo podłączyć controller vs_computer do game_controller
 @app.route('/game_controller', methods=['POST'])
 def game_controller():
     if request.method == 'POST':

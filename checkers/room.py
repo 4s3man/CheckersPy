@@ -40,7 +40,7 @@ class Room():
 
     def win_too_long_unmoved(self):
         self.change_turn()
-        self.winner = self.turn
+        self.winner = self.get_turn_color()
 
     def is_time_up_for_move(self, now: datetime)-> bool:
         if None is self.last_move_time:
