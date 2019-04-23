@@ -333,6 +333,10 @@ def del_game_sessions(sufix:str=''):
     for key in ['turn'+ sufix, 'draw_count'+ sufix, 'board_state'+ sufix]:
         if key in session_keys: del session[key]
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return redirect(url_for('choose_game'))
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     # socketio.run(app, debug=True)

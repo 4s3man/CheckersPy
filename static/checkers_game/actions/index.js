@@ -97,7 +97,14 @@ export function winner(str){
   }
 }
 
+export function time(seconds){
+  return {
+    type:constatns.TIME,
+    time: seconds
+  }
+}
 
+// todo zrobic reducer gameStarted odpalany przy fetch board state w timerze i w connection.js odpalac funkcje start timer ktora bedzie podobna jak to nizej ale bedzie dispatchowac time tylko
 export function connection(){
   return dispatch => {
       fetchPolyfill('/through_net_connection', {
@@ -125,7 +132,7 @@ export function connection(){
             }
           });
 
-      var timer = setInterval(function (){
+    var timer = setInterval(function (){
         fetchPolyfill('/through_net_connection', {
         method: 'POST',
         headers: {
@@ -139,6 +146,7 @@ export function connection(){
           })
           .then((response) => response.json())
           .then((data) => {
+
             dispatch(joined(data['joined'] == true));
             if (data['room_error'] != undefined) {
               window.location.assign(data['room_error']);
@@ -158,8 +166,7 @@ export function connection(){
           });
 
       }, 1000);
-      
-            var other_timer = setInterval(function (){
+      var other_timer = setInterval(function (){
         fetchPolyfill('/through_net_connection', {
         method: 'POST',
         headers: {

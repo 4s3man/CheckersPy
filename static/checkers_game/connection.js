@@ -21,7 +21,7 @@ class Connection extends Component{
         return (
                 <div className={classnames('blink--position', cssClass)}>
                     {msg}
-                    time for move
+                    {/*todo time for move*/}
                 </div>
         );
     }
@@ -30,13 +30,15 @@ class Connection extends Component{
 Connection.propTypes = {
     playerTurn: PropTypes.bool.isRequired,
     connection: PropTypes.func.isRequired,
-    joined: PropTypes.bool.isRequired
+    joined: PropTypes.bool.isRequired,
+    // time: PropTypes.int.isRequired
 }
 
 const mapStateToProps = (state) => {
     return {
         playerTurn: state.statePlayerTurn,
-        joined: state.joined
+        joined: state.joined,
+        time: state.time
     }
 }
 const mapDispatchToProps = (dispatch) => {

@@ -113,3 +113,13 @@ export function joined(state = false, action){
     return state;
   }
 };
+
+export function time(state = 0, action) {
+    switch (action.type) {
+    case constants.TIME:
+    return action.time;
+
+    default:
+    return state;
+  }
+}
