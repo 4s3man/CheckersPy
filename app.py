@@ -152,6 +152,9 @@ def thorugh_net_connection():
             room = ROOMS[session['rid']]
             player_id = session['pid']
 
+            if not room.is_winned() and room.is_time_up_for_move(datetime.now()):
+                room.win_too_long_unmoved()
+
             return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != '', 'winner': room.winner})
         else:
             return json.dumps({'room_error': url_for('choose_game')})

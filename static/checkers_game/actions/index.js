@@ -145,8 +145,10 @@ export function connection(){
             }
             if (data['winner'] != ''){
               dispatch(winner(data['winner']));
+              clearInterval(timer);
+              clearInterval(other_timer);
             }
-            if (data['playerTurn'] != undefined && data['joined'] == true) {
+            if (data['winner'] == '' && data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
               if(data['playerTurn'] == true){
                 dispatch(fetchBoardState('/move_through_net', {}, true));
@@ -156,5 +158,36 @@ export function connection(){
           });
 
       }, 1000);
+      
+            var other_timer = setInterval(function (){
+        fetchPolyfill('/through_net_connection', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify('')
+        })
+          .then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+            else return response;
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            dispatch(joined(data['joined'] == true));
+            if (data['room_error'] != undefined) {
+              window.location.assign(data['room_error']);
+            }
+            if (data['winner'] != ''){
+              dispatch(winner(data['winner']));
+              clearInterval(timer);
+              clearInterval(other_timer);
+            }
+            if (data['winner'] == '' && data['playerTurn'] != undefined && data['joined'] == true) {
+                dispatch(fetchBoardState('/move_through_net', {}, true));
+
+            }
+          });
+
+      }, 5000);
   }
 }

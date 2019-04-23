@@ -21,6 +21,7 @@ class Connection extends Component{
         return (
                 <div className={classnames('blink--position', cssClass)}>
                     {msg}
+                    time for move
                 </div>
         );
     }
