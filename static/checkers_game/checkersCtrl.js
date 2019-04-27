@@ -49,11 +49,6 @@ class CheckersCtrl extends Component{
           else return response;
         })
         .then((response) => response.text())
-        //TODO remove log
-        // .then(data => {
-        //   console.log('Frontend:',data);
-        //   return data;
-        // })
         .catch((e) => {
           console.log(e);
         });

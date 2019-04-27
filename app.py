@@ -11,7 +11,6 @@ from bundles.Captcha import Captcha
 
 import re
 
-
 # from checkers.tests.fixtures.state_fixtures import *
 from checkers.tests.fixtures.room_fixtures import *
 
@@ -28,6 +27,8 @@ def close_connection(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def choose_game():
+    db = connection.get_db();
+
     ROOMS.cultivate()
     if request.method == 'POST':
         if request.form['cmd'] == 'create_room':
@@ -54,7 +55,7 @@ def choose_game():
 
 @app.route('/ranking', methods=['GET', 'POST'])
 def ranking():
-    #TODO dokończyć ranking, dodać tekst o histori warcab, zrobic timer 40 sek na ruch
+    #TODO dokończyć ranking, dodać tekst o histori warcab
     #todo captcha z google
     return render_template('ranking.jinja2')
 
