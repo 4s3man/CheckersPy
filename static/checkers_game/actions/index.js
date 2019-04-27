@@ -97,16 +97,28 @@ export function winner(str){
   }
 }
 
-export function time(seconds){
+export function gameStarted(bool){
   return {
-    type:constatns.TIME,
-    time: seconds
+    type: constatns.GAME_STARTED,
+    gameStarted: bool
   }
 }
 
-// todo zrobic reducer gameStarted odpalany przy fetch board state w timerze i w connection.js odpalac funkcje start timer ktora bedzie podobna jak to nizej ale bedzie dispatchowac time tylko
+export function incrementTime(){
+  return {
+    type:constatns.INCREMENT_TIME
+  }
+}
+
+export function clearTime(){
+  return {
+    type:constatns.CLEAR_TIME
+  }
+}
+
 export function connection(){
-  return dispatch => {
+  return (dispatch, getState) => {
+    var state = getState();
       fetchPolyfill('/through_net_connection', {
         method: 'POST',
         headers: {
@@ -126,6 +138,11 @@ export function connection(){
             }
             if (data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
+              // todo tutaj
+              // console.log(data['playerTurn'] !== state.statePlayerTurn);
+              if (data['playerTurn'] !== state.statePlayerTurn) {
+                dispatch(clearTime());
+              }
               if(data['playerTurn'] == true){
                 dispatch(fetchBoardState('/move_through_net', {}, true));
               }
@@ -158,6 +175,11 @@ export function connection(){
             }
             if (data['winner'] == '' && data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
+              //todo tutaj
+              // console.log(data['playerTurn'] !== state.statePlayerTurn);
+              if (data['playerTurn'] !== state.statePlayerTurn) {
+                dispatch(clearTime());
+              }
               if(data['playerTurn'] == true){
                 dispatch(fetchBoardState('/move_through_net', {}, true));
                 clearInterval(timer);
@@ -191,7 +213,6 @@ export function connection(){
             }
             if (data['winner'] == '' && data['playerTurn'] != undefined && data['joined'] == true) {
                 dispatch(fetchBoardState('/move_through_net', {}, true));
-
             }
           });
 

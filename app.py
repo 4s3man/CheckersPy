@@ -54,7 +54,7 @@ def choose_game():
 
 @app.route('/ranking', methods=['GET', 'POST'])
 def ranking():
-    #TODO dokończyć ranking, dodać tekst o histori warcab, zrobic 40 sec na ruch w through net i wygrywanie po tym czasie
+    #TODO dokończyć ranking, dodać tekst o histori warcab, zrobic timer 40 sek na ruch
     #todo captcha z google
     return render_template('ranking.jinja2')
 
@@ -339,5 +339,4 @@ def page_not_found(error):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-    # socketio.run(app, debug=True)
    # app.run(host="0.0.0.0", port=5009, debug=True)

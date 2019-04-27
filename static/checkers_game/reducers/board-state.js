@@ -1,5 +1,6 @@
 import * as constants from "../constants/action-types"
 import {selectPawn, deselectPawn} from "../actions/moves.js"
+import {dispatchClearTime} from "../actions";
 
 export function fields(state = {}, action){
   switch (action.type) {
@@ -87,7 +88,7 @@ export function winner(winner = '', action){
 export function statePlayerTurn(state = false, action){
   switch (action.type) {
     case constants.PLAYER_TURN:
-    return action.playerTurn;
+      return action.playerTurn;
 
     default:
     return state;
@@ -107,7 +108,7 @@ export function stateHasError(state = false, action){
 export function joined(state = false, action){
   switch (action.type) {
     case constants.JOINED:
-    return action.joined;
+      return action.joined;
 
     default:
     return state;
@@ -116,10 +117,30 @@ export function joined(state = false, action){
 
 export function time(state = 0, action) {
     switch (action.type) {
-    case constants.TIME:
-    return action.time;
+      case constants.INCREMENT_TIME:
+        state++;
+        if (state>40)state=0;
+        // console.log('incrementuje');
+        return state;
+      case constants.CLEAR_TIME:
+        console.log('clearuje');
+        return 0;
 
     default:
-    return state;
+      return state;
+  }
+}
+
+export function gameStarted(state = false, action) {
+  switch (action.type) {
+    case constants.STATE_FETCH_SUCCESS:
+      var initial_moves_string = "{\"1\":{\"position_after_move\":[4,2]},\"2\":{\"position_after_move\":[4,0]},\"3\":{\"position_after_move\":[4,4]},\"4\":{\"position_after_move\":[4,2]},\"5\":{\"position_after_move\":[4,6]},\"6\":{\"position_after_move\":[4,4]},\"7\":{\"position_after_move\":[4,6]}}";
+      if(initial_moves_string !== JSON.stringify(action.moves)) {
+        return true;
+      }
+      return false;
+
+    default:
+      return state;
   }
 }

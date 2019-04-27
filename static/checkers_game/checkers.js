@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import CheckersCtrl from './checkersCtrl'
 
-import { stateFetchSuccess, stateHasError, statePlayerTurn, winner, fetchBoardState} from './actions/index.js'
+import { stateFetchSuccess, stateHasError, statePlayerTurn, winner, fetchBoardState, clearTime} from './actions/index.js'
 import {deselectPawn, selectPawn} from './actions/moves.js'
 
 class Checkers extends Component{
@@ -60,11 +60,17 @@ class Checkers extends Component{
           if(!this.through_net) {
             fieldFunc = () => this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey]);
           } else {
-            fieldFunc = () => this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey], true);
+            fieldFunc = () => {
+              this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey], true);
+              //todo check
+              this.props.clearTime();
+            }
           }
           break;
         default:
-          fieldFunc = () => this.props.selectPawn({'fieldKey':fieldKey, 'moves':pawn.moves});
+          fieldFunc = () => {
+            this.props.selectPawn({'fieldKey':fieldKey, 'moves':pawn.moves});
+          };
       }
       return ClickableField(color, id, field, fieldFunc, pawn);
     }
@@ -140,6 +146,7 @@ const GameEndWindow = (winner, actionSuffix='') => {
 Checkers.propTypes = {
     fetchBoardState: PropTypes.func.isRequired,
     selectPawn: PropTypes.func.isRequired,
+    clearTime: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     playerTurn: PropTypes.bool.isRequired,
 
@@ -164,7 +171,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchBoardState: (url, payload={}, through_net=false) => dispatch(fetchBoardState(url, payload, through_net)),
     selectPawn: (moves) => dispatch(selectPawn(moves)),
-    deselectPawn: () => dispatch(deselectPawn())
+    deselectPawn: () => dispatch(deselectPawn()),
+    clearTime: () => dispatch(clearTime())
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Checkers);
