@@ -62,7 +62,6 @@ class Checkers extends Component{
           } else {
             fieldFunc = () => {
               this.props.fetchBoardState(this.moveUrl, this.props.moveDataTmp[fieldKey], true);
-              //todo check
               this.props.clearTime();
             }
           }
@@ -124,7 +123,6 @@ const Pawn = (props) => {
     <span
     className={classnames(blockClass, blockClass+'--'+props.color, blockClass+'--'+props.type)}
     >
-    {props.id}
     </span>
   );
 }

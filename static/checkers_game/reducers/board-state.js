@@ -120,10 +120,8 @@ export function time(state = 0, action) {
       case constants.INCREMENT_TIME:
         state++;
         if (state>40)state=0;
-        // console.log('incrementuje');
         return state;
       case constants.CLEAR_TIME:
-        console.log('clearuje');
         return 0;
 
     default:

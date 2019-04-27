@@ -138,8 +138,6 @@ export function connection(){
             }
             if (data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
-              // todo tutaj
-              // console.log(data['playerTurn'] !== state.statePlayerTurn);
               if (data['playerTurn'] !== state.statePlayerTurn) {
                 dispatch(clearTime());
               }
@@ -175,8 +173,6 @@ export function connection(){
             }
             if (data['winner'] == '' && data['playerTurn'] != undefined && data['joined'] == true) {
               dispatch(playerTurn(data['playerTurn']));
-              //todo tutaj
-              // console.log(data['playerTurn'] !== state.statePlayerTurn);
               if (data['playerTurn'] !== state.statePlayerTurn) {
                 dispatch(clearTime());
               }

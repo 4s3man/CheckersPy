@@ -16,7 +16,7 @@ class Connection extends Component{
         var me = this;
         me.props.connection();
         setInterval(function () {
-            if (me.props.gameStarted) {
+            if (me.props.gameStarted && me.props.winner === '') {
                 me.props.incrementTime();
             }
         }, 1000);
@@ -57,7 +57,8 @@ const mapStateToProps = (state) => {
         playerTurn: state.statePlayerTurn,
         joined: state.joined,
         gameStarted: state.gameStarted,
-        time: state.time
+        time: state.time,
+        winner: state.winner
     }
 }
 const mapDispatchToProps = (dispatch) => {
