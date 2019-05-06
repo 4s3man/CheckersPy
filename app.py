@@ -58,7 +58,16 @@ def choose_game():
 def ranking():
     #TODO dokończyć ranking, dodać tekst o histori warcab
     #todo captcha z google
-    return render_template('ranking.jinja2')
+    ranking = Ranking()
+    user_id = session.get('user').get('id') if session.get('user') else None
+    user_login = session.get('user').get('login') if session.get('user') else None
+    print(ranking.find_all())
+    print(ranking.find_for_user(user_id))
+    return render_template('ranking.jinja2',
+        ranking=ranking.find_all(),
+        user_stats=ranking.find_for_user(user_id),
+        user_login=user_login
+        )
 
 @app.route('/logout', methods=['GET'])
 def logut():

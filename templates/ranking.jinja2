@@ -5,14 +5,87 @@ Ranking
 {% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='dist/choose_game.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/ranking.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="gridContainer gridContainer--withCenter">
-        <div class="gridContainer--center">
+<div class="gridContainer gridContainer--withCenter">
+    <div class="gridContainer--center">
+
+      <div class="ranking">
+        {%  if user_stats %}
+          <div class="ranking__logged">
+            <h2>stats for user {{user_login}}</h2>
+            <table>
+              <thead>
+                <tr>
+                  <td>game mode</td>
+                  <td>win</td>
+                  <td>draw</td>
+                  <td>lost</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in user_stats %}
+                  <tr>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[4]}}</td>
+                  </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+        {%endif%}
+          <h2 class="ranking__gameMode"></h2>
+          <div class="rankingSelect">
+            <a href="#vs_computer">
+              Vs computer
+            </a>
+            <a href="#through_net">
+              Through net
+            </a>
+          </div>
+          <div class="userStats">
+            <h2>Top 20</h2>
+            <table>
+              <thead>
+                <tr>
+                  <td>login</td>
+                  <td>game mode</td>
+                  <td>win</td>
+                  <td>draw</td>
+                  <td>lost</td>
+                </tr>
+              </thead>
+              <tbody id='vs_computer' class="showOnFocus">
+                {% for row in ranking if row[1] == 'VS_COMPUTER' %}
+                  <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[3]}}</td>
+                  </tr>
+                {%endfor%}
+              </tbody>
+              <tbody id='through_net' class="showOnFocus">
+                {% for row in ranking if row[2] == 'THROUGH_NET' %}
+                  <tr>
+                    <td>login</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[4]}}</td>
+                  </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
 
         </div>
-    </div>
-{% endblock %}
 
+    </div>
+</div>
+{% endblock %}

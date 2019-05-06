@@ -8,6 +8,7 @@ module.exports = {
       game_hot_seat: __dirname + '/pages/game/hot_seat.js',
       game_vs_computer: __dirname + '/pages/game/vs_computer.js',
       game_through_net: __dirname + '/pages/game/through_net.js',
+      ranking: __dirname + '/pages/ranking/index.js',
     },
     output: {
         path: __dirname + '/dist/',

@@ -30,7 +30,13 @@ class Ranking():
             self.connection.execute(query, (currentResult, userId, gameType))
 
     def find_all(self):
-        return self.connection.query_db('SELECT * FROM RANKING', '')
+        return self.connection.query_db('SELECT USER.LOGIN, RANKING.GAME_TYPE, RANKING.WIN, RANKING.LOST, RANKING.DRAW FROM RANKING INNER JOIN USER ON RANKING.USERID = USER.ID ORDER BY (WIN - LOST) DESC LIMIT 20')
+
+    def find_for_user(self, user_id):
+        if user_id == None:
+            return None
+
+        return self.connection.query_db('SELECT * FROM RANKING WHERE ID = ?', [user_id])
 
     def getEndResultCount(self, result, userId, gameType):
         query = 'SELECT {result} FROM RANKING WHERE USERID = ? and GAME_TYPE = ?'.format(result=result)
