@@ -13,11 +13,24 @@ class Connection():
         cur.execute(query, args)
         db.commit()
 
+    def drop_tables(self, app):
+        with app.app_context():
+            self.execute('DROP TABLE IF EXISTS USER', [])
+            self.execute('DROP TABLE IF EXISTS  RANKING', [])
+            self.execute('DROP TABLE IF EXISTS  GAME_TYPES', [])
+
     def get_db(self):
         db = getattr(g, '_database', None)
         if db is None:
             db = g._database = sqlite3.connect(DATABASE)
         return db
+
+    def get_scalar_result(self, sql, args):
+        db = self.get_db()
+        cursor = db.cursor()
+        cursor.execute(sql, args)
+        result = cursor.fetchone()
+        return result[0] if result else None
 
     def query_db(self, query, args=(), one=False):
         cur = self.get_db().execute(query, args)

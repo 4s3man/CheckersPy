@@ -1,11 +1,21 @@
 from bundles.Connection import Connection
 from re import compile, match
+from bundles.Ranking import Ranking
+
 class User:
     connection = None
     validationRegex = '^[a-zA-Z0-9_%!@#$^&*<>]+$'
 
     def __init__(self):
         self.connection = Connection()
+
+    @classmethod
+    def increment_score(self, session, game_type, result):
+        ranking = Ranking()
+        if session.get('user', None):
+            ranking.increment(game_type, result, session['user']['id'])
+            # todo remove print, insert this method in appropraiate place in app.py
+            print(ranking.find_all())
 
     def create(self, login, password):
         self.connection.execute("INSERT INTO USER (LOGIN, PASSWORD) VALUES ( ?, ? )", (login, password))
