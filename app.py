@@ -54,17 +54,16 @@ def choose_game():
 
     return render_template('choose_game.html', rooms_number=str(ROOMS.count_joinable()))
 
-@app.route('/ranking', methods=['GET', 'POST'])
+@app.route('/ranking', methods=['GET'])
 def ranking():
-    #TODO dokończyć ranking, dodać tekst o histori warcab
-    #todo captcha z google
+    #TODO dodać tekst o histori warcab, captcha z google, potestować ranking THROUGH NET
     ranking = Ranking()
     user_id = session.get('user').get('id') if session.get('user') else None
     user_login = session.get('user').get('login') if session.get('user') else None
-    print(ranking.find_all())
-    print(ranking.find_for_user(user_id))
+
     return render_template('ranking.jinja2',
-        ranking=ranking.find_all(),
+        top_20_vs_computer=ranking.find_top_20_for_game(Ranking.VS_COMPUTER),
+        top_20_through_net=ranking.find_top_20_for_game(Ranking.THROUGH_NET),
         user_stats=ranking.find_for_user(user_id),
         user_login=user_login
         )
@@ -104,7 +103,6 @@ def login():
     session['captcha'] = captcha[Captcha.RESULT]
 
     return render_template('login.jinja2',
-                           captcha=captcha[Captcha.QUESTION],
                            login=login,
                            password=password
                            )
@@ -174,6 +172,13 @@ def thorugh_net_connection():
                 if room.winner == 'black':
                     User.increment_score(session, Ranking.THROUGH_NET, Ranking.LOST)
 
+            if session.get('pid', None) != room.creator_id and room.is_winned():
+                if room.winner == 'white':
+                    User.increment_score(session, Ranking.THROUGH_NET, Ranking.LOST)
+                if room.winner == 'black':
+                    User.increment_score(session, Ranking.THROUGH_NET, Ranking.WIN)
+
+
             return json.dumps({'playerTurn':room.turn == player_id, 'joined':room.joiner_id != '', 'winner': room.winner})
         else:
             return json.dumps({'room_error': url_for('choose_game')})
@@ -206,11 +211,18 @@ def move_through_net():
             winner = room.get_turn_color()
             checkers.state.winner = 'white' if winner == 'black' else 'black'
 
+        if checkers.state.winner != '':
             if session.get('pid', None) == room.creator_id:
                 if winner == 'white':
                     User.increment_score(session, Ranking.THROUGH_NET, Ranking.WIN)
                 if winner == 'black':
                     User.increment_score(session, Ranking.THROUGH_NET, Ranking.LOST)
+
+            if session.get('pid', None) == room.joiner_id:
+                if winner == 'white':
+                    User.increment_score(session, Ranking.THROUGH_NET, Ranking.LOST)
+                if winner == 'black':
+                    User.increment_score(session, Ranking.THROUGH_NET, Ranking.WIN)
 
         room.board_state = checkers.state.json_encode()
     except EmptyPawnMove:

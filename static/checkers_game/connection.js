@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {fetch as fetchPolyfill} from "whatwg-fetch"
 import {connect} from 'react-redux'
-import {fetchBoardState, playerTurn, connection, incrementTime, clearTime} from './actions/index'
+import {fetchBoardState, playerTurn, connection, incrementTime, handleMoveTime} from './actions/index'
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
@@ -17,7 +17,7 @@ class Connection extends Component{
         me.props.connection();
         setInterval(function () {
             if (me.props.gameStarted && me.props.winner === '') {
-                me.props.incrementTime();
+                me.props.handleMoveTime();
             }
         }, 1000);
     }
@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         connection: () => dispatch(connection()),
         incrementTime: () => dispatch(incrementTime()),
-        clearTime: () => dispatch(clearTime())
+        handleMoveTime: () => dispatch(handleMoveTime())
     }
 }
 

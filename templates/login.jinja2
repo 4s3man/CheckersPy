@@ -5,12 +5,13 @@ Login
 {% endblock %}
 
 {% block style %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='dist/choose_game.css') }}">
 {% endblock %}
 
 {% block content %}
     <div class="form gridContainer gridContainer--withCenter">
-        <h2 class="title">Login</h2>
         <div class="form-outer gridContainer--center">
             <form method="post" action="" class="form">
                 <label for="login" class="form__label">
@@ -27,8 +28,7 @@ Login
                     Captcha
                     <br>
                     <br>
-                    {{ captcha|default('') }} =
-                    <input name="captcha" type="text" class="form__input">
+                    <div class="g-recaptcha" data-sitekey="6LfQTqIUAAAAAIfhQoSqnZMB3RJytcvrA7Lr3_Xr"></div>
                 </div>
 
                 <input type="submit" class="form_submit" value="login">
@@ -37,3 +37,8 @@ Login
     </div>
 {% endblock %}
 
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="{{url_for('static', filename='dist/captcha.js')}}"></script>
+{% endblock %}

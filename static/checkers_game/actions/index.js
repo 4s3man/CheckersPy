@@ -116,6 +116,20 @@ export function clearTime(){
   }
 }
 
+export function handleMoveTime(){
+  return (dispatch, getState) => {
+    var state = getState();
+    dispatch(incrementTime());
+    console.log(state.time);
+    console.log(state.statePlayerTurn);
+    console.log(state.movingColor);
+    if (state.time === 39 && state.statePlayerTurn === true) {
+      var local_winner = state.movingColor === 'white' ? 'black' : 'white';
+      dispatch(winner(local_winner));
+    }
+  }
+}
+
 export function connection(){
   return (dispatch, getState) => {
     var state = getState();

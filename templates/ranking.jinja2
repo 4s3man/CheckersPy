@@ -39,16 +39,19 @@ Ranking
           </div>
         {%endif%}
           <h2 class="ranking__gameMode"></h2>
-          <div class="rankingSelect">
-            <a href="#vs_computer">
-              Vs computer
-            </a>
-            <a href="#through_net">
-              Through net
-            </a>
+          <div class="rankingHeader">
+            <h2>Top 20</h2>
+            <p>choose mode to display</p>
+            <div class="rankingSelect">
+              <a href="#vs_computer">
+                Vs computer
+              </a>
+              <a href="#through_net">
+                Through net
+              </a>
+            </div>
           </div>
           <div class="userStats">
-            <h2>Top 20</h2>
             <table>
               <thead>
                 <tr>
@@ -60,7 +63,7 @@ Ranking
                 </tr>
               </thead>
               <tbody id='vs_computer' class="showOnFocus">
-                {% for row in ranking if row[1] == 'VS_COMPUTER' %}
+                {% for row in top_20_vs_computer %}
                   <tr>
                     <td>{{row[0]}}</td>
                     <td>{{row[1]}}</td>
@@ -71,13 +74,13 @@ Ranking
                 {%endfor%}
               </tbody>
               <tbody id='through_net' class="showOnFocus">
-                {% for row in ranking if row[2] == 'THROUGH_NET' %}
+                {% for row in top_20_through_net %}
                   <tr>
-                    <td>login</td>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
                     <td>{{row[2]}}</td>
-                    <td>{{row[3]}}</td>
-                    <td>{{row[5]}}</td>
                     <td>{{row[4]}}</td>
+                    <td>{{row[3]}}</td>
                   </tr>
                 {%endfor%}
               </tbody>

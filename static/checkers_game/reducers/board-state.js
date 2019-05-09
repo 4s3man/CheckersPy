@@ -115,6 +115,25 @@ export function joined(state = false, action){
   }
 };
 
+function getIdOfPawnWithMoves(fields) {
+  for (var key in fields) {
+    let field = fields[key];
+    if (fields.hasOwnProperty(key) && field.moves.length) {
+        return field.pawn;
+    }
+  }
+}
+
+export function movingColor(state = 'white', action) {
+  if (action.type === constants.STATE_FETCH_SUCCESS) {
+    let pawnId = getIdOfPawnWithMoves(action.fields);
+    return action.pawns[pawnId].color;
+  }
+
+  return state;
+}
+
+
 export function time(state = 0, action) {
     switch (action.type) {
       case constants.INCREMENT_TIME:
