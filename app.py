@@ -1,4 +1,6 @@
 import sqlite3
+import re
+import urllib.request
 from flask import Flask, flash, render_template, request, session, url_for, redirect, g
 from checkers.checkers import *
 from helpers.connection import *
@@ -10,7 +12,6 @@ from bundles.User import User
 from bundles.Captcha import Captcha
 from bundles.Ranking import Ranking
 
-import re
 
 # from checkers.tests.fixtures.state_fixtures import *
 from checkers.tests.fixtures.room_fixtures import *
@@ -82,9 +83,11 @@ def login():
     if request.method == 'POST':
         login = request.form.get('login')
         password = request.form.get('password')
-        if request.form['captcha'] != str(session.get('captcha')):
-            flash('invalid captcha', 'error')
-        elif not user.validate(login):
+        secret_key = "6LfQTqIUAAAAANVt8PZn2kP5Oqz99mk8mt8zITWh"
+        captcha = request.form.get('g-recaptcha-response')
+        server_ip = request.host.split(':')[0]
+        print(urllib.request.urlopen("https://www.google.com/recaptcha/api/siteverify?secret=" + secret_key + "&response=" + captcha + "&remoteip=" + server_ip).read(1000))
+        if not user.validate(login):
             flash('login must contain only ' + user.getAllowedChars(), 'error')
         elif not user.validate(password):
             flash('password must contain only ' + user.getAllowedChars(), 'error')
