@@ -1,6 +1,5 @@
 import sqlite3
 import re
-import urllib.request
 from flask import Flask, flash, render_template, request, session, url_for, redirect, g
 from checkers.checkers import *
 from helpers.connection import *
@@ -9,7 +8,7 @@ from checkers.maxmin import *
 from uuid import uuid4
 from bundles.Connection import Connection
 from bundles.User import User
-from bundles.Captcha import Captcha
+from bundles.Captcha import captcha_is_ok
 from bundles.Ranking import Ranking
 
 
@@ -83,11 +82,9 @@ def login():
     if request.method == 'POST':
         login = request.form.get('login')
         password = request.form.get('password')
-        secret_key = "6LfQTqIUAAAAANVt8PZn2kP5Oqz99mk8mt8zITWh"
-        captcha = request.form.get('g-recaptcha-response')
-        server_ip = request.host.split(':')[0]
-        print(urllib.request.urlopen("https://www.google.com/recaptcha/api/siteverify?secret=" + secret_key + "&response=" + captcha + "&remoteip=" + server_ip).read(1000))
-        if not user.validate(login):
+        if not captcha_is_ok(request):
+            flash('invalid captcha', 'error')
+        elif not user.validate(login):
             flash('login must contain only ' + user.getAllowedChars(), 'error')
         elif not user.validate(password):
             flash('password must contain only ' + user.getAllowedChars(), 'error')
@@ -101,9 +98,6 @@ def login():
                 return redirect('/')
             else:
                 flash('invalid password', 'error')
-
-    captcha = Captcha().get_captcha()
-    session['captcha'] = captcha[Captcha.RESULT]
 
     return render_template('login.jinja2',
                            login=login,
@@ -119,7 +113,9 @@ def register():
     if request.method == 'POST':
         login = request.form.get('login')
         password = request.form.get('password')
-        if user.login_already_exists(login):
+        if not captcha_is_ok(request):
+            flash('invalid captcha', 'error')
+        elif user.login_already_exists(login):
             flash('login already in use', 'error')
         elif request.form['password'] != request.form['password_confirm']:
             flash('repeated passowrd is not the same as original', 'error')
@@ -129,18 +125,12 @@ def register():
             flash('password must contain only ' + user.getAllowedChars(), 'error')
         elif user.login_already_exists(login):
             flash('login already in use', 'error')
-        elif request.form['captcha'] != str(session.get('captcha')):
-            flash('invalid captcha', 'error')
         else:
             user.create(login, password)
             flash('successfully registered', 'success')
             return redirect(url_for('login'))
 
-    captcha = Captcha().get_captcha()
-    session['captcha'] = captcha[Captcha.RESULT]
-
     return render_template('register.jinja2',
-                           captcha=captcha[Captcha.QUESTION],
                            login=login,
                            password=password
                            )
