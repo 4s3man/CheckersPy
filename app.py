@@ -200,18 +200,11 @@ def move_through_net():
             winner = room.get_turn_color()
             checkers.state.winner = 'white' if winner == 'black' else 'black'
 
-        if checkers.state.winner != '':
             if session.get('pid', None) == room.creator_id:
                 if winner == 'white':
                     User.increment_score(session, Ranking.THROUGH_NET, Ranking.WIN)
                 if winner == 'black':
                     User.increment_score(session, Ranking.THROUGH_NET, Ranking.LOST)
-
-            if session.get('pid', None) == room.joiner_id:
-                if winner == 'white':
-                    User.increment_score(session, Ranking.THROUGH_NET, Ranking.LOST)
-                if winner == 'black':
-                    User.increment_score(session, Ranking.THROUGH_NET, Ranking.WIN)
 
         room.board_state = checkers.state.json_encode()
     except EmptyPawnMove:
