@@ -54,15 +54,6 @@
 .rules__content--right {
     padding-left: 2em;
 }
-.rules__title{
-    padding-left: 2em;
-    padding-top: 1em;
-    padding-bottom: 0.2em;
-    font-size: 1.2em;
-}
-.rules__list {
-    list-style: unset;
-}
 
 @media(max-width: 576px){
     .rules{

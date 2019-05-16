@@ -3,30 +3,49 @@
         <h1 class="rules__header__title">Rules</h1>
     </header>
         <div class="rules__content">
+          <h1 class="t1">Rules</h1>
             <div>
-                <h2 class="rules__title">Cel</h2>
-                Celem gry jest zbicie wszystkich pionów przeciwnika (w tym damek -- patrz niżej) albo zablokowanie wszystkich, które pozostają na planszy, pozbawiając przeciwnika możliwości wykonania ruchu. Jeśli żaden z graczy nie jest w stanie tego osiągnąć (każdy z graczy wykona po 3 ruchy damkami bez zmniejszania liczby pionów pozostających na planszy), następuje remis.
+                <h2 class="title t2">Goal</h2>
+                The goal of the game is to beat or block all enemy pawns.
+                Block means that they don't have moves to make.
+                If none of player is able to block or beat enemy pawns, and each player makes 3 moves by queens without beating any pawns, game ends with draw
             </div>
             <div>
-                <h2 class="rules__title">Ruchy</h2>
-                    Jako pierwszy ruch wykonuje grający pionami białymi, po czym gracze wykonują na zmianę kolejne ruchy.
+                <h2 class="title t2">Moves</h2>
+                    The first move belongs to player, playing with white pawns.
+                    Later players make moves one by one.
                 <div class="rules__content--right">
-                    <h3 class="rules__title">Piony</h3>
-                    <ul class="rules__list">
-                        <li>Piony mogą poruszać się o jedno pole do przodu po przekątnej (na ukos) na wolne pola.</li>
-                        <li>Bicia są obowiązkowe.</li>
-                        <li>Podczas bicia nie można przeskakiwać więcej niż raz przez ten sam pion (damkę).</li>
-                        <li>Bicie pionem następuje przez przeskoczenie sąsiedniego pionu (lub damki) przeciwnika na pole znajdujące się tuż za nim po przekątnej (pole to musi być wolne). Zbite piony są usuwane z planszy po zakończeniu ruchu.</li>
-                        <li>Piony mogą bić zarówno do przodu, jak i do tyłu.</li>
-                        <li>W jednym ruchu wolno wykonać więcej niż jedno bicie tym samym pionem, przeskakując przez kolejne piony (damki) przeciwnika.</li>
+                    <h3 class="title t2">Pawns</h3>
+                    <ul class="list">
+                        <li>Normal pawns can move by one field, foreward diagonally on free fields.</li>
+                        <li>All beatings are obligatory.</li>
+                        <li>During beating, you can't jump over same pawn more than once</li>
+                        <li>
+                          The beating takes place, by jumping over neighboring pawn, on the field in same direction, just after beated pawn field, it has to be free field.
+                          Beated pawns are removed from board.
+                        </li>
+                        <li>Pawns can beat both foreward and backward, diagonally</li>
+                        <li>
+                          In one move it's possible to beat more than one enemy pawn, jumping over next pawns.
+                        </li>
+                        <li>
+                          If there is possibility to make more than one beating move, the one wchich beats highest number of enemy pawns is obligatory.
+                        </li>
                     </ul>
-                    <h3 class="rules__title">Damki</h3>
-                    <ul class="rules__list">
-                        <li>Pion, który dojdzie do ostatniego rzędu planszy, staje się damką, przy czym jeśli znajdzie się tam w wyniku bicia i będzie mógł wykonać kolejne bicie (do tyłu), to będzie musiał je wykonać i nie staje się wtedy damką.</li>
-                        <li>Kiedy pion staje się damką, kolej ruchu przypada dla przeciwnika.</li>
-                        <li>Damki mogą poruszać się w jednym ruchu o dowolną liczbę pól do przodu lub do tyłu po przekątnej, zatrzymując się na wolnych polach.</li>
-                        <li>Bicie damką jest możliwe z dowolnej odległości po linii przekątnej i następuje przez przeskoczenie pionu (lub damki) przeciwnika, za którym musi znajdować się co najmniej jedno wolne pole -- damka przeskakuje na dowolne z tych pól i może kontynuować bicie (na tej samej lub prostopadłej linii).</li>
-                        <li>Kiedy istnieje kilka możliwych bić, gracz musi wykonać maksymalne (tzn. takie, w którym zbije największą liczbę pionów lub damek przeciwnika).</li>
+                    <h3 class="title t2">Queens</h3>
+                    <ul class="list">
+                        <li>
+                          If pawn move ends on last row of the board, it becomes a queen.
+                        </li>
+                        <li>
+                          Queens can travel in one move, by any amount of fields, forwareward and backward diagonally.
+                        </li>
+                        <li>
+                          Queens can beat enemy pawns from any distance, and after first jump they can continue beating as normal pawn would do.
+                        </li>
+                        <li>
+                          Queens have same beating obligations as normal pawns.
+                        </li>
                     </ul>
                 </div>
             </div>
