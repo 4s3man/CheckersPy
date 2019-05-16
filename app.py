@@ -52,7 +52,6 @@ def choose_game():
 
 @app.route('/ranking', methods=['GET'])
 def ranking():
-    #TODO dodać tekst o histori warcab, potestować ranking THROUGH NET, przetłumaczyć rules na engielski, posprzątać todos
     ranking = Ranking()
     user_id = session.get('user').get('id') if session.get('user') else None
     user_login = session.get('user').get('login') if session.get('user') else None
