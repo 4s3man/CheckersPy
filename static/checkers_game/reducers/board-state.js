@@ -127,7 +127,7 @@ function getIdOfPawnWithMoves(fields) {
 export function movingColor(state = 'white', action) {
   if (action.type === constants.STATE_FETCH_SUCCESS) {
     let pawnId = getIdOfPawnWithMoves(action.fields);
-    return action.pawns[pawnId].color;
+    return action.pawns[pawnId] ? action.pawns[pawnId].color : state;
   }
 
   return state;

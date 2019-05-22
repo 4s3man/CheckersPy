@@ -290,18 +290,8 @@ def move():
 
 @app.route('/game/vs_computer', methods=['POST', 'GET'])
 def vs_computer():
-    #todo tutaj testuje
-    # if not 'board_state_vs_computer' in session.keys():
-    #     set_initial_game_sessions('_vs_computer')
     if not 'board_state_vs_computer' in session.keys():
-        """Empty sufix used for hot_seats"""
-        checkers = Checkers(two_moves_to_win())
-        checkers.resolve_moves('white')
-        sufix='_vs_computer'
-        session['board_state' + sufix] = checkers.state.json_encode()
-        session['turn' + sufix] = 'white'
-        session['draw_count' + sufix] = 0
-    print("\n\n\n"  + session['board_state_vs_computer'])
+        set_initial_game_sessions('_vs_computer')
 
     return render_template('games/vs_computer.jinja2')
 
@@ -345,15 +335,12 @@ def move_vs_computer():
         if checkers.state.winner == 'draw':
             User.increment_score(session, Ranking.VS_COMPUTER, Ranking.DRAW)
 
-        print(checkers.state.winner)
         session['board_state_vs_computer'] = checkers.state.json_encode()
     except EmptyPawnMove:
         print('EmptyPawnMove')
         pass
     except InvalidPawnMove as e:
         """Handle some error"""
-        # todo changed
-        print(e)
         print('invalidPawnMove Error')
     except KeyError:
         set_initial_game_sessions('_vs_computer')
