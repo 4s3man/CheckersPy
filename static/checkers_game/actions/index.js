@@ -17,12 +17,12 @@ export function fetchBoardState(url, payload={}, through_net = false){
     .then((response) => response.json())
     .then((data) => normalizeData(data))
     .then((data) => dispatch(stateFetchSuccess(data)))
-        .then((data)=> {
-          if(payload.id != undefined && through_net == true){
-            dispatch(playerTurn(false));
-            dispatch(connection());
-          }
-        })
+    .then((data)=> {
+      if(payload.id != undefined && through_net == true){
+        dispatch(playerTurn(false));
+        dispatch(connection());
+      }
+    })
     .catch((e) => {
       // console.log(e);
       return dispatch(stateHasError(true));

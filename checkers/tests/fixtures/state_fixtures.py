@@ -451,3 +451,75 @@ def for_max_min_test_simple():
             None,
             None]
     })
+
+@pytest.fixture
+def black_one_move_to_win():
+    return makeState({
+        "white_pawns":
+            [
+            None,
+            {"y": 2, "x": 2,"color": "white", "type": "queen", "foreward": -1, "id": 2, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+        "black_pawns":
+            [
+            {"y": 3, "x": 1,"color": "black", "type": "queen", "foreward": 1, "id": 0, "moves": []},
+            {"y": 2, "x": 4,"color": "black", "type": "queen", "foreward": 1, "id": 1, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
+    })
+
+@pytest.fixture
+def two_moves_to_win():
+    return makeState({
+        "white_pawns":
+            [
+            {"y": 3, "x": 1,"color": "white", "type": "queen", "foreward": 1, "id": 0, "moves": []},
+            {"y": 4, "x": 4,"color": "white", "type": "queen", "foreward": 1, "id": 1, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+            ],
+        "black_pawns":
+            [
+            None,
+            {"y": 6, "x": 6,"color": "black", "type": "queen", "foreward": -1, "id": 1, "moves": []},
+            {"y": 2, "x": 2,"color": "black", "type": "queen", "foreward": -1, "id": 2, "moves": []},
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None]
+    })

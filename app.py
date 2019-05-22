@@ -11,6 +11,9 @@ from bundles.User import User
 from bundles.Captcha import captcha_is_ok
 from bundles.Ranking import Ranking
 
+#todo remove
+from checkers.tests.fixtures.state_fixtures import *
+
 app = Flask(__name__)
 ROOMS = RoomIndex()
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
@@ -186,8 +189,8 @@ def move_through_net():
 
         checkers.state.winner = checkers.state.get_winner()
         if has_only_queens(checkers.state) and not checkers.state.winner:
-            room.draw_count_vs_computer += 1
-            if(room.draw_count_vs_computer > 6):
+            room.draw_count += 1
+            if(room.draw_count > 6):
                 # todo test
                 User.increment_score(session, Ranking.THROUGH_NET, Ranking.DRAW)
                 checkers.state.winner = 'draw'
@@ -287,8 +290,18 @@ def move():
 
 @app.route('/game/vs_computer', methods=['POST', 'GET'])
 def vs_computer():
+    #todo tutaj testuje
+    # if not 'board_state_vs_computer' in session.keys():
+    #     set_initial_game_sessions('_vs_computer')
     if not 'board_state_vs_computer' in session.keys():
-        set_initial_game_sessions('_vs_computer')
+        """Empty sufix used for hot_seats"""
+        checkers = Checkers(two_moves_to_win())
+        checkers.resolve_moves('white')
+        sufix='_vs_computer'
+        session['board_state' + sufix] = checkers.state.json_encode()
+        session['turn' + sufix] = 'white'
+        session['draw_count' + sufix] = 0
+    print("\n\n\n"  + session['board_state_vs_computer'])
 
     return render_template('games/vs_computer.jinja2')
 
@@ -298,7 +311,6 @@ def move_vs_computer():
         pawn_move = receive_pawn_move(request.get_json(), session['turn_vs_computer'])
         checkers = Checkers(State(session['board_state_vs_computer']))
         if not checkers.pawn_move_is_valid(**pawn_move): raise InvalidPawnMove('No such pawn or move for pawn')
-
         checkers.make_move(**pawn_move)
 
         checkers.state.winner = checkers.state.get_winner()
@@ -333,12 +345,15 @@ def move_vs_computer():
         if checkers.state.winner == 'draw':
             User.increment_score(session, Ranking.VS_COMPUTER, Ranking.DRAW)
 
+        print(checkers.state.winner)
         session['board_state_vs_computer'] = checkers.state.json_encode()
     except EmptyPawnMove:
         print('EmptyPawnMove')
         pass
-    except InvalidPawnMove:
+    except InvalidPawnMove as e:
         """Handle some error"""
+        # todo changed
+        print(e)
         print('invalidPawnMove Error')
     except KeyError:
         set_initial_game_sessions('_vs_computer')
