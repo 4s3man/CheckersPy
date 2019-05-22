@@ -11,16 +11,11 @@ from bundles.User import User
 from bundles.Captcha import captcha_is_ok
 from bundles.Ranking import Ranking
 
-#todo remove
-from checkers.tests.fixtures.state_fixtures import *
-
 app = Flask(__name__)
 ROOMS = RoomIndex()
 app.secret_key = '$$_asdoi20z1|}2!{_012!!_\z!@669xcz^[%mmaq'
 
 connection = Connection()
-#todo remove
-# connection.drop_tables(app)
 connection.init_db(app)
 
 @app.teardown_appcontext
@@ -156,7 +151,6 @@ def thorugh_net_connection():
             if not room.is_winned() and room.is_time_up_for_move(datetime.now()):
                 room.win_too_long_unmoved()
 
-            # todo test
             if session.get('pid', None) == room.creator_id and room.is_winned():
                 if room.winner == 'white':
                     User.increment_score(session, Ranking.THROUGH_NET, Ranking.WIN)
@@ -191,7 +185,6 @@ def move_through_net():
         if has_only_queens(checkers.state) and not checkers.state.winner:
             room.draw_count += 1
             if(room.draw_count > 6):
-                # todo test
                 User.increment_score(session, Ranking.THROUGH_NET, Ranking.DRAW)
                 checkers.state.winner = 'draw'
 
