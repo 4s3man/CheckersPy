@@ -147,7 +147,6 @@ def thorugh_net_connection():
         if ROOMS.room_exists(session['rid']):
             room = ROOMS[session['rid']]
             player_id = session['pid']
-
             if not room.is_winned() and room.is_time_up_for_move(datetime.now()):
                 room.win_too_long_unmoved()
 
@@ -365,4 +364,3 @@ def page_not_found(error):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-   # app.run(host="0.0.0.0", port=5009, debug=True)

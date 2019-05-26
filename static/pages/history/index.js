@@ -71,7 +71,7 @@ class SimpleSlider extends React.Component {
         "middleAgesCheckers.jpg",
         "middleAgesCheckers",
         'Checkers as we know',
-        'Nowadays checkers were invented in Middle Ages on the south of Europe.'
+        'Nowadays checkers were invented in the Middle Ages on the south of Europe.'
       )}
       {this.createImage(
         "france.jpeg",
