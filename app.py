@@ -22,6 +22,11 @@ connection.init_db(app)
 def close_connection(exception):
     connection.maybe_close_db()
 
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    return render_template('about.jinja2')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def choose_game():
     ROOMS.cultivate()

@@ -1,0 +1,23 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}
+About
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/choose_game.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="gridContainer gridContainer--withCenter pt-5">
+        <div class="form-outer gridContainer--center text-center mt-5 pt-5">
+          <h2 class="title">Info</h2>
+        <p>
+        Autorem niniejszego serwisu jest  Jakub Kułaga
+Serwis ten stanowi integralną część pracy licencjackiej (kierunek: Elektroniczne Przetwarzanie Informacji), przygotowanej pod kierunkiem prof. dr. hab. Piotra Jordana Śliwińskiego na Wydziale Zarządzania i Komunikacji Społecznej Uniwersytetu Jagiellońskiego.
+        </p>
+        </div>
+    </div>
+{% endblock %}
