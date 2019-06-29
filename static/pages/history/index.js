@@ -10,7 +10,7 @@ class SimpleSlider extends React.Component {
 
   constructor(props) {
    super(props);
-   this.url = "/static/images/"
+   this.url = "http://leszczyna.wzks.uj.edu.pl/16_kulaga/checkerspy/static/images/"
    this.slides = [
      {
        "title":"name"
