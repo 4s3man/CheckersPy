@@ -22,7 +22,7 @@ export default class ActiveRooms extends Component{
     }
 
     fetch_rooms(){
-        fetchPolyfill('/fetch_rooms', {
+        fetchPolyfill('/16_kulaga/checkerspy/fetch_rooms', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

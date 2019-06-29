@@ -11,10 +11,13 @@ import Connection from './connection'
 import "./css/game.css"
 import "./css/dialogWindow.css"
 
+const sitePrevix = '/16_kulaga/checkerspy';
+
 const store = configureStore();
 console.log('index.js debug');
 
 export function renderGame(moveUrl, actionSufix){
+  var moveUrl = sitePrevix + moveUrl;
   render(
     <Provider store={store}>
       <div className='game'>
@@ -27,6 +30,7 @@ export function renderGame(moveUrl, actionSufix){
 }
 
 export function renderGame__withConnection(moveUrl, actionSufix){
+  var moveUrl = sitePrevix + moveUrl;
   render(
     <Provider store={store}>
       <div className='game'>

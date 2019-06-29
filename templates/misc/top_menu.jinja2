@@ -7,29 +7,29 @@
             </a>
         </div>
         <div class="topMenu__item">
-            <a href="/history">history</a>
+            <a href="/16_kulaga/checkerspy/history">history</a>
         </div>
         <div class="topMenu__item">
-            <a href="/ranking#vs_computer">ranking</a>
+            <a href="/16_kulaga/checkerspy/ranking#vs_computer">ranking</a>
         </div>
         <div class="topMenu__item">
-          <a href="/about">info</a>
+          <a href="/16_kulaga/checkerspy/about">info</a>
         </div>
     </div>
     <div class="topMenu__container topMenu__container--left">
         {%  if session.get('user') == None %}
         <div class="topMenu__item login">
-            <a href="/login">login</a>
+            <a href="/16_kulaga/checkerspy/login">login</a>
         </div>
         <div class="topMenu__item register">
-            <a href="/register">register</a>
+            <a href="/16_kulaga/checkerspy/register">register</a>
         </div>
         {% else %}
         <div class="topMenu__item">
             logged in as {{ session['user']['login'] }}
         </div>
         <div class="topMenu__item logout">
-            <a href="/logout">logout</a>
+            <a href="/16_kulaga/checkerspy/logout">logout</a>
         </div>
         {% endif %}
     </div>
