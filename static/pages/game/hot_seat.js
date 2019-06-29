@@ -2,4 +2,4 @@
 import "./bundle_styles"
 import {renderGame} from "../../checkers_game/index.js"
 
-renderGame('/move', 'hot_seat');
+renderGame('/16_kulaga/checkerspy/move', 'hot_seat');
