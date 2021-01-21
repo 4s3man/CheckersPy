@@ -29,7 +29,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "reset-css": "^4.0.1",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.1",
     "whatwg-fetch": "^3.0.0"
